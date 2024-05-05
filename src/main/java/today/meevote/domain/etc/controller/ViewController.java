@@ -1,0 +1,34 @@
+package today.meevote.domain.etc.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+
+import today.meevote.exception.view.UnauthenticatedException;
+import today.meevote.exception.view.NotFoundException;
+
+@Controller
+public class ViewController {
+	
+	@GetMapping("error/notfound")
+	public String notFound() {
+		return "error/notfound";
+	}
+	
+	@GetMapping("/")
+	public String calendar() {
+		return "calendar/calendar";
+	}	
+	
+	
+	@GetMapping("/register")
+	public String register() {
+		return "register/register";
+	}
+	
+	@GetMapping("/login")
+	public String login() {
+		return "login/login";
+	}
+	
+
+}

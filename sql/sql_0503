@@ -1,0 +1,275 @@
+create user meevote
+identified by 1004
+default tablespace users
+temporary tablespace temp;
+
+grant connect, resource, dba to meevote;
+
+commit;
+
+CREATE TABLE member (
+	email	varchar2		NOT NULL,
+	password	varchar2(50)		NOT NULL,
+	name	varchar2(50)		NOT NULL,
+	phone_number	varchar2(50)		NOT NULL,
+	address	varchar2(50)		NOT NULL,
+	img_src	varchar2(255)		NOT NULL,
+	is_banned	number(1)		NOT NULL
+);
+
+CREATE TABLE member_ban (
+	member_ban_id	number		NOT NULL,
+	member_email	varchar2(255)		NOT NULL,
+	admin_email	varchar2(50)		NOT NULL,
+	start_date	date		NOT NULL,
+	end_date	date		NOT NULL
+);
+CREATE SEQUENCE seq_member_ban; 
+
+CREATE TABLE schedule_category (
+	schedule_category_id	number		NOT NULL,
+	schedule_category_name	varchar2(50)		NOT NULL,
+	schedule_color	varchar2(20)		NOT NULL
+);
+CREATE SEQUENCE seq_schedule_category ;
+
+CREATE TABLE date_voted (
+	date_voted_id	number		NOT NULL,
+	email	varchar2(255)		NOT NULL,
+	schedule_id	number		NOT NULL,
+	start_date	date		NOT NULL,
+	end_date	date		NOT NULL
+);
+CREATE SEQUENCE seq_date_voted ;
+
+CREATE TABLE member_schedule (
+	email	varchar2(255)		NOT NULL,
+	schedule_id	number		NOT NULL,
+	is_owner	number(1)		NOT NULL,
+	attedance	number(1)	DEFAULT 0 NOT NULL
+);
+
+CREATE TABLE schedule (
+	schedule_id	number		NOT NULL,
+	schedule_category_id	number		NOT NULL,
+	name	varchar2(50)		NOT NULL,
+	description	varchar2(50)		NOT NULL,
+	is_group	number(1)		NOT NULL,
+	duration	number		NOT NULL,
+	start_date	date		NULL,
+	end_date	date		NULL,
+	place_name	varchar2(255)		NULL,
+	place_latitude	number		NULL,
+	place_longitude	number		NULL
+);
+CREATE SEQUENCE seq_schedule ;
+
+CREATE TABLE date_voting_items (
+	date_voting_items_id	number		NOT NULL,
+	schedule_id	number		NOT NULL,
+	start_date	date		NOT NULL,
+	end_date	date		NOT NULL
+);
+CREATE SEQUENCE seq_date_voting_items;
+
+CREATE TABLE place_voting_items (
+	place_voting_items_id	number		NOT NULL,
+	schedule_id	number		NOT NULL,
+	place_name	varchar2(255)		NOT NULL,
+	place_latitude	number		NOT NULL,
+	place_longitude	number		NOT NULL
+);
+CREATE SEQUENCE seq_place_voting_items;
+
+CREATE TABLE place_voted (
+	place_voted_id	number		NOT NULL,
+	email	varchar2(255)		NOT NULL,
+	schedule_id	number		NOT NULL,
+	place_to_vote_id	number		NOT NULL
+);
+CREATE SEQUENCE seq_place_voted;
+
+CREATE TABLE administer (
+	email	varchar2(255)		NOT NULL,
+	password	varchar2(50)		NOT NULL,
+	name	varchar2(50)		NOT NULL
+);
+
+CREATE TABLE notify (
+	notify_id	number		NOT NULL,
+	email	varchar2(255)		NOT NULL,
+	schedule_id	number		NOT NULL,
+	notify_category_id	number		NOT NULL,
+	is_read	number(1)		NOT NULL
+);
+CREATE SEQUENCE seq_notify;
+
+CREATE TABLE notify_category (
+	notify_category_id	number		NOT NULL,
+	notify_category_name	varchar2(50)		NOT NULL
+);
+CREATE SEQUENCE seq_notify_category;
+
+CREATE TABLE schedule_vote (
+	schedule_id	number		NOT NULL,
+	date_vote_deadline	date		NOT NULL,
+	place_vote_deadline	date		NULL
+);
+CREATE SEQUENCE seq_schedule_vote;
+
+ALTER TABLE member ADD CONSTRAINT PK_MEMBER PRIMARY KEY (
+	email
+);
+
+ALTER TABLE member_ban ADD CONSTRAINT PK_MEMBER_BAN PRIMARY KEY (
+	member_ban_id
+);
+
+ALTER TABLE schedule_category ADD CONSTRAINT PK_SCHEDULE_CATEGORY PRIMARY KEY (
+	schedule_category_id
+);
+
+ALTER TABLE date_voted ADD CONSTRAINT PK_DATE_VOTED PRIMARY KEY (
+	date_voted_id
+);
+
+ALTER TABLE member_schedule ADD CONSTRAINT PK_MEMBER_SCHEDULE PRIMARY KEY (
+	email,
+	schedule_id
+);
+
+ALTER TABLE schedule ADD CONSTRAINT PK_SCHEDULE PRIMARY KEY (
+	schedule_id
+);
+
+ALTER TABLE date_voting_items ADD CONSTRAINT PK_DATE_VOTING_ITEMS PRIMARY KEY (
+	date_voting_items_id
+);
+
+ALTER TABLE place_voting_items ADD CONSTRAINT PK_PLACE_VOTING_ITEMS PRIMARY KEY (
+	place_voting_items_id
+);
+
+ALTER TABLE place_voted ADD CONSTRAINT PK_PLACE_VOTED PRIMARY KEY (
+	place_voted_id
+);
+
+ALTER TABLE administer ADD CONSTRAINT PK_ADMINISTER PRIMARY KEY (
+	email
+);
+
+ALTER TABLE notify ADD CONSTRAINT PK_NOTIFY PRIMARY KEY (
+	notify_id
+);
+
+ALTER TABLE notify_category ADD CONSTRAINT PK_NOTIFY_CATEGORY PRIMARY KEY (
+	notify_category_id
+);
+
+ALTER TABLE schedule_vote ADD CONSTRAINT PK_SCHEDULE_VOTE PRIMARY KEY (
+	schedule_id
+);
+
+ALTER TABLE member_ban ADD CONSTRAINT FK_member_TO_member_ban_1 FOREIGN KEY (
+	member_email
+)
+REFERENCES member (
+	email
+);
+
+ALTER TABLE member_ban ADD CONSTRAINT FK_administer_TO_member_ban_1 FOREIGN KEY (
+	admin_email
+)
+REFERENCES administer (
+	email
+);
+
+ALTER TABLE member_schedule ADD CONSTRAINT FK_member_TO_member_schedule_1 FOREIGN KEY (
+	email
+)
+REFERENCES member (
+	email
+);
+
+ALTER TABLE member_schedule ADD CONSTRAINT FK_sched_TO_member_schedule_1 FOREIGN KEY (
+	schedule_id
+)
+REFERENCES schedule (
+	schedule_id
+);
+
+ALTER TABLE date_voted ADD CONSTRAINT FK_member_sche_TO_date_voted_1 FOREIGN KEY (
+	email,
+    schedule_id
+)
+REFERENCES member_schedule (
+    email,
+    schedule_id
+);
+
+ALTER TABLE schedule ADD CONSTRAINT FK_sche_category_TO_schedule_1 FOREIGN KEY (
+	schedule_category_id
+)
+REFERENCES schedule_category (
+	schedule_category_id
+);
+
+ALTER TABLE date_voting_items ADD CONSTRAINT FK_sv_TO_date_voting_items_1 FOREIGN KEY (
+	schedule_id
+)
+REFERENCES schedule_vote (
+	schedule_id
+);
+
+ALTER TABLE place_voting_items ADD CONSTRAINT FK_sv_TO_place_voting_items_1 FOREIGN KEY (
+	schedule_id
+)
+REFERENCES schedule_vote(
+	schedule_id
+);
+
+ALTER TABLE place_voted ADD CONSTRAINT FK_ms_TO_place_voted_1 FOREIGN KEY (
+	email,
+    schedule_id
+)
+REFERENCES member_schedule (
+	email,
+    schedule_id
+);
+
+ALTER TABLE place_voted ADD CONSTRAINT FK_pvi_TO_place_voted_1 FOREIGN KEY (
+    place_to_vote_id
+)
+REFERENCES place_voting_items (
+	place_voting_items_id
+);
+
+ALTER TABLE notify ADD CONSTRAINT FK_member_TO_notify_1 FOREIGN KEY (
+	email
+)
+REFERENCES member (
+	email
+);
+
+ALTER TABLE notify ADD CONSTRAINT FK_schedule_TO_notify_1 FOREIGN KEY (
+	schedule_id
+)
+REFERENCES schedule (
+	schedule_id
+);
+
+ALTER TABLE notify ADD CONSTRAINT FK_notify_category_TO_notify_1 FOREIGN KEY (
+	notify_category_id
+)
+REFERENCES notify_category(
+	notify_category_id
+);
+
+ALTER TABLE schedule_vote ADD CONSTRAINT FK_schedule_TO_schedule_vote_1 FOREIGN KEY (
+	schedule_id
+)
+REFERENCES schedule (
+	schedule_id
+);
+
+commit;

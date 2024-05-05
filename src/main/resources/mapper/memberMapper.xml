@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="today.meevote.domain.member.dao.MemberDao">
+    <select id="isExistMember" resultType="boolean">
+        SELECT COUNT(*) 
+        FROM member 
+        WHERE email = #{email}
+    </select>
+    
+    <insert id="createMember">
+        INSERT INTO member (
+	        email, 
+	        password, 
+	        name,
+	        phone_number, 
+	        address,
+	        img_src,
+	        is_banned
+        )
+        VALUES (
+	        #{email}, 
+	        #{password}, 
+	        #{name},
+	        #{phoneNumber}, 
+	        #{address},
+	        'default.jpg',
+	        0
+        )
+    </insert>
+    
+    <select id="getMember" resultType="today.meevote.domain.member.dto.reponse.GetMyInfoDto">
+	    SELECT 
+	        name,
+	        address,
+	        email,
+	        phone_number,
+	        img_src,
+	        is_banned
+	    FROM member
+	    WHERE email = #{email}    		
+    </select>
+</mapper>
