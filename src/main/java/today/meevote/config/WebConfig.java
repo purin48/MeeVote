@@ -30,9 +30,9 @@ public class WebConfig implements WebMvcConfigurer {
         
         registry.addInterceptor(new RestInterceptor())
 				.excludePathPatterns(
-						"/api/member/register",
-						"/api/member/getMailCode",
-						"/api/member/login"
+						"/api/auth/register",
+						"/api/auth/mailcode",
+						"/api/auth/login"
 						)
 				.addPathPatterns("/api/**");
     }

@@ -46,7 +46,7 @@ CREATE TABLE member_schedule (
 	email	varchar2(255)		NOT NULL,
 	schedule_id	number		NOT NULL,
 	is_owner	number(1)		NOT NULL,
-	attedance	number(1)	DEFAULT 0 NOT NULL
+	attendance	number(1)	DEFAULT 0 NOT NULL
 );
 
 CREATE TABLE schedule (

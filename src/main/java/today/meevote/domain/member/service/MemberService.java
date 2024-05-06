@@ -2,16 +2,18 @@ package today.meevote.domain.member.service;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.RequiredArgsConstructor;
 import today.meevote.contextholder.MemberContextHolder;
+import today.meevote.domain.etc.service.S3Service;
 import today.meevote.domain.member.dao.MemberDao;
+import today.meevote.domain.member.dto.reponse.GetMemberForInviteDto;
 import today.meevote.domain.member.dto.reponse.GetMyInfoDto;
-import today.meevote.domain.member.dto.request.LoginDto;
-import today.meevote.domain.member.dto.request.RegisterDto;
+import today.meevote.domain.member.dto.request.EditMyInfoDto;
+import today.meevote.domain.member.dto.request.EditMyPasswordDto;
 import today.meevote.exception.rest.RestException;
 import today.meevote.response.FailureInfo;
-import today.meevote.utils.SessionUtil;
 
 @Service
 @RequiredArgsConstructor
@@ -19,27 +21,44 @@ public class MemberService {
 	
 	private final MemberDao memberDao;
 	private final PasswordEncoder passwordEncoder;
-	
-	public void register(RegisterDto registerDto) {
-		if(memberDao.isExistMember(registerDto.getEmail())) {
-			throw new RestException(FailureInfo.ALREADY_EXIST_MEMBER);
-		}
-		registerDto.setPassword(passwordEncoder.encode(registerDto.getPassword()));		
-		memberDao.createMember(registerDto);
-	}
-
-	public void login(LoginDto loginDto) {
-		loginDto.setPassword(passwordEncoder.encode(loginDto.getPassword()));
-		if(!memberDao.isExistMember(loginDto)) {
-			throw new RestException(FailureInfo.NOT_EXIST_MEMBER);
-		}
-		SessionUtil.getSession(true).setAttribute("email", loginDto.getEmail());
-	}
+	private final S3Service s3Service;
 	
 	public GetMyInfoDto getMyInfo(){
-		GetMyInfoDto getMyInfoDto = memberDao.getMember(MemberContextHolder.getEmail())
+		return memberDao.findMyInfoByEmail(MemberContextHolder.getEmail())
 				.orElseThrow(() -> new RestException(FailureInfo.NOT_EXIST_MEMBER));
-		return getMyInfoDto;		
 	}
 
+	public void editMyInfo(EditMyInfoDto editMyInfoDto, MultipartFile file) {
+		String email = MemberContextHolder.getEmail();
+		if(!memberDao.isExistByEmail(email)) {
+			throw new RestException(FailureInfo.NOT_EXIST_MEMBER);
+		}
+		String imgSrc = null;
+		if(file != null) {
+			imgSrc = s3Service.uploadProfileImage(file); 
+		}
+		memberDao.update(email, editMyInfoDto, imgSrc);
+	}
+
+	public void editMyPassword(EditMyPasswordDto editMyPasswordDto) {
+		String email = MemberContextHolder.getEmail();
+		String password = memberDao.findPasswordByEmail(email);
+        if (password == null) {
+            throw new RestException(FailureInfo.NOT_EXIST_MEMBER);
+        }
+    	if(!passwordEncoder.matches(editMyPasswordDto.getOldPassword(), password)) {
+            throw new RestException(FailureInfo.NOT_CORRECT_PASSWORD);
+        }	
+		memberDao.updatePassword(email, passwordEncoder.encode(editMyPasswordDto.getNewPassword()));
+	}
+
+	public GetMemberForInviteDto getMemberForInvite(String email) {
+		String myEmail = MemberContextHolder.getEmail();
+		
+		if(email.equals(myEmail)) 
+			throw new RestException(FailureInfo.SELF_INVITE);
+		
+		return memberDao.findMemberForInviteByEmail(email)
+			.orElseThrow(() -> new RestException(FailureInfo.NOT_EXIST_MEMBER));
+	}
 }

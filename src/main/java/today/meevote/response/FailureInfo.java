@@ -8,19 +8,25 @@ import lombok.RequiredArgsConstructor;
 @Getter
 public enum FailureInfo {
 	
-	// 공통 (~Z99)
-    INTERNAL_SERVER_ERROR("Z99", "서버 오류가 발생했습니다."),
-    INVALID_INPUT("Z98", "입력값이 유효하지 않습니다."),
+	// 공통 (Z00~)
     UNAUTHENTICATED("Z97", "인증되지않은 요청입니다."),
+    INVALID_INPUT("Z98", "입력값이 유효하지 않습니다."),
+    INTERNAL_SERVER_ERROR("Z99", "서버 오류가 발생했습니다."),
+    
+    //파일 (Y00)
+    IMAGE_UPLOAD_FAIL("Y00", "파일 업로드가 실패했습니다. 다시 시도해주세요."),
+    EMPTY_FILE("Y01", "파일이 비어있습니다."),
+    INVALID_FILE_EXENTION("Y02", "유효하지않은 파일 확장자입니다."),
 
     // 회원 (B00~ )
     ALREADY_EXIST_MEMBER("B00", "이미 존재하는 회원입니다."), 
     NOT_EXIST_MEMBER("B01", "존재하지 않는 회원입니다."), 
-    CODE_SEND_FAIL("B02", "인증코드 전송을 실패했습니다. 유효한 메일인지 확인 후 다시 시도해주세요."),
+    CODE_SEND_FAIL("B02", "인증코드 전송을 실패했습니다. 유효한 메일인지 확인 후 다시 시도해주세요."), 
+    NOT_CORRECT_PASSWORD("B03", "비밀번호가 일치하지 않습니다."), 
+    SELF_INVITE("B04", "본인을 초대할 수 없습니다."), 
+    
     
     ;
-
-    
     private final String code;
     private final String message;
 

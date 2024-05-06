@@ -2,13 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
 <mapper namespace="today.meevote.domain.member.dao.MemberDao">
-    <select id="isExistMember" resultType="boolean">
+
+    <select id="isExistByEmail" resultType="boolean">
         SELECT COUNT(*) 
         FROM member 
         WHERE email = #{email}
     </select>
     
-    <insert id="createMember">
+    <insert id="insert">
         INSERT INTO member (
 	        email, 
 	        password, 
@@ -29,7 +30,15 @@
         )
     </insert>
     
-    <select id="getMember" resultType="today.meevote.domain.member.dto.reponse.GetMyInfoDto">
+    
+    <select id="findPasswordByEmail" resultType="String" parameterType="String">
+        SELECT password
+        FROM member
+        WHERE email = #{email}
+    </select>
+    
+    
+    <select id="findMyInfoByEmail" resultType="today.meevote.domain.member.dto.reponse.GetMyInfoDto">
 	    SELECT 
 	        name,
 	        address,
@@ -40,4 +49,30 @@
 	    FROM member
 	    WHERE email = #{email}    		
     </select>
+    
+    <update id="update" parameterType="map">
+    	UPDATE member
+    	<set>
+    		name = #{editMyInfoDto.name},
+    		address = #{editMyInfoDto.address},
+    		phone_number = #{editMyInfoDto.phoneNumber},
+    		<if test="imgSrc != null">img_src = #{imgSrc}</if>
+    	</set>
+   		WHERE email = #{email}
+    </update>
+    
+   <update id="updatePassword" parameterType="map">
+        UPDATE member
+        SET password = #{password}
+        WHERE email = #{email}
+    </update>
+    
+    <select id="findMemberForInviteByEmail" resultType="today.meevote.domain.member.dto.reponse.GetMemberForInviteDto">
+	    SELECT 
+	        email,
+	        name
+	    FROM member
+	    WHERE email = #{email}    		
+    </select>
+    
 </mapper>

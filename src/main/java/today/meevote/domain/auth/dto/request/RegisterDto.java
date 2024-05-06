@@ -1,4 +1,4 @@
-package today.meevote.domain.member.dto.request;
+package today.meevote.domain.auth.dto.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;

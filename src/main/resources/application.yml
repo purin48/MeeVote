@@ -5,6 +5,7 @@ server:
       init-parameters:
         development: true
     session:
+      create: false
       timeout: 3600
 
 spring:
@@ -28,10 +29,27 @@ spring:
           timeout: 5000
           starttls:
             enable: true
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 20MB
       
 mybatis:
   mapper-locations: classpath:mapper/*.xml
   config-location: classpath:mybatis-config.xml
+
+cloud:
+  aws:
+    s3:
+      bucket: ${aws.s3.bucketname}
+    credentials:
+      access-key: ${aws.s3.accesskey}
+      secret-key: ${aws.s3.secretkey}
+    region:
+      static: ${aws.s3.region}
+      auto: false
+    stack:
+      auto: false
   
 springdoc:
   default-consumes-media-type: application/json;charset=UTF-8
@@ -40,4 +58,4 @@ springdoc:
     operations-sorter: method
     tags-sorter: alpha
     path: "swagger"
-  
+      

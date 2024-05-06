@@ -2,6 +2,7 @@ package today.meevote.domain.etc.service;
 
 import java.util.Random;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,10 @@ import today.meevote.response.FailureInfo;
 public class MailService {
 
 	private final JavaMailSender mailSender;
-	private final Environment env;
+	
+	@Value("${spring.mail.username}")
+	private String fromMail;
+	
 	private int code;
 	
     public GetMailCodeDto getMailCode(String email) {
@@ -39,7 +43,7 @@ public class MailService {
         MimeMessage message = mailSender.createMimeMessage();
 
         try {
-			message.setFrom(env.getProperty("spring.mail.username"));
+			message.setFrom(fromMail);
             message.setRecipients(MimeMessage.RecipientType.TO, email); 
             message.setSubject("[Meevote] 회원가입을 위한 이메일 인증");  
             String body = "";
