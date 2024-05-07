@@ -8,12 +8,12 @@ grant connect, resource, dba to meevote;
 commit;
 
 CREATE TABLE member (
-	email	varchar2		NOT NULL,
-	password	varchar2(50)		NOT NULL,
+	email	varchar2(255)		NOT NULL,
+	password	varchar2(4000)		NOT NULL,
 	name	varchar2(50)		NOT NULL,
 	phone_number	varchar2(50)		NOT NULL,
 	address	varchar2(50)		NOT NULL,
-	img_src	varchar2(255)		NOT NULL,
+	img_src	varchar2(4000)		NOT NULL,
 	is_banned	number(1)		NOT NULL
 );
 
