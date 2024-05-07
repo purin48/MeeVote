@@ -1,0 +1,120 @@
+body {
+  margin: 0px;
+  display: flex;
+  font-family: "Nanum Gothic Coding", monospace;
+  font-weight: bold;
+  font-style: normal;
+}
+
+/* 좌측 배너 */
+.left-banner {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #4fd1c5;
+  transition: all 0.5s;
+}
+
+.left-logo {
+  width: 380px;
+}
+/* 좌측 배너 end*/
+
+/* 우측 컨테이너 */
+.right-logo {
+  width: 35%;
+  transition: all 0.5s;
+  margin: 20px 0px 0px;
+}
+
+.right-section {
+  width: 100%;
+	height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+/* 우측 컨테이너 end*/
+
+/* 입력 폼 */
+.form-container {
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+label {
+  font-size: 12px;
+	padding: 5px 5px;
+}
+
+.form-floating {
+	/* height: 30px; */
+}
+
+.form-control {
+  border: #4fd1c5 solid 1px;
+	height: 10px !important;
+}
+
+/* 입력 폼 End*/
+
+/* 완료 버튼 */
+.compelte-container {
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 15px;
+}
+
+.complete-button {
+  width: 100%;
+  padding: 10px;
+  color: white;
+  background-color: #4fd1c5;
+  font-size: 22px;
+  font-weight: bold;
+  border: 0px;
+  border-radius: 10px;
+  box-shadow: 5px 5px 5px lightgray;
+}
+
+.complete-button:hover {
+  background-color: #35f2e1;
+  transition: all 0.3s;
+}
+
+.compelte-container > a {
+  text-align: center;
+  text-decoration: none;
+  color: black;
+  transition: all 0.3s;
+  font-size: 1em;
+}
+
+.compelte-container > a:hover {
+  opacity: 80%;
+}
+/* 완료 버튼 End */
+
+/* 반응형 쿼리 */
+@media (max-width: 1000px) {
+  .left-banner {
+    width: 0px;
+  }
+
+  .form-container {
+    width: 85%;
+  }
+
+  .compelte-container {
+    width: 85%;
+  }
+}
+/* 반응형 쿼리 End*/

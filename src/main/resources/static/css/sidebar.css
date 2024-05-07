@@ -1,0 +1,148 @@
+body {
+ margin: 0;
+ font-family: "Nanum Gothic Coding", monospace;
+ font-weight: bold;
+ font-style: normal;
+}
+
+.side-nav{
+  width: 250px;
+  height: 100vh;
+  padding: 10px 20px 20px 20px;
+  background-color: #4FD1C5;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+
+/* 사이드바 상단 */
+.nav-head {
+  width: 100%;
+  padding-bottom: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 3px white solid;
+}
+
+.nav-head > img {
+  width: 85%;
+}
+
+.nav-head > i {
+  color: white;
+  font-size: 25px;
+}
+/* 사이드바 상단 End */
+
+
+
+/* 사이드바 중간 */
+.nav-content {
+  width: 100%;
+  height: 100%;
+  padding: 20px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.menu-item {
+  width: 100%;
+  padding: 10px 15px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 15px;
+  border-radius: 20px;
+}
+
+.menu-icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  font-size: 24px;
+}
+
+.menu-item > p{
+  font-size: 14px;
+  margin: 0;
+}
+
+.selected {
+  background-color: white;
+}
+
+.selected > .menu-icon {
+  background-color: #4FD1C5;
+  color: white;
+}
+
+.unselected {
+  background-color: #4FD1C5;
+}
+
+.unselected > .menu-icon {
+  background-color: white;
+  color: #4FD1C5;
+}
+
+.unselected p{
+  color: white;
+}
+
+/* 사이드바 중간 End*/
+
+
+
+/* 사이드바 하단 */
+.nav-foot {
+  width: 100%;
+  height: 70px;
+  padding-top: 10px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  border-top: 3px white solid;
+  gap: 5px;
+}
+
+.profile-img {
+  height: 100%;
+  border-radius: 10px;
+}
+
+.profile-info {
+  width: 100%;
+  height: 100%;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 5px;
+  font-weight: 400;
+}
+
+.profile-info > p {
+  margin: 0;
+}
+
+.info-name {
+  width: 100%;
+  font-size: 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.info-email {
+  font-size: 12px;
+}

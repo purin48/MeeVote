@@ -24,7 +24,10 @@ public class WebConfig implements WebMvcConfigurer {
         				"/swagger-ui.html", 
         				"/swagger-ui/**", 
         				"/v3/api-docs/**", 
-        				"/swagger-resources/**"
+        				"/swagger-resources/**",
+        				"/css/**",
+        				"/js/**",
+        				"/image/**"
         				)
         		.addPathPatterns("/**");
         
