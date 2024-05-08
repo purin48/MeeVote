@@ -49,20 +49,14 @@ body {
   gap: 10px;
 }
 
-.input-group {
-  border: #4fd1c5 solid 1px;
-  border-radius: 5px;
-}
-
 .input-group-text {
-  background-color: white;
+  background-color: #4fd1c5;
+  color: white;
   border: 0px;
 }
 
 .form-control {
-  margin-right: 5px;
-  border: 0px;
-  border-radius: 5px;
+  border: #4fd1c5 1px solid;
   font-size: 14px;
   font-family: "Nanum Gothic Coding", monospace;
   font-weight: bold;
@@ -71,13 +65,20 @@ body {
 
 .input-btn {
   border: 0px;
-  border-radius: 10px;
+  border-top-right-radius: 5px !important;
+  border-bottom-right-radius: 5px !important;
   background-color: #4fd1c5;
   color: white;
   box-shadow: 0px;
-  font-size: 14px;
+  font-size: 12px;
   font-family: "Nanum Gothic Coding", monospace;
   font-weight: bold;
+}
+
+.valid-feedback, .invalid-feedback {
+  margin: 0px;
+  font-size: 12px;
+  text-align: center;
 }
 
 /* 입력 폼 End*/
