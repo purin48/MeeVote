@@ -94,4 +94,24 @@ public class AuthController {
     		String email){
     	return new DataResponse<>(SuccessInfo.GET_MAIL_CODE, mailService.getMailCode(email));
     }
+	
+	
+	@Operation(summary = "이메일 중복검사")
+    @ApiResponse(responseCode = "1", description = "성공")
+    @ApiResponse(responseCode = "2", description = "실패",
+	    content = @Content(examples = {
+        @ExampleObject(name = "이미 존재하는 회원", value = "{\"isSuccess\": false, \"code\": \"B00\", \"message\": \"이미 존재하는 회원입니다.\"}"),
+        @ExampleObject(name = "유효하지않은 입력값", value = "{\"isSuccess\": false, \"code\": \"Z98\", \"message\": \"입력값이 유효하지 않습니다.\"}"),
+        @ExampleObject(name = "내부 서버 오류", value = "{\"isSuccess\": false, \"code\": \"Z99\", \"message\": \"서버 오류가 발생했습니다.\"}")
+    }))  
+	@GetMapping("/mail/duplicate")
+	public BaseResponse checkEmailDuplication(
+			@Schema(description = "이메일", defaultValue = "test@gmail.com")
+    	    @NotBlank(message = "이메일을 입력해주세요.")
+    	    @Email(message = "유효한 이메일 형식이 아닙니다.")
+			String email) {
+		
+		authService.checkEmailDuplication(email);
+		return new BaseResponse(SuccessInfo.VALID_EMAIL);
+	}
 }
