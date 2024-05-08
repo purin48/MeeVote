@@ -40,54 +40,81 @@ body {
 }
 /* 우측 컨테이너 end*/
 
-/* 입력 폼 */
+
+/* 입력 폼 - register */
 .form-container {
-  width: 60%;
+  width: 75%;
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-label {
-  font-size: 12px;
-	padding: 5px 5px;
+.input-group {
+  border: #4fd1c5 solid 1px;
+  border-radius: 5px;
 }
 
-.form-floating {
-	/* height: 30px; */
+.input-group-text {
+  background-color: white;
+  border: 0px;
 }
 
 .form-control {
-  border: #4fd1c5 solid 1px;
-	height: 10px !important;
+  margin-right: 5px;
+  border: 0px;
+  border-radius: 5px;
+  font-size: 14px;
+  font-family: "Nanum Gothic Coding", monospace;
+  font-weight: bold;
+  font-style: normal;
+}
+
+.input-btn {
+  border: 0px;
+  border-radius: 10px;
+  background-color: #4fd1c5;
+  color: white;
+  box-shadow: 0px;
+  font-size: 14px;
+  font-family: "Nanum Gothic Coding", monospace;
+  font-weight: bold;
 }
 
 /* 입력 폼 End*/
 
+
 /* 완료 버튼 */
 .compelte-container {
-  width: 60%;
+  width: 75%;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   gap: 15px;
 }
 
-.complete-button {
+.compelte-container > button {
   width: 100%;
   padding: 10px;
   color: white;
   background-color: #4fd1c5;
-  font-size: 22px;
+  font-size: 18px;
   font-weight: bold;
   border: 0px;
   border-radius: 10px;
   box-shadow: 5px 5px 5px lightgray;
 }
 
-.complete-button:hover {
+.compelte-container > button:hover {
   background-color: #35f2e1;
   transition: all 0.3s;
+}
+
+.compelte-container > p {
+  margin: 0px;
+  font-size: 12px;
+  color: tomato;
+  display: none;
 }
 
 .compelte-container > a {
@@ -95,11 +122,11 @@ label {
   text-decoration: none;
   color: black;
   transition: all 0.3s;
-  font-size: 1em;
+  font-size: 14px;
 }
 
 .compelte-container > a:hover {
-  opacity: 80%;
+  font-size: 15px;
 }
 /* 완료 버튼 End */
 
