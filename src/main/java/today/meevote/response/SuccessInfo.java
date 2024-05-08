@@ -14,6 +14,8 @@ public enum SuccessInfo {
 	UPDATE_ME("내 정보 수정이 완료되었습니다."), 
 	UPDATE_PASSWORD("내 비밀번호 변경이 완료되었습니다."), 
 	GET_MEMBER_FOR_INVITE("회원 조회가 완료되었습니다."),
+	
+	CREATE_SCHEDULE("내 일정 생성이 완료되었습니다.")
 	;
 	
 
