@@ -1,5 +1,6 @@
 package today.meevote.domain.auth.service;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -19,12 +20,15 @@ public class AuthService {
 	private final MemberDao memberDao;
 	private final PasswordEncoder passwordEncoder;
 	
+	@Value("${default-profile-img-src}")
+    private String defaultProfileImgSrc;
+	
 	public void register(RegisterDto registerDto) {
 		if(memberDao.isExistByEmail(registerDto.getEmail())) {
 			throw new RestException(FailureInfo.ALREADY_EXIST_MEMBER);
 		}
 		registerDto.setPassword(passwordEncoder.encode(registerDto.getPassword()));		
-		memberDao.insert(registerDto);
+		memberDao.insert(registerDto, defaultProfileImgSrc);
 	}
 
 	public void login(LoginDto loginDto) {
