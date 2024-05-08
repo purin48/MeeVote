@@ -38,4 +38,10 @@ public class AuthService {
         }	
 		SessionUtil.getSession(true).setAttribute("email", loginDto.getEmail());
 	}
+
+	public void checkEmailDuplication(String email) {
+		if(memberDao.isExistByEmail(email)) {
+			throw new RestException(FailureInfo.ALREADY_EXIST_MEMBER);
+		}		
+	}
 }
