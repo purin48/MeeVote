@@ -51,5 +51,15 @@ public class ScheduleService {
         Long scheduleId = (Long) params.get("id"); 
         scheduleDao.createMemberSchedule(email, scheduleId);
 	}
+
+	@Transactional
+	public void deletePersonalSchedule(Long scheduleId) {
+		String email = MemberContextHolder.getEmail();
+        if (!scheduleDao.isExistScheduleByInfo(email, scheduleId)) {
+            throw new RestException(FailureInfo.NOT_EXIST_SCHEDULE);
+        }
+        scheduleDao.deleteMemberSchedule(scheduleId);
+        scheduleDao.deletePersonalSchedule(scheduleId);
+	}
 	
 }

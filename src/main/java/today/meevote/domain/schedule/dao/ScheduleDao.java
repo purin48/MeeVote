@@ -18,5 +18,11 @@ public interface ScheduleDao {
     public void createPersonalSchedule(Map<String, Object> dto);
     
     public void createMemberSchedule(@Param("email") String email, @Param("scheduleId") long scheduleId);
+
+	public boolean isExistScheduleByInfo(@Param("email") String email, @Param("scheduleId") long scheduleId);
+
+	public void deleteMemberSchedule(Long scheduleId);
+
+	public void deletePersonalSchedule(Long scheduleId);
 	
 }
