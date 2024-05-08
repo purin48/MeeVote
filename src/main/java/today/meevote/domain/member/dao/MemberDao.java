@@ -17,7 +17,8 @@ public interface MemberDao {
 	
 	public boolean isExistByEmail(String email);
 
-	public void insert(RegisterDto registerDto);
+	public void insert(@Param("registerDto") RegisterDto registerDto, 
+					   @Param("defaultProfileImgSrc") String defaultProfileImgSrc);
 
 	public String findPasswordByEmail(String email);
 	
