@@ -9,7 +9,7 @@
         WHERE email = #{email}
     </select>
     
-    <insert id="insert">
+    <insert id="insert" parameterType="map">
         INSERT INTO member (
 	        email, 
 	        password, 
@@ -20,12 +20,12 @@
 	        is_banned
         )
         VALUES (
-	        #{email}, 
-	        #{password}, 
-	        #{name},
-	        #{phoneNumber}, 
-	        #{address},
-	        'default.jpg',
+	        #{registerDto.email}, 
+	        #{registerDto.password}, 
+	        #{registerDto.name},
+	        #{registerDto.phoneNumber}, 
+	        #{registerDto.address},
+	        #{defaultProfileImgSrc},
 	        0
         )
     </insert>

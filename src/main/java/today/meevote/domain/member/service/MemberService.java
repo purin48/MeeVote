@@ -1,5 +1,6 @@
 package today.meevote.domain.member.service;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,6 +23,7 @@ public class MemberService {
 	private final MemberDao memberDao;
 	private final PasswordEncoder passwordEncoder;
 	private final S3Service s3Service;
+
 	
 	public GetMyInfoDto getMyInfo(){
 		return memberDao.findMyInfoByEmail(MemberContextHolder.getEmail())
