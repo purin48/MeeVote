@@ -28,7 +28,8 @@ public enum FailureInfo {
     // 일정
     INVALID_DATE_FORMAT("Z98","유효한 날짜 형식이 아닙니다."),
     INVALID_PLACE_INPUT("Z98", "잘못된 주소 입력입니다. 주소 입력값을 확인 후 다시 시도해주세요."),
-    NOT_EXIST_CATEGORY("S01", "존재하지 않는 카테고리입니다.")
+    NOT_EXIST_CATEGORY("S01", "존재하지 않는 카테고리입니다."),
+    NOT_EXIST_SCHEDULE("S02", "존재하지 않는 일정입니다.")
     
     ;
     private final String code;

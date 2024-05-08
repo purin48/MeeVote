@@ -61,5 +61,21 @@
             1 <!-- 참여자 1명 -->
         )
     </insert>
+    
+    <select id="isExistScheduleByInfo" resultType="boolean">
+	    SELECT COUNT(*)
+		FROM member_schedule
+		WHERE email = #{email} AND schedule_id = #{scheduleId}
+	</select>
+	
+	<delete id="deleteMemberSchedule" parameterType="long">
+	    DELETE FROM member_schedule
+	    WHERE schedule_id = #{scheduleId}
+	</delete>
+	
+	<delete id="deletePersonalSchedule" parameterType="long">
+	    DELETE FROM schedule
+	    WHERE schedule_id = #{scheduleId}
+	</delete>
 
 </mapper>
