@@ -70,12 +70,10 @@ public class ScheduleController {
 	    return new BaseResponse(SuccessInfo.DELETE_SCHEDULE);
 	}
 
-	@Operation(summary = "일정목록 조회")
+	@Operation(summary = "캘린더 일정조회")
 	@ApiResponse(responseCode = "1", description = "성공")
 	@ApiResponse(responseCode = "2", description = "실패",
 			content = @Content(examples = {
-					@ExampleObject(name = "존재하지않는 회원", value = "{\"isSuccess\": false, \"code\": \"B01\", \"message\": \"존재하지않는 회원입니다.\"}"),
-					@ExampleObject(name = "본인 조회", value = "{\"isSuccess\": false, \"code\": \"B04\", \"message\": \"본인을 초대할 수 없습니다.\"}"),
 					@ExampleObject(name = "인증되지않은 요청", value = "{\"isSuccess\": false, \"code\": \"Z97\", \"message\": \"인증되지않은 요청입니다.\"}"),
 					@ExampleObject(name = "유효하지않은 입력값", value = "{\"isSuccess\": false, \"code\": \"Z98\", \"message\": \"입력값이 유효하지 않습니다.\"}"),
 					@ExampleObject(name = "내부 서버 오류", value = "{\"isSuccess\": false, \"code\": \"Z99\", \"message\": \"서버 오류가 발생했습니다.\"}")
