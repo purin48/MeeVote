@@ -44,18 +44,17 @@ pageEncoding="UTF-8"%>
                 </span>
             </div>
         </header>
-        <div class="calendar-body">
-            <ul class="calendar-weekdays">
-                <li>일</li>
-                <li>월</li>
-                <li>화</li>
-                <li>수</li>
-                <li>목</li>
-                <li>금</li>
-                <li>토</li>
-            </ul>
-            <ul class="calendar-dates"></ul>
-        </div>
+        <table class="calendar-body">
+            <thead class="calendar-weekdays">
+                <th>일</th>
+                <th>월</th>
+                <th>화</th>
+                <th>수</th>
+                <th>목</th>
+                <th>금</th>
+                <th>토</th>
+            </thead>
+        </table>
       </div>
     </div>
   </div>

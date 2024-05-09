@@ -50,21 +50,15 @@
 /* 달력 헤더 End */
 
 .calendar-body {
-  padding: 20px;
+  width: 100%;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  justify-content: space-between;
 }
 
 .calendar-weekdays {
   margin: 0%;
   padding: 0%;
   width: 100%;
-  list-style: none;
-  flex-wrap: wrap;
-  display: flex;
-  justify-content: space-between;
 }
 
 .calendar-weekdays > li {
@@ -88,7 +82,6 @@
 }
 
 .calendar-dates li {
-  width: calc(100% / 7);
   position: relative;
   z-index: 1;
   cursor: pointer;

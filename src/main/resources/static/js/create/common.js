@@ -3,12 +3,14 @@ let date = new Date();
 let year = date.getFullYear();
 let month = date.getMonth();
  
-const day = document.querySelector(".calendar-dates");
- 
 const prenexIcons = document
     .querySelectorAll(".calendar-navigation span");
- 
+
+// 오늘에 해당하는 달력 
 const manipulate = () => {
+	// 달력 비우기
+	$('table.calendar-body').children().not('thead').remove();
+
 	// 기준 날짜 추출
 	let dayone = new Date(year, month, 1).getDay();
 	let lastdate = new Date(year, month + 1, 0).getDate();
@@ -19,9 +21,9 @@ const manipulate = () => {
 	const dateList = [];
 
 	for (let i = dayone; i > 0; i--) {
-		const li = $('<li></li>');
-		li.addClass('inactive');
-		li.text(`${monthlastdate - i + 1}`);
+		const td = $('<td></td>');
+		td.addClass('inactive');
+		td.text(`${monthlastdate - i + 1}`);
 		dateList.push(li);
 	}
 
@@ -31,39 +33,43 @@ const manipulate = () => {
 					&& year === new Date().getFullYear()
 					? "active"
 					: "";
-			const li = $('<li></li>');
-			li.addClass(`${isToday}`);
-			li.text(`${i}`)
+			const td = $('<td></td>');
+			td.addClass(`${isToday}`);
+			td.text(`${i}`)
 			dateList.push(li);
 	}
 
 	for (let i = dayend; i < 6; i++) {
-		const li = $('<li></li>');
-		li.addClass('inactive');
-		li.text(`${i - dayend + 1}`);
+		const td = $('<td></td>');
+		td.addClass('inactive');
+		td.text(`${i - dayend + 1}`);
 		dateList.push(li);
 	}
 	
 	// 달력에 날짜 엘리먼트 추가
 	let count = 0;
-	const ul = $('<ul></ul>')
+	let tr = $('<tr></tr>')
+	ul.addClass('calendar-dates')
 	$.each(dateList, function (index, el) {
-		// 7개의 날짜 엘리먼트를 추가한후 ul 초기화
-		if (count === 7) {
-			$('.calendar-body').append(ul);
-			ul = $('<ul></ul>')
-			count = 0;
-		}
 		// 일요일 빨간색 표시, 토요일 파란색 표시
+		
 		if (count === 0) el.css('color', 'red');
 		else if (count === 6) el.css('color', 'blue');
-		ul.append(el)
+
+		tr.append(el)
 		count++;
-		console.log(el.text())
+
+		// 7개의 날짜 엘리먼트를 추가한후 ul 초기화
+		if (count === 7) {
+			$('.calendar-body').append(tr);
+			tr = $('<ul></ul>');
+			tr.addClass('calendar-dates');
+			count = 0;
+		}
 	});
 
 	// 년월 표시
-	$('.calendar-current-date').text(`${year}년 ${month+1}월`)
+	$('.calendar-current-date').text(`${year}년 ${month+1}월`);
 }
  
 manipulate();
@@ -72,33 +78,17 @@ manipulate();
 prenexIcons.forEach(icon => {
  
     icon.addEventListener("click", () => {
- 
-        // Check if the icon is "calendar-prev"
-        // or "calendar-next"
         month = icon.id === "calendar-prev" ? month - 1 : month + 1;
- 
-        // Check if the month is out of range
         if (month < 0 || month > 11) {
- 
-            // Set the date to the first day of the 
-            // month with the new year
             date = new Date(year, month, new Date().getDate());
- 
-            // Set the year to the new year
             year = date.getFullYear();
- 
-            // Set the month to the new month
             month = date.getMonth();
         }
- 
         else {
- 
-            // Set the date to the current date
+
             date = new Date();
         }
- 
-        // Call the manipulate function to 
-        // update the calendar display
+
         manipulate();
     });
 });
