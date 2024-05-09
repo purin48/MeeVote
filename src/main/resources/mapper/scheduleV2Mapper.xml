@@ -27,5 +27,12 @@
 	    </if>
 	    AND TO_CHAR(s.start_date, 'YYYY') = #{year}
 	    AND TO_CHAR(s.start_date, 'MM') = #{month}
+	    AND s.end_date IS NOT NULL
+		AND (
+		    (s.is_group = 1
+		         AND s.place_name IS NOT NULL
+		         AND s.place_latitude IS NOT NULL
+		         AND s.place_longitude IS NOT NULL)
+			OR s.is_group = 0)
 	</select>
 </mapper>
