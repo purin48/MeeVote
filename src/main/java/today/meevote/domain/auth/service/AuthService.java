@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
 import today.meevote.domain.auth.dto.request.LoginDto;
 import today.meevote.domain.auth.dto.request.RegisterDto;
-import today.meevote.domain.etc.service.S3Service;
 import today.meevote.domain.member.dao.MemberDao;
 import today.meevote.exception.rest.RestException;
 import today.meevote.response.FailureInfo;
