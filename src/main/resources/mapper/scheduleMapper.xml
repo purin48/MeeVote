@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="today.meevote.domain.schedule.dao.ScheduleDao">
+
+	<select id="isExistByEmail" resultType="boolean">
+        SELECT COUNT(*) 
+        FROM member 
+        WHERE email = #{email}
+    </select>
+    
+    <select id="isCategoryExist" resultType="boolean">
+	    SELECT COUNT(*)
+		FROM schedule_category
+		WHERE schedule_category_id =#{categoryId}
+	</select>
+
+
+	<insert id="createPersonalSchedule" parameterType="map">
+	    <selectKey keyProperty="id" resultType="long" order="BEFORE">
+	        SELECT seq_schedule.NEXTVAL FROM DUAL
+	    </selectKey>
+	    INSERT INTO Schedule (
+	        schedule_id,
+	        name,
+	        description,
+	        is_group,
+	        schedule_category_id,
+	        duration,
+	        start_date,
+	        end_date,
+	        place_name,
+	        place_latitude,
+	        place_longitude
+	    ) VALUES (
+	        #{id},
+	        #{dto.name},
+	        #{dto.description, jdbcType=VARCHAR},
+	        0,
+	        #{dto.scheduleCategoryId},
+	        #{duration},
+	        TO_DATE(#{dto.startDate}, 'YYYY-MM-DD HH24:MI'),
+	        TO_DATE(#{dto.endDate}, 'YYYY-MM-DD HH24:MI'),
+	        #{dto.placeName, jdbcType=VARCHAR},
+	        #{dto.placeLatitude, jdbcType=VARCHAR},
+	        #{dto.placeLongitude, jdbcType=VARCHAR}
+	    )
+	</insert>
+
+    
+    <insert id="createMemberSchedule" parameterType="map">
+        INSERT INTO member_schedule (
+            email,
+            schedule_id,
+            is_owner,
+			attendance
+        ) VALUES (
+            #{email},
+            #{scheduleId},
+            1, <!-- isOwner : 1로 설정 -->
+            1 <!-- 참여자 1명 -->
+        )
+    </insert>
+    
+    <select id="isExistScheduleByInfo" resultType="boolean">
+	    SELECT COUNT(*)
+		FROM member_schedule
+		WHERE email = #{email} AND schedule_id = #{scheduleId}
+	</select>
+	
+	<delete id="deleteMemberSchedule" parameterType="long">
+	    DELETE FROM member_schedule
+	    WHERE schedule_id = #{scheduleId}
+	</delete>
+	
+	<delete id="deletePersonalSchedule" parameterType="long">
+	    DELETE FROM schedule
+	    WHERE schedule_id = #{scheduleId}
+	</delete>
+
+</mapper>
