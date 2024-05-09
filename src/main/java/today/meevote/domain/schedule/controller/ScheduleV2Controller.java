@@ -18,6 +18,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.RequiredArgsConstructor;
 import today.meevote.domain.schedule.dto.response.GetMyScheduleListDto;
+import today.meevote.domain.schedule.dto.response.GetScheduleCategoryDto;
 import today.meevote.domain.schedule.service.ScheduleV2Service;
 import today.meevote.response.DataResponse;
 import today.meevote.response.SuccessInfo;
@@ -58,5 +59,18 @@ public class ScheduleV2Controller {
 				
 		return new DataResponse<>(SuccessInfo.GET_MY_SCHEDULE_LIST, 
 								  scheduleService.getMyScheduleList(isGroup, year, month));			
+	}
+
+	@Operation(summary = "일정 카테고리 조회")
+	@ApiResponse(responseCode = "1", description = "성공")
+	@ApiResponse(responseCode = "2", description = "실패",
+			content = @Content(examples = {
+					@ExampleObject(name = "인증되지않은 요청", value = "{\"isSuccess\": false, \"code\": \"Z97\", \"message\": \"인증되지않은 요청입니다.\"}"),
+					@ExampleObject(name = "내부 서버 오류", value = "{\"isSuccess\": false, \"code\": \"Z99\", \"message\": \"서버 오류가 발생했습니다.\"}")
+			}))
+	@GetMapping("/category")
+	public DataResponse<List<GetScheduleCategoryDto>> getScheduleCategory(){
+		return new DataResponse<>(SuccessInfo.GET_SCHEDULE_CATEGORY, scheduleService.getCategory());
+
 	}
 }

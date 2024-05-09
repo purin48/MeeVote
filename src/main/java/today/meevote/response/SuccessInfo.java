@@ -24,7 +24,7 @@ public enum SuccessInfo {
 	
 	
 	GET_MY_SCHEDULE_LIST("내 일정 목록 조회가 완료되었습니다."),
-	;
+    GET_SCHEDULE_CATEGORY("일정 카테고리 조회가 완료되었습니다.");
 	
 
     private final String code = "A00";

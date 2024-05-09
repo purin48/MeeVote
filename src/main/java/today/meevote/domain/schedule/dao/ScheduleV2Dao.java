@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import today.meevote.domain.schedule.dto.response.GetMyScheduleListDto;
+import today.meevote.domain.schedule.dto.response.GetScheduleCategoryDto;
 
 @Mapper
 public interface ScheduleV2Dao {
@@ -19,7 +20,7 @@ public interface ScheduleV2Dao {
 			String year, 
 			@Param("month")
 			String month);
-	
-	
 
+
+	List<GetScheduleCategoryDto> getCategory();
 }

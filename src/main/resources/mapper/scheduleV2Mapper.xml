@@ -35,4 +35,12 @@
 		         AND s.place_longitude IS NOT NULL)
 			OR s.is_group = 0)
 	</select>
+
+	<select id="getCategory" resultType="today.meevote.domain.schedule.dto.response.GetScheduleCategoryDto">
+		SELECT
+			schedule_category_id,
+			schedule_category_name,
+			schedule_color
+		FROM schedule_category
+	</select>
 </mapper>

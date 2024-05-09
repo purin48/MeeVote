@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import today.meevote.contextholder.MemberContextHolder;
 import today.meevote.domain.schedule.dao.ScheduleV2Dao;
 import today.meevote.domain.schedule.dto.response.GetMyScheduleListDto;
+import today.meevote.domain.schedule.dto.response.GetScheduleCategoryDto;
 
 @Service
 @RequiredArgsConstructor
@@ -19,4 +20,8 @@ public class ScheduleV2Service {
 		String email = MemberContextHolder.getEmail();
 		return scheduleDao.getMyScheduleList(email, isGroup, year, month);
 	}
+
+    public List<GetScheduleCategoryDto> getCategory() {
+		return scheduleDao.getCategory();
+    }
 }
