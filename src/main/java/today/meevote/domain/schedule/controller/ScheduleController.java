@@ -78,7 +78,7 @@ public class ScheduleController {
 					@ExampleObject(name = "유효하지않은 입력값", value = "{\"isSuccess\": false, \"code\": \"Z98\", \"message\": \"입력값이 유효하지 않습니다.\"}"),
 					@ExampleObject(name = "내부 서버 오류", value = "{\"isSuccess\": false, \"code\": \"Z99\", \"message\": \"서버 오류가 발생했습니다.\"}")
 			}))
-	@GetMapping("/me/list")
+	@GetMapping("/calendar")
 	public DataResponse<List<GetMyScheduleListDto>> getMyScheduleList(
 			@RequestParam(required = false)
 			Boolean isGroup,

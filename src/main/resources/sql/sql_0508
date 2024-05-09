@@ -267,10 +267,10 @@ REFERENCES schedule (
 	schedule_id
 );
 
-INSERT INTO schedule_category VALUES (seq_schedule_category.nextval, '±‚≈∏', 'blue');
-INSERT INTO schedule_category VALUES (seq_schedule_category.nextval, 'Ω∫≈Õµ', 'green');
-INSERT INTO schedule_category VALUES (seq_schedule_category.nextval, '»∏¿«', 'orange');
-INSERT INTO schedule_category VALUES (seq_schedule_category.nextval, 'ΩƒªÁ', 'yellow');
-INSERT INTO schedule_category VALUES (seq_schedule_category.nextval, '»∏Ωƒ', 'tomato');
-INSERT INTO schedule_category VALUES (seq_schedule_category.nextval, 'ø©«‡', 'mint');
+INSERT INTO schedule_category VALUES (seq_schedule_category.nextval, 'Í∏∞ÌÉÄ', 'blue');
+INSERT INTO schedule_category VALUES (seq_schedule_category.nextval, 'Ïä§ÌÑ∞Îîî', 'green');
+INSERT INTO schedule_category VALUES (seq_schedule_category.nextval, 'ÌöåÏùò', 'orange');
+INSERT INTO schedule_category VALUES (seq_schedule_category.nextval, 'ÏãùÏÇ¨', 'yellow');
+INSERT INTO schedule_category VALUES (seq_schedule_category.nextval, 'ÌöåÏãù', 'tomato');
+INSERT INTO schedule_category VALUES (seq_schedule_category.nextval, 'Ïó¨Ìñâ', 'mint');
 commit;
