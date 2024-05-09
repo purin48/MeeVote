@@ -1,12 +1,8 @@
-body {
- margin: 0;
- font-family: "Nanum Gothic Coding", monospace;
- font-weight: bold;
- font-style: normal;
-}
-
 .side-nav{
-  width: 250px;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 230px;
   height: 100vh;
   padding: 10px 20px 20px 20px;
   background-color: #4FD1C5;
@@ -14,9 +10,12 @@ body {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  transition: all 0.5s;
 }
 
-
+.nav-toggle {
+  left: -230px;
+}
 
 /* 사이드바 상단 */
 .nav-head {
@@ -28,16 +27,17 @@ body {
   border-bottom: 3px white solid;
 }
 
-.nav-head > img {
+#logo-img {
   width: 85%;
 }
 
-.nav-head > i {
+#nav-delete-btn {
   color: white;
-  font-size: 25px;
+  font-size: 22px;
+  cursor: pointer;
+  
 }
 /* 사이드바 상단 End */
-
 
 
 /* 사이드바 중간 */
@@ -59,6 +59,7 @@ body {
   align-items: center;
   gap: 15px;
   border-radius: 20px;
+  cursor: pointer;
 }
 
 .menu-icon {
@@ -68,16 +69,20 @@ body {
   justify-content: center;
   align-items: center;
   border-radius: 10px;
-  font-size: 24px;
+  font-size: 22px;
+  background-color: white;
+  color: #4FD1C5;
 }
 
 .menu-item > p{
-  font-size: 14px;
+  font-size: 12px;
   margin: 0;
+  color: white;
 }
 
 .selected {
   background-color: white;
+  cursor: auto;
 }
 
 .selected > .menu-icon {
@@ -85,64 +90,101 @@ body {
   color: white;
 }
 
-.unselected {
-  background-color: #4FD1C5;
+.selected > p {
+  color: black;
 }
-
-.unselected > .menu-icon {
-  background-color: white;
-  color: #4FD1C5;
-}
-
-.unselected p{
-  color: white;
-}
-
 /* 사이드바 중간 End*/
-
 
 
 /* 사이드바 하단 */
 .nav-foot {
   width: 100%;
-  height: 70px;
   padding-top: 10px;
   display: flex;
-  justify-content: flex-start;
-  align-items: center;
+  flex-direction: column;
   border-top: 3px white solid;
   gap: 5px;
 }
 
-.profile-img {
-  height: 100%;
-  border-radius: 10px;
-}
-
-.profile-info {
+.nav-foot-top {
   width: 100%;
-  height: 100%;
-  color: white;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 5px;
-  font-weight: 400;
+  align-items: center;
+  gap: 10px;
 }
 
-.profile-info > p {
-  margin: 0;
+.profile-img-container {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background-color: white;
 }
 
-.info-name {
+#profile-img {
   width: 100%;
-  font-size: 18px;
+  object-fit: cover;
+}
+
+.name-icon-container {
+  flex-grow: 1;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  color: white;
 }
 
-.info-email {
-  font-size: 12px;
+#info-name {
+  font-size : 16px
+}
+
+#logout-btn {
+  font-size: 20px;
+  cursor: pointer;
+}
+
+#info-email {
+  margin: 0px;
+  font-size: 13px;
+  color: white;
+}
+/* 사이드바 하단 End*/
+
+
+/* 사이드바 생성 버튼 */
+#nav-create-btn {
+  position: fixed;
+  left: 20px;
+  top: 20px;
+  width: 40px;
+  height: 40px;
+  padding: 5px;
+  background-color: #4FD1C5;
+  text-align: center;
+  border-radius: 5px;
+  box-shadow: 3px 3px 3px rgba(0,0,0,0.12);
+  transition: all 0.3s;
+  cursor: pointer;
+  display: none;
+}
+
+#nav-create-btn:hover {
+  background-color: #39E3D4;
+}
+
+
+
+#nav-create-btn > i {
+  font-size: 24px;
+  color: white;
+}
+/* 사이드바 생성 버튼 End*/
+
+
+/* 호버링 */
+.menu-item:not(.selected):hover,
+#nav-delete-btn:hover,
+#logout-btn:hover
+{
+  transform: scale(1.1);
+  transition: transform 0.3s ease;
 }

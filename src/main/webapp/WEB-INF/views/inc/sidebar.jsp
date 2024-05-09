@@ -1,47 +1,65 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    
-<!DOCTYPE html>
+pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-  <nav class="side-nav">
-    <div class="nav-head">
-        <img src="asset/image/sidebar/logo_white2.png" alt="">
-        <i class="bi bi-arrow-left-circle"></i>
+<!-- 사이드바 상단 토글 -->
+<div id="nav-create-btn">
+  <i class="bi bi-list"></i>
+</div>
+
+<!-- 사이드바 -->
+<nav class="side-nav">
+  <!-- 로고 -->
+  <div class="nav-head">
+    <img src="image/logo/logo_white2.png" alt="" id="logo-img"/>
+    <i class="bi bi-arrow-left-circle" id="nav-delete-btn"></i>
+  </div>
+  <!-- 로고 End -->
+  <!-- 메뉴 -->
+  <div class="nav-content">
+    <!-- 캘린더 -->
+    <div class="menu-item ${param.pageName == 'calendar' ? 'selected' : ''}">
+      <div class="menu-icon">
+        <i class="bi bi-calendar-week"></i>
+      </div>
+      <p>캘린더</p>
     </div>
-    <div class="nav-content">
-      <div class="menu-item selected">
-        <div class="menu-icon">
-          <i class="bi bi-calendar-week"></i>
-        </div>
-        <p>캘린더</p>
+    <!-- 테이블 -->
+    <div class="menu-item ${param.pageName == 'table' ? 'selected' : ''}">
+      <div class="menu-icon">
+        <i class="bi bi-file-earmark-spreadsheet"></i>
       </div>
-      <div class="menu-item unselected">
-        <div class="menu-icon">
-          <i class="bi bi-person-lines-fill"></i>
-        </div>
-        <p>내 일정</p>
+      <p>일정 테이블</p>
+    </div>
+    <!-- 개인 일정 -->
+    <div class="menu-item ${param.pageName == 'personal' ? 'selected' : ''}">
+      <div class="menu-icon">
+        <i class="bi bi-person-fill"></i>
       </div>
-      <div class="menu-item unselected">
-        <div class="menu-icon">
-          <i class="bi bi-person-fill"></i>
-        </div>
-        <p>개인 일정 생성</p>
+      <p>개인 일정 생성</p>
+    </div>
+    <!-- 그룹 일정 -->
+    <div class="menu-item ${param.pageName == 'group' ? 'selected' : ''}">
+      <div class="menu-icon">
+        <i class="bi bi-people-fill"></i>
       </div>
-      <div class="menu-item unselected">
-        <div class="menu-icon">
-          <i class="bi bi-people-fill"></i>
-        </div>
-        <p>그룹 일정 생성</p>
+      <p>그룹 일정 생성</p>
+    </div>
+  </div>
+  <!-- 메뉴 End -->
+  <!-- 프로필 -->
+  <div class="nav-foot">
+    <div class="nav-foot-top">
+      <div class="profile-img-container">
+        <img alt="" id="profile-img" />
+      </div>
+      <div class="name-icon-container">
+        <span id="info-name"></span>
+        <i class="bi bi-box-arrow-in-left" id="logout-btn"></i>
       </div>
     </div>
-    <div class="nav-foot">
-      <img src="asset/image/profile.png" alt="" class="profile-img">
-      <div class="profile-info">
-        <p class="info-name">
-          <span>Username</span>
-          <i class="bi bi-box-arrow-in-left"></i>
-        </p>
-        <p class="info-email">example@naver.com</p>
-      </div>
-    </div>
-  </nav>
+    <p id="info-email"></p>
+  </div>
+
+  <!-- 프로필 End -->
+</nav>

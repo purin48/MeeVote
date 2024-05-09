@@ -23,13 +23,13 @@ $("#email-container >.input-btn").click(function (e) {
     dataType: "json",
     contentType: "application/json",
     data: { email: $("#email-input").val() },
-    success: function (data) {
-      if (data.isSuccess) {
+    success: function (response) {
+      if (response.isSuccess) {
         // 유효한 이메일 입력값
         emailValidation = true;
         $("#email-input").removeClass("is-invalid");
         $("#email-input").addClass("is-valid");
-        $("#email-container > .valid-feedback").text(data.message);
+        $("#email-container > .valid-feedback").text(response.message);
         $("#email-code-input").removeClass("is-invalid");
         $("#email-input").attr("disabled", "true");
       } else {
@@ -37,7 +37,7 @@ $("#email-container >.input-btn").click(function (e) {
         emailValidation = false;
         $("#email-input").removeClass("is-valid");
         $("#email-input").addClass("is-invalid");
-        $("#email-container > .invalid-feedback").text(data.message);
+        $("#email-container > .invalid-feedback").text(response.message);
       }
     },
   });
@@ -183,15 +183,14 @@ $('.complete-button').click(function(e) {
       "phoneNumber": $('#phone-number-input').val(),
       "address": $('#address-input').val()
     }; 
-    console.log(data)
     $.ajax({
       type: "POST",
       url: `${baseURL}/api/auth/register`,
       dataType: "json",
       contentType: "application/json",
       data: JSON.stringify(data),
-      success: function (data) {
-        if (data.isSuccess) {
+      success: function (response) {
+        if (response.isSuccess) {
           // 회원 가입 성공
           Swal.fire({
             title: '회원가입이 완료되었습니다',

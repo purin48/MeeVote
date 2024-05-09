@@ -15,8 +15,8 @@ function login() {
     dataType : "json",
     contentType: "application/json",
     data : JSON.stringify({'email': email, 'password': password}),
-    success: function(data) {
-      if (data.isSuccess) {
+    success: function(response) {
+      if (response.isSuccess) {
         window.location.href = `${baseURL}`;
       } else {
         $('.complete-container > p').css("display", "block");
@@ -32,5 +32,7 @@ $('.complete-container > button').click(function (e) {
 
 // 이벤트 등록 - 패스워드 입력창
 $('#password-input').keypress(function (e) { 
-  login();
+  if(e.keyCode && e.keyCode == 13){
+    login();
+  }
 });

@@ -81,6 +81,10 @@ body {
   text-align: center;
 }
 
+.input-btn:hover {
+  background-color: #35f2e1;
+  transition: all 0.3s;
+}
 /* 입력 폼 End*/
 
 

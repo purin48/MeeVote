@@ -18,6 +18,17 @@ public class ViewController {
 	public String calendar() {
 		return "calendar/calendar";
 	}	
+
+	@GetMapping("/table")
+	public String table() {
+		return "table/table";
+	}
+
+	@GetMapping("/create/personal")
+	public String createPersonal() {
+		return "create/personal";
+	}
+
 	
 	
 	@GetMapping("/register")
@@ -30,5 +41,6 @@ public class ViewController {
 		return "login/login";
 	}
 	
+
 
 }
