@@ -11,18 +11,18 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
-import today.meevote.domain.schedule.dto.request.CreatePersonalScheduleDto;
-import today.meevote.domain.schedule.dto.response.GetMyScheduleListDto;
-import today.meevote.domain.schedule.dto.response.GetScheduleCategoryDto;
+import today.meevote.domain.schedule.dto.request.*;
+import today.meevote.domain.schedule.dto.response.*;
 import today.meevote.domain.schedule.service.ScheduleService;
 import today.meevote.response.BaseResponse;
 import today.meevote.response.DataResponse;
 import today.meevote.response.SuccessInfo;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 @RestController
@@ -109,5 +109,137 @@ public class ScheduleController {
 		return new DataResponse<>(SuccessInfo.GET_SCHEDULE_CATEGORY, scheduleService.getCategory());
 
 	}
-	
+
+	@Operation(summary = "모임일정 생성(미완)")
+	@PostMapping("/group")
+	public BaseResponse createGroupSchedule(CreateGroupScheduleDto createGroupScheduleDto){
+		//모임장 및 초대된 인원들
+		//member_schedule에 데이터 넣어야함
+		//notify에는 모임장 빼고 초대된 인원들 데이터 넣어야함
+		//schedule_vote 생성해야함
+		return null;
+	}
+
+	@Operation(summary = "투표 중인 일정 목록(미완)")
+	@GetMapping("/group/voting/list")
+	public DataResponse<List<GetScheduleListToVoteDto>> getScheduleListToVote(){
+		//투표가 임박한 순으로 정렬해서 리턴
+		//투표 중인 걸 알기 위한 조건
+		// is_group이 1
+		// start_date와 end_date가 null -> 일정 투표 중임
+		// start_date랑 end_date는 있는데 place_~ 다 null -> 장소 투표 중임
+		// 리턴할때 이게 일정 투표 중인지 장소 투표 중인지 알려줘야함(날짜 투표 일정 상세보기랑 장소 투표 일정 상세보기랑 api가 달라서)
+		return null;
+	}
+
+	@Operation(summary = "시간 투표 중인 일정 상세보기(미완)")
+	@GetMapping("/group/voting/date")
+	public DataResponse<GetScheduleToDateVoteDto> getScheduleToDateVote(long scheduleId){
+		// 조인 지옥
+		// 일정이 존재하는지 확인
+		// 요청자가 이 일정의 참여자인지 확인
+		// 이게 일정 투표중 인지 확인
+		// 조인을 하고
+		// 요청자가 이 일정의 일정장인지 확인
+		return null;
+	}
+
+	@Operation(summary = "시간 투표 요청하기(미완)")
+	@PostMapping("/group/voting/date")
+	public BaseResponse voteScheduleDate(@Valid @RequestBody VoteScheduleDateDto voteScheduleDateDto){
+		// 일정이 존재하는지 확인
+		// 요청자가 이 일정의 참여자인지 확인
+		// 이게 일정 투표중 인지 확인(데드라인 확인해야함)
+		// 일정 투표를 하는데 기존에 했던 투표를 다 지우고 삽입
+		// 투표를 하면 시간 테이블만 재렌더링되는 api 분리하기
+		return null;
+	}
+
+	@Operation(summary = "시간 투표 확정하기(미완)")
+	@PostMapping("/group/fix/date")
+	public BaseResponse fixScheduleDate(@Valid @RequestBody FixScheduleDateDto fixScheduleDateDto){
+		// 일정이 존재하는지 확인
+		// 요청자가 이 일정의 모임장인지 확인
+		// 시간 투표 데드라인이 지났고 장소 투표가 시작이 안됐는지 확인
+		return null;
+	}
+
+	@Operation(summary = "장소 투표 마감일 정하기(미완)")
+	@PostMapping("/group/place/deadline")
+	public BaseResponse decidePlaceDeadline(@Valid @RequestBody DecidePlaceDeadlineDto decidePlaceDeadlineDto){
+		// 일정이 존재하는지 확인하고
+		// 요청자가 이 일정의 모임장인지 확인
+		// 이 일정이 시간투표가 확정되었고 장소 투표가 시작하지 않았는지 확인
+		return null;
+	}
+
+	@Operation(summary = "장소 투표 중인 모임일정 상세조회(미완)")
+	@GetMapping("/group/voting/place")
+	public DataResponse<GetScheduleToPlaceVoteDto> getScheduleToPlaceVote(long scheduleId){
+		// 조인 지옥
+		// 일정이 존재하는지 확인하고
+		// 요청자가 이 일정의 참여자인지 확인
+		// 장소 투표가 진행중인지 확인 (데드라인이 지나도 장소 확정이 안되었으면 조회할수있음 단 post가 안됨)
+
+		return null;
+	}
+
+	@Operation(summary = "장소 투표 후보지 넣기(미완)")
+	@PostMapping("/group/place/candidate")
+	public BaseResponse createCandidatePlace(@Valid @RequestBody CreateCandidatePlaceDto createCandidatePlaceDto){
+		// 일정이 존재하는지 확인하고
+		// 요청자가 이 일정의 참여자인지 확인하고
+		// 이 일정이 장소투표가 진행중인지 확인
+		// 장소를 추가하면 장소 후보지 목록만 재렌더링되는 api 분리하기
+		return null;
+	}
+
+	@Operation(summary = "장소 투표하기(미완)")
+	@PostMapping("/group/voting/place")
+	public BaseResponse createCandidatePlace(@Valid @RequestBody VoteSchedulePlaceDto voteSchedulePlaceDto){
+		// 일정이 존재하는지 확인하고
+		// 요청자가 이 일정의 참여자인지 확인하고
+		// 이게 장소 투표중 인지 확인(데드라인 확인해야함)
+		// 장소 투표를 하는데 기존에 했던 투표를 다 지우고 삽입
+		// 장소 투표를 하면 장소 투표 현황만 재렌더링되는 api 분리하기
+		return null;
+	}
+
+	@Operation(summary = "장소 투표 확정하기(미완)")
+	@PostMapping("/group/fix/place")
+	public BaseResponse fixSchedulePlace(@Valid @RequestBody FixSchedulePlaceDto fixSchedulePlaceDto){
+		// 일정이 존재하는지 확인
+		// 요청자가 이 일정의 모임장인지 확인
+		// 일정 기간이 존재하는지, 장소 투표 데드라인이 지났는지 확인
+		return null;
+	}
+
+	@Operation(summary = "확정된 일정 상세보기(미완)")
+	@GetMapping("/detail")
+	public DataResponse<GetScheduleDetailDto> getScheduleDetail(long scheduleId){
+		// 일정이 존재하는지 확인
+		// 요청자가 이 일정의 모임장인지 확인
+		// 이 일정이 찐 확정됐는지 확인
+		return null;
+	}
+
+	@Operation(summary = "지난 일정목록 조회(미완)")
+	@GetMapping("/past/list")
+	public DataResponse<Page<GetScheduleListDto>> getPastScheduleList(long categoryId, String keyword, Pageable pageable){
+		// 확정된 지난 일정(endDate가 현재 일시보다 이전일때)
+		// 페이징 처리
+		// 카테고리 아이디, 키워드는 필수아님
+		// 최근순으로 정렬
+		return null;
+	}
+
+	@Operation(summary = "예정 중인 일정목록 조회(미완)")
+	@GetMapping("/future/list")
+	public DataResponse<List<GetScheduleListDto>> getFutureScheduleList(){
+		//현재에서 가장 가까운 순으로 정렬
+		//확정된 일정
+		return null;
+	}
+
+
 }
