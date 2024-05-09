@@ -16,48 +16,17 @@ pageEncoding="UTF-8"%>
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
       <link rel="stylesheet" href="css/inc/sidebar.css"/>
-      <link rel="stylesheet" href="css/create/common.css"/>
       <!-- js import -->
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
       crossorigin="anonymous" defer></script>
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js" defer></script>
       <script src="js/inc/sidebar.js" defer></script>
-      <script src="js/create/common.js" defer></script>
 </head>
 <body>
   <!-- 사이드바 include -->
   <jsp:include page="/WEB-INF/views/inc/sidebar.jsp">
-    <jsp:param value="personal" name="pageName"/>
+    <jsp:param value="group" name="pageName"/>
   </jsp:include>
-  <div class="top-container">
-    <div>
-      <div class="calendar-container">
-        <header class="calendar-header">
-            <p class="calendar-current-date"></p>
-            <div class="calendar-navigation">
-                <span id="calendar-prev" class="material-symbols-rounded">
-                  <i class="bi bi-caret-left-fill"></i>
-                </span>
-                <span id="calendar-next" class="material-symbols-rounded">
-                  <i class="bi bi-caret-right-fill"></i>
-                </span>
-            </div>
-        </header>
-        <div class="calendar-body">
-            <ul class="calendar-weekdays">
-                <li>일</li>
-                <li>월</li>
-                <li>화</li>
-                <li>수</li>
-                <li>목</li>
-                <li>금</li>
-                <li>토</li>
-            </ul>
-            <ul class="calendar-dates"></ul>
-        </div>
-      </div>
-    </div>
-  </div>
 </body>
 </html>

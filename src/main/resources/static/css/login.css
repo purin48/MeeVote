@@ -136,7 +136,7 @@ body {
 /* 완료 버튼 End */
 
 /* 반응형 쿼리 */
-@media (max-width: 900px) {
+@media (max-width: 800px) {
   .left-banner {
     width: 0px;
   }

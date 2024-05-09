@@ -1,3 +1,9 @@
+body {
+  height: 100vh;
+  padding-left: 230px;
+  transition: all 0.5s;
+}
+
 .side-nav{
   position: fixed;
   top: 0px;
@@ -11,10 +17,10 @@
   justify-content: space-between;
   align-items: center;
   transition: all 0.5s;
-}
-
-.nav-toggle {
-  left: -230px;
+  font-style: normal;
+  font-family: "Nanum Gothic Coding", monospace;
+  font-weight: bold;
+  z-index: 3;
 }
 
 /* 사이드바 상단 */
@@ -35,7 +41,7 @@
   color: white;
   font-size: 22px;
   cursor: pointer;
-  
+  display: none;
 }
 /* 사이드바 상단 End */
 
@@ -159,19 +165,19 @@
   height: 40px;
   padding: 5px;
   background-color: #4FD1C5;
-  text-align: center;
   border-radius: 5px;
   box-shadow: 3px 3px 3px rgba(0,0,0,0.12);
   transition: all 0.3s;
   cursor: pointer;
   display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
 }
 
 #nav-create-btn:hover {
   background-color: #39E3D4;
 }
-
-
 
 #nav-create-btn > i {
   font-size: 24px;
@@ -187,4 +193,22 @@
 {
   transform: scale(1.1);
   transition: transform 0.3s ease;
+}
+
+
+/* 미디어 쿼리 */
+@media (max-width: 800px) {
+  body {
+    padding-left: 0px; 
+  }
+
+  #nav-delete-btn {
+    display: block;
+  }
+}
+
+@media (min-width: 800px) {
+  .side-nav {
+    left: 0px
+  }
 }

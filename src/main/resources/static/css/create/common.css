@@ -1,0 +1,132 @@
+.top-container {
+
+}
+
+
+.calendar-container {
+  background: #fff;
+  width: 350px;
+  border-radius: 10px;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.12);
+}
+
+/* 달력 헤더 */
+.calendar-container header {
+  display: flex;
+  align-items: center;
+  padding: 25px 20px 10px;
+  justify-content: space-between;
+}
+
+.calendar-navigation {
+  display: flex;
+}
+
+.calendar-navigation span {
+  height: 38px;
+  width: 38px;
+  margin: 0 1px;
+  cursor: pointer;
+  text-align: center;
+  line-height: 38px;
+  border-radius: 50%;
+  user-select: none;
+  color: #aeabab;
+  font-size: 1.9rem;
+}
+
+.calendar-navigation span:last-child {
+  /* margin-right: -10px; */
+}
+
+.calendar-navigation span:hover {
+  background: #f2f2f2;
+}
+
+.calendar-current-date {
+  font-size: 18px;
+  margin: 0px;
+}
+/* 달력 헤더 End */
+
+.calendar-body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.calendar-weekdays {
+  margin: 0%;
+  padding: 0%;
+  width: 100%;
+  list-style: none;
+  flex-wrap: wrap;
+  display: flex;
+  justify-content: space-between;
+}
+
+.calendar-weekdays > li {
+  cursor: default;
+  font-weight: 500;
+  text-align: center;
+}
+
+.calendar-dates {
+  margin: 0%;
+  padding: 0%;
+  width: 100%;
+  list-style: none;
+  flex-wrap: wrap;
+  display: flex;
+  justify-content: space-between;
+}
+
+.calendar-dates {
+  margin-bottom: 20px;
+}
+
+.calendar-dates li {
+  width: calc(100% / 7);
+  position: relative;
+  z-index: 1;
+  cursor: pointer;
+  color: #414141;
+  text-align: center;
+  padding: 10px 0;
+}
+
+.calendar-dates li.inactive {
+  color: #aaa;
+}
+
+.calendar-dates li.active {
+  color: #fff;
+}
+
+.calendar-dates li::before {
+  position: absolute;
+  content: "";
+  z-index: -1;
+  top: 50%;
+  left: 50%;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.calendar-dates li.active::before {
+  background: #6332c5;
+}
+
+.calendar-dates li:not(.active):hover::before {
+  background: #e4e1e1;
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

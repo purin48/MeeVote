@@ -24,11 +24,15 @@ public class ViewController {
 		return "table/table";
 	}
 
-	@GetMapping("/create/personal")
-	public String createPersonal() {
+	@GetMapping("/create-personal")
+	public String createPersonalSchedule() {
 		return "create/personal";
 	}
 
+	@GetMapping("/create-group")
+	public String createGroupSchedule() {
+		return "create/group";
+	}
 	
 	
 	@GetMapping("/register")
@@ -40,7 +44,4 @@ public class ViewController {
 	public String login() {
 		return "login/login";
 	}
-	
-
-
 }
