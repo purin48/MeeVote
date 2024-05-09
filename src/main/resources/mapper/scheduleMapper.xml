@@ -65,7 +65,7 @@
     <select id="isExistScheduleByInfo" resultType="boolean">
 	    SELECT COUNT(*)
 		FROM member_schedule
-		WHERE email = #{email} AND schedule_id = #{scheduleId}
+		WHERE email = #{email} AND schedule_id = #{scheduleId} AND is_owner = 1
 	</select>
 	
 	<delete id="deleteMemberSchedule" parameterType="long">
@@ -77,5 +77,46 @@
 	    DELETE FROM schedule
 	    WHERE schedule_id = #{scheduleId}
 	</delete>
+
+
+	<select id="getMyScheduleList" resultType="today.meevote.domain.schedule.dto.response.GetMyScheduleListDto">
+		SELECT
+		s.schedule_id AS scheduleId,
+		s.name,
+		c.schedule_category_id AS scheduleCategoryId,
+		c.schedule_category_name AS scheduleCategoryName,
+		c.schedule_color AS scheduleColor,
+		s.is_group AS isGroup,
+		s.duration,
+		TO_CHAR(s.start_date, 'YYYY-MM-DD HH24:MI') AS startDate,
+		TO_CHAR(s.end_date, 'YYYY-MM-DD HH24:MI') AS endDate,
+		s.place_name AS placeName
+		FROM
+		member_schedule ms
+		JOIN schedule s ON ms.schedule_id = s.schedule_id
+		JOIN schedule_category c ON s.schedule_category_id = c.schedule_category_id
+		WHERE
+		ms.email = #{email}
+		<if test="isGroup != null">
+			AND s.is_group = #{isGroup}
+		</if>
+		AND TO_CHAR(s.start_date, 'YYYY') = #{year}
+		AND TO_CHAR(s.start_date, 'MM') = #{month}
+		AND s.end_date IS NOT NULL
+		AND (
+		(s.is_group = 1
+		AND s.place_name IS NOT NULL
+		AND s.place_latitude IS NOT NULL
+		AND s.place_longitude IS NOT NULL)
+		OR s.is_group = 0)
+	</select>
+
+	<select id="getCategory" resultType="today.meevote.domain.schedule.dto.response.GetScheduleCategoryDto">
+		SELECT
+			schedule_category_id,
+			schedule_category_name,
+			schedule_color
+		FROM schedule_category
+	</select>
 
 </mapper>
