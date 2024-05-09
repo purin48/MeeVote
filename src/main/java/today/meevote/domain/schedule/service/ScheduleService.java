@@ -2,6 +2,7 @@ package today.meevote.domain.schedule.service;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
@@ -12,6 +13,8 @@ import lombok.RequiredArgsConstructor;
 import today.meevote.contextholder.MemberContextHolder;
 import today.meevote.domain.schedule.dao.ScheduleDao;
 import today.meevote.domain.schedule.dto.request.CreatePersonalScheduleDto;
+import today.meevote.domain.schedule.dto.response.GetMyScheduleListDto;
+import today.meevote.domain.schedule.dto.response.GetScheduleCategoryDto;
 import today.meevote.exception.rest.RestException;
 import today.meevote.response.FailureInfo;
 import today.meevote.utils.DateUtil;
@@ -61,5 +64,14 @@ public class ScheduleService {
         scheduleDao.deleteMemberSchedule(scheduleId);
         scheduleDao.deletePersonalSchedule(scheduleId);
 	}
+
+    public List<GetMyScheduleListDto> getMyScheduleList(Boolean isGroup, String year, String month) {
+        String email = MemberContextHolder.getEmail();
+        return scheduleDao.getMyScheduleList(email, isGroup, year, month);
+    }
+
+    public List<GetScheduleCategoryDto> getCategory() {
+        return scheduleDao.getCategory();
+    }
 	
 }

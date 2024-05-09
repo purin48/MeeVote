@@ -22,9 +22,11 @@ public class CreatePersonalScheduleDto {
 	@Schema(description = "일정 카테고리 ID", defaultValue = "1")
 	private int scheduleCategoryId;
 
+	@NotBlank(message = "일정 시작일을 입력해주세요.")
 	@Schema(description = "일정 시작일", defaultValue = "2024-05-07 15:00")
 	private String startDate;
-	
+
+	@NotBlank(message = "일정 종료일을 입력해주세요.")
 	@Schema(description = "일정 종료일", defaultValue = "2024-05-08 21:00")
 	private String endDate;
 	
