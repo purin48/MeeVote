@@ -14,7 +14,7 @@ public class ScheduleMemberVoteDto {
     private String name;
     private String address;
     private String imgSrc;
-    private boolean isOwner;
+    private Boolean isOwner;
     private String departurePlaceName;
     private String lat;
     private String lng;

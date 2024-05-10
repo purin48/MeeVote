@@ -21,5 +21,5 @@ public class GetVoteScheduleDetailDto {
     private String voteDeadline;
     private List<PlaceToVote> placeToVoteList;
     private List<ScheduleMemberVoteDto> memberList;
-    private boolean isRequesterOwner;
+    private Boolean isRequesterOwner;
 }

@@ -18,7 +18,7 @@ public class GetScheduleDetailDto {
     private String description;
     private String startDate;
     private String endDate;
-    private boolean isGroup;
+    private Boolean isGroup;
     private String placeName;
     private String lat;
     private String lng;

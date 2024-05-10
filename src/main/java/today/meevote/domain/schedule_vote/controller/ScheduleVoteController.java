@@ -12,8 +12,11 @@ import today.meevote.domain.schedule.dto.response.GetScheduleListDto;
 import today.meevote.domain.schedule_vote.dto.request.CreatePlaceDto;
 import today.meevote.domain.schedule_vote.dto.request.DecidePlaceDto;
 import today.meevote.domain.schedule_vote.dto.response.GetVoteScheduleDetailDto;
+import today.meevote.domain.schedule_vote.dto.response.GetVoteScheduleListDto;
+import today.meevote.domain.schedule_vote.service.ScheduleVoteService;
 import today.meevote.response.BaseResponse;
 import today.meevote.response.DataResponse;
+import today.meevote.response.SuccessInfo;
 
 import java.util.List;
 
@@ -24,10 +27,13 @@ import java.util.List;
 @Validated
 public class ScheduleVoteController {
 
-    @Operation(summary = "투표 중인 일정 목록 조회(미완)")
+    private final ScheduleVoteService scheduleVoteService;
+
+    @Operation(summary = "투표 중인 일정 목록 조회")
     @GetMapping("/list")
-    public DataResponse<List<GetScheduleListDto>> getVoteScheduleList(){
-        return null;
+    public DataResponse<List<GetVoteScheduleListDto>> getVoteScheduleList(){
+        return new DataResponse<>(SuccessInfo.GET_VOTE_SCHEDULE_LIST,
+                scheduleVoteService.getVoteScheduleList());
     }
 
     @Operation(summary = "투표 중인 일정 상세조회(미완)")
