@@ -1,4 +1,4 @@
-package today.meevote.domain.schedule.dto.request;
+package today.meevote.domain.schedule_place.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

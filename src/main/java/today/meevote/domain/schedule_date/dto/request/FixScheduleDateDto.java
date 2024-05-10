@@ -1,4 +1,4 @@
-package today.meevote.domain.schedule.dto.request;
+package today.meevote.domain.schedule_date.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,7 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class DecidePlaceDeadlineDto {
+public class FixScheduleDateDto {
     private long scheduleId;
-    private String placeVoteDeadline;
+    private String startDate;
+    private String endDate;
 }

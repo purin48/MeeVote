@@ -1,14 +1,16 @@
-package today.meevote.domain.schedule.dto.request;
+package today.meevote.domain.schedule_place.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class FixScheduleDateDto {
+public class VoteSchedulePlaceDto {
     private long scheduleId;
-    private String startDate;
-    private String endDate;
+
+    private List<Long> selectedPlaceIdList;
 }

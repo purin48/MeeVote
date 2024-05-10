@@ -1,4 +1,4 @@
-package today.meevote.domain.schedule.dto.response;
+package today.meevote.domain.schedule_place.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,7 +9,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class GetScheduleToDateVoteDto {
+public class GetScheduleToPlaceVoteDto {
     private long scheduleId;
     private long scheduleCategoryId;
     private String scheduleCategoryName;
@@ -17,8 +17,10 @@ public class GetScheduleToDateVoteDto {
     private String name;
     private String description;
     private int duration;
-    private String dateVoteDeadline;
-    private List<DateVotingItemsDto> dateVotingItems;
-    private List<ScheduleMemberDateDto> memberList;
+    private String startDate;
+    private String endDate;
+    private String placeVoteDeadline;
+    private List<PlaceVotingItemsDto> placeVotingItems;
+    private List<ScheduleMemberPlaceDto> memberList;
     private boolean isRequesterOwner;
 }
