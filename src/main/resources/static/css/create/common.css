@@ -1,20 +1,228 @@
 .top-container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  gap: 50px;
+  font-family: "Nanum Gothic Coding", monospace;
+  font-weight: bold;
+  font-style: normal;
+  padding: 30px;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: start;
+  height: 650px;
+  padding: 20px;
 
 }
 
 
+/* 좌측 섹션 */
+#left-section {
+  width: 40%;
+  gap: 20px;
+}
+
+
+#left-section > p {
+  width: 100%;
+  text-align: right;
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0px;
+}
+
+.dateinput-container {
+  padding: 0px 10px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dateinput-container > span{
+  font-size: 14px;
+}
+
+.dateinput-container > input {
+  border: #BBBBBB solid 1px;
+  font-size: 14px;
+  width: 35%;
+}
+
+.checkbox-container {
+  padding: 0px 10px;
+}
+
+#allday-check:checked {
+  background-color: #4fd1c5;
+  border-color: #4fd1c5;
+}
+/* 좌측 섹션 End */
+
+
+/* 우측 섹션 */
+#right-section {
+  width: 60%;
+  gap: 35px;
+  box-shadow: 0px 5px 5px #BBBBBB;
+  border-radius: 10px;
+  padding: 30px;
+}
+
+.content-container{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap : 15px;
+}
+
+.content-container > i {
+  font-size: 22px;
+}
+
+#name-container > div {
+  width: 40px;
+  height: 40px;
+  background-color: #4fd1c5;
+  border-radius: 50%;
+}
+
+#name-container > input {
+  width: 100%;
+  border: 0px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+#name-container > input:focus {
+  outline: none;
+}
+
+#category-container > select, #category-container option{
+  padding: 5px;
+  font-size: 14px;
+  font-weight: bold;
+  border: #BBBBBB 1px solid;
+}
+
+#place-container > input{
+  width: 100%;
+  padding: 5px;
+  font-size: 14px;
+  font-weight: bold;
+  border: #BBBBBB 1px solid;
+}
+
+#description-container{
+  align-items: start;
+}
+
+#description-container > textarea{
+  width: 100%;
+  font-size: 14px;
+  font-weight: bold;
+  border: #BBBBBB 1px solid;
+}
+
+#weather-container{
+  align-items: start;
+}
+
+#weather-infos {
+  width: 220px;
+  height: 150px;
+  padding: 10px;
+  border-radius: 10px;
+  background: linear-gradient(to right, #2A8484, #4fd1c5);
+  box-shadow: 5px 10px 15px lightgray;
+  display: flex;
+  justify-content: space-between;
+}
+
+#weather-infos > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: white;
+}
+
+#weather-texts > p {
+  margin: 0px;
+}
+
+#weather-texts > p:last-child {
+  font-size: 36px;
+}
+
+#right-section-foot {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+#save-btn {
+  width: 100px;
+  padding: 10px;
+  background-color: rgba(79, 209, 197, 0.15);
+  font-size: 16px;
+  font-weight: bold;
+  color: #4fd1c5;
+  border: 0px;
+  border-radius: 10px;
+  box-shadow: 5px 5px 5px lightgray;
+}
+/* 우측 섹션 End */
+
+
+
+/* 반응형 미디어쿼리 */
+@media (max-width: 800px) {
+  .top-container {
+    width: 100vw;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #left-section {
+    width: 100%;
+  }
+
+  #right-section {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  #right-section-foot {
+    flex-direction: column;
+    gap: 30px;
+  }
+  
+  #save-btn {
+    margin: auto;
+  }
+}
+/* 반응형 미디어쿼리 End*/
+
+
+/* 달력 */
 .calendar-container {
   background: #fff;
-  width: 350px;
+  width: 100%;
   border-radius: 10px;
-  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.12);
+  /* box-shadow: 0 10px 10px rgba(0, 0, 0, 0.12); */
 }
 
-/* 달력 헤더 */
 .calendar-container header {
   display: flex;
   align-items: center;
-  padding: 25px 20px 10px;
+  padding: 25px 10px 10px;
   justify-content: space-between;
 }
 
@@ -25,7 +233,6 @@
 .calendar-navigation span {
   height: 38px;
   width: 38px;
-  margin: 0 1px;
   cursor: pointer;
   text-align: center;
   line-height: 38px;
@@ -51,37 +258,16 @@
 
 .calendar-body {
   width: 100%;
-  display: flex;
-  justify-content: space-between;
 }
 
-.calendar-weekdays {
-  margin: 0%;
-  padding: 0%;
-  width: 100%;
-}
-
-.calendar-weekdays > li {
+.calendar-weekdays th {
   cursor: default;
   font-weight: 500;
   text-align: center;
+  padding: 10px 0px;
 }
 
-.calendar-dates {
-  margin: 0%;
-  padding: 0%;
-  width: 100%;
-  list-style: none;
-  flex-wrap: wrap;
-  display: flex;
-  justify-content: space-between;
-}
-
-.calendar-dates {
-  margin-bottom: 20px;
-}
-
-.calendar-dates li {
+.calendar-dates td{
   position: relative;
   z-index: 1;
   cursor: pointer;
@@ -90,15 +276,15 @@
   padding: 10px 0;
 }
 
-.calendar-dates li.inactive {
+.calendar-dates td.inactive {
   color: #aaa;
 }
 
-.calendar-dates li.active {
+.calendar-dates td.active {
   color: #fff;
 }
 
-.calendar-dates li::before {
+.calendar-dates td::before {
   position: absolute;
   content: "";
   z-index: -1;
@@ -110,16 +296,12 @@
   transform: translate(-50%, -50%);
 }
 
-.calendar-dates li.active::before {
-  background: #6332c5;
+.calendar-dates td.active::before {
+  background: #4fd1c5;
 }
 
-.calendar-dates li:not(.active):hover::before {
+
+.calendar-dates td:not(.active):hover::before {
   background: #e4e1e1;
 }
-
-.flex-center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+/* 달력 End*/

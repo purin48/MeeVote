@@ -5,11 +5,13 @@ let month = date.getMonth();
  
 const prenexIcons = document
     .querySelectorAll(".calendar-navigation span");
+calendarDisplay();
 
-// 오늘에 해당하는 달력 
-const manipulate = () => {
+
+// 함수 - 달력 표시
+function calendarDisplay() {
 	// 달력 비우기
-	$('table.calendar-body').children().not('thead').remove();
+	$(".calendar-dates").children().remove();
 
 	// 기준 날짜 추출
 	let dayone = new Date(year, month, 1).getDay();
@@ -21,10 +23,10 @@ const manipulate = () => {
 	const dateList = [];
 
 	for (let i = dayone; i > 0; i--) {
-		const td = $('<td></td>');
-		td.addClass('inactive');
+		const td = $("<td></td>");
+		td.addClass("inactive");
 		td.text(`${monthlastdate - i + 1}`);
-		dateList.push(li);
+		dateList.push(td);
 	}
 
 	for (let i = 1; i <= lastdate; i++) {
@@ -33,62 +35,61 @@ const manipulate = () => {
 					&& year === new Date().getFullYear()
 					? "active"
 					: "";
-			const td = $('<td></td>');
+			const td = $("<td></td>");
 			td.addClass(`${isToday}`);
 			td.text(`${i}`)
-			dateList.push(li);
+			dateList.push(td);
 	}
 
 	for (let i = dayend; i < 6; i++) {
-		const td = $('<td></td>');
-		td.addClass('inactive');
+		const td = $("<td></td>");
+		td.addClass("inactive");
 		td.text(`${i - dayend + 1}`);
-		dateList.push(li);
+		dateList.push(td);
 	}
 	
 	// 달력에 날짜 엘리먼트 추가
 	let count = 0;
-	let tr = $('<tr></tr>')
-	ul.addClass('calendar-dates')
+	let tr = $("<tr></tr>")
+	tr.addClass("calendar-row")
 	$.each(dateList, function (index, el) {
 		// 일요일 빨간색 표시, 토요일 파란색 표시
-		
-		if (count === 0) el.css('color', 'red');
-		else if (count === 6) el.css('color', 'blue');
-
+		if (count === 0 && !el.hasClass("inactive")) el.css("color", "tomato");
+		else if (count === 6 && !el.hasClass("inactive")) el.css("color", "blueviolet");
+		// 행에 날짜 추가
 		tr.append(el)
 		count++;
-
 		// 7개의 날짜 엘리먼트를 추가한후 ul 초기화
 		if (count === 7) {
-			$('.calendar-body').append(tr);
-			tr = $('<ul></ul>');
-			tr.addClass('calendar-dates');
+			$(".calendar-dates").append(tr);
+			tr = $("<tr></tr>");
+			tr.addClass("calendar-row");
 			count = 0;
 		}
 	});
 
 	// 년월 표시
-	$('.calendar-current-date').text(`${year}년 ${month+1}월`);
+	$(".calendar-current-date").text(`${year}년 ${month+1}월`);
 }
- 
-manipulate();
- 
+// 함수 - 달력 표시 End
 
-prenexIcons.forEach(icon => {
  
-    icon.addEventListener("click", () => {
-        month = icon.id === "calendar-prev" ? month - 1 : month + 1;
-        if (month < 0 || month > 11) {
-            date = new Date(year, month, new Date().getDate());
-            year = date.getFullYear();
-            month = date.getMonth();
-        }
-        else {
+// 이벤트 등록 - 달력 넘기기 
+$.each($(".calendar-navigation span"), function(index, icon) {
+	$(icon).click(function(e) {
+		month = icon.id === "calendar-prev" ? month - 1 : month + 1;
+		if (month < 0 || month > 11) {
+				date = new Date(year, month, new Date().getDate());
+				year = date.getFullYear();
+				month = date.getMonth();
+		}
+		else {
+				date = new Date();
+		}
+		calendarDisplay();
+	})
+})
 
-            date = new Date();
-        }
-
-        manipulate();
-    });
-});
+// 이벤트 등록 - 데이트 피커(Jquery UI)
+$( "#datepicker1" ).datepicker();
+$( "#datepicker2" ).datepicker();
