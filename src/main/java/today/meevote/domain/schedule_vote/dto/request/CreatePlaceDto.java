@@ -1,4 +1,4 @@
-package today.meevote.domain.schedule_place.dto.request;
+package today.meevote.domain.schedule_vote.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,10 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreateCandidatePlaceDto {
-
+public class CreatePlaceDto {
     private long scheduleId;
     private String placeName;
-    private String placeLatitude;
-    private String placeLongitude;
+    private String lat;
+    private String lng;
 }

@@ -1,0 +1,225 @@
+DROP TABLE MEMBER CASCADE CONSTRAINTS;
+DROP TABLE MEMBER_BAN CASCADE CONSTRAINTS;
+DROP TABLE SCHEDULE_CATEGORY CASCADE CONSTRAINTS;
+DROP TABLE DATE_VOTED CASCADE CONSTRAINTS;
+DROP TABLE MEMBER_SCHEDULE CASCADE CONSTRAINTS;
+DROP TABLE SCHEDULE CASCADE CONSTRAINTS;
+DROP TABLE DATE_VOTING_ITEMS CASCADE CONSTRAINTS;
+DROP TABLE PLACE_VOTING_ITEMS CASCADE CONSTRAINTS;
+DROP TABLE PLACE_VOTED CASCADE CONSTRAINTS;
+DROP TABLE ADMINISTER CASCADE CONSTRAINTS;
+DROP TABLE NOTIFY CASCADE CONSTRAINTS;
+DROP TABLE NOTIFY_CATEGORY CASCADE CONSTRAINTS;
+DROP TABLE SCHEDULE_VOTE CASCADE CONSTRAINTS;
+
+BEGIN
+    FOR r IN (SELECT sequence_name FROM user_sequences)
+    LOOP
+        EXECUTE IMMEDIATE 'DROP SEQUENCE ' || r.sequence_name;
+    END LOOP;
+END;
+
+CREATE TABLE member (
+	email nvarchar2(2000)		NOT NULL,
+	password	nvarchar2(2000)		NOT NULL,
+	name	nvarchar2(2000)		NOT NULL,
+	phone_number	nvarchar2(2000)		NOT NULL,
+	address	nvarchar2(2000)		NOT NULL,
+	img_src	nvarchar2(2000)		NOT NULL
+);
+
+CREATE TABLE schedule_category (
+	schedule_category_id	number		NOT NULL,
+	category_name	nvarchar2(2000)		NOT NULL,
+	color	nvarchar2(2000)		NOT NULL
+);
+CREATE SEQUENCE seq_schedule_category;
+
+CREATE TABLE member_schedule (
+	email	nvarchar2(2000)		NOT NULL,
+	schedule_id	number		NOT NULL,
+	is_owner	number(1)		NOT NULL
+);
+
+CREATE TABLE schedule (
+	schedule_id	number		NOT NULL,
+	schedule_category_id	number		NOT NULL,
+	name	nvarchar2(2000)		NOT NULL,
+	description	nvarchar2(2000)		NULL,
+	start_date	date		NOT NULL,
+	end_date	date		NOT NULL,
+	is_group	number(1)		NOT NULL,
+	vote_deadline	date		NULL
+);
+CREATE SEQUENCE seq_schedule;
+
+CREATE TABLE place_to_vote (
+	place_to_vote_id	number		NOT NULL,
+	schedule_id	number		NOT NULL,
+	place_name	nvarchar2(2000)		NOT NULL,
+	lat	nvarchar2(2000)		NOT NULL,
+	lng	nvarchar2(2000)		NOT NULL
+);
+CREATE SEQUENCE seq_place_to_vote;
+
+CREATE TABLE place_voted (
+	place_voted_id	number		NOT NULL,
+	email	nvarchar2(2000)		NOT NULL,
+	schedule_id	number		NOT NULL,
+	place_to_vote_id	number		NOT NULL
+);
+CREATE SEQUENCE seq_place_voted;
+
+CREATE TABLE notify (
+	notify_id	number		NOT NULL,
+	email	nvarchar2(2000)		NOT NULL,
+	schedule_id	number		NOT NULL,
+	notify_category_id	number		NOT NULL,
+	message	nvarchar2(2000)		NOT NULL,
+	is_read	number(1)		NOT NULL
+);
+CREATE SEQUENCE seq_notify;
+
+CREATE TABLE notify_category (
+	notify_category_id	number		NOT NULL,
+	category_name	nvarchar2(2000)		NOT NULL
+);
+CREATE SEQUENCE seq_notify_category;
+
+CREATE TABLE schedule_place (
+	schedule_id	number		NOT NULL,
+	place_name	nvarchar2(2000)		NOT NULL,
+	lat	nvarchar2(2000)		NOT NULL,
+	lng	nvarchar2(2000)		NOT NULL
+);
+
+CREATE TABLE departure_place (
+	email	nvarchar2(2000)		NOT NULL,
+	schedule_id	number		NOT NULL,
+	place_name	nvarchar2(2000)		NOT NULL,
+	lat	nvarchar2(2000)		NOT NULL,
+	lng	nvarchar2(2000)		NOT NULL
+);
+
+ALTER TABLE member ADD CONSTRAINT PK_MEMBER PRIMARY KEY (
+	email
+);
+
+ALTER TABLE schedule_category ADD CONSTRAINT PK_SCHEDULE_CATEGORY PRIMARY KEY (
+	schedule_category_id
+);
+
+ALTER TABLE member_schedule ADD CONSTRAINT PK_MEMBER_SCHEDULE PRIMARY KEY (
+	email,
+	schedule_id
+);
+
+ALTER TABLE schedule ADD CONSTRAINT PK_SCHEDULE PRIMARY KEY (
+	schedule_id
+);
+
+ALTER TABLE place_to_vote ADD CONSTRAINT PK_PLACE_TO_VOTE PRIMARY KEY (
+	place_to_vote_id
+);
+
+ALTER TABLE place_voted ADD CONSTRAINT PK_PLACE_VOTED PRIMARY KEY (
+	place_voted_id
+);
+
+ALTER TABLE notify ADD CONSTRAINT PK_NOTIFY PRIMARY KEY (
+	notify_id
+);
+
+ALTER TABLE notify_category ADD CONSTRAINT PK_NOTIFY_CATEGORY PRIMARY KEY (
+	notify_category_id
+);
+
+ALTER TABLE schedule_place ADD CONSTRAINT PK_SCHEDULE_PLACE PRIMARY KEY (
+	schedule_id
+);
+
+ALTER TABLE departure_place ADD CONSTRAINT PK_DEPARTURE_PLACE PRIMARY KEY (
+	email,
+	schedule_id
+);
+
+ALTER TABLE member_schedule ADD CONSTRAINT FK_m_TO_m_s_1 FOREIGN KEY (
+	email
+)
+REFERENCES member (
+	email
+);
+
+ALTER TABLE member_schedule ADD CONSTRAINT FK_s_TO_m_s_1 FOREIGN KEY (
+	schedule_id
+)
+REFERENCES schedule (
+	schedule_id
+);
+
+ALTER TABLE schedule ADD CONSTRAINT FK_s_c_TO_s_1 FOREIGN KEY (
+	schedule_category_id
+)
+REFERENCES schedule_category (
+	schedule_category_id
+);
+
+ALTER TABLE place_to_vote ADD CONSTRAINT FK_s_TO_p_t_v_1 FOREIGN KEY (
+	schedule_id
+)
+REFERENCES schedule (
+	schedule_id
+);
+
+ALTER TABLE place_voted ADD CONSTRAINT FK_m_s_TO_p_v_1 FOREIGN KEY (
+	email, schedule_id
+)
+REFERENCES member_schedule (
+	email, schedule_id
+);
+
+ALTER TABLE place_voted ADD CONSTRAINT FK_p_t_v_TO_p_v_1 FOREIGN KEY (
+	place_to_vote_id
+)
+REFERENCES place_to_vote (
+	place_to_vote_id
+);
+
+ALTER TABLE notify ADD CONSTRAINT FK_m_s_TO_n_1 FOREIGN KEY (
+	email, schedule_id
+)
+REFERENCES member_schedule (
+	email, schedule_id
+);
+
+ALTER TABLE notify ADD CONSTRAINT FK_n_c_TO_n_1 FOREIGN KEY (
+	notify_category_id
+)
+REFERENCES notify_category (
+	notify_category_id
+);
+
+ALTER TABLE schedule_place ADD CONSTRAINT FK_s_TO_s_p_1 FOREIGN KEY (
+	schedule_id
+)
+REFERENCES schedule (
+	schedule_id
+);
+
+ALTER TABLE departure_place ADD CONSTRAINT FK_m_s_TO_d_p_1 FOREIGN KEY (
+	email, schedule_id
+)
+REFERENCES member_schedule (
+	email, schedule_id
+);
+
+INSERT INTO schedule_category VALUES (seq_schedule_category.nextval, '기타', 'blue');
+INSERT INTO schedule_category VALUES (seq_schedule_category.nextval, '스터디', 'green');
+INSERT INTO schedule_category VALUES (seq_schedule_category.nextval, '회의', 'orange');
+INSERT INTO schedule_category VALUES (seq_schedule_category.nextval, '식사', 'yellow');
+INSERT INTO schedule_category VALUES (seq_schedule_category.nextval, '회식', 'tomato');
+INSERT INTO schedule_category VALUES (seq_schedule_category.nextval, '여행', 'mint');
+
+commit;
+
+

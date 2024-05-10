@@ -16,8 +16,7 @@
 	        name,
 	        phone_number, 
 	        address,
-	        img_src,
-	        is_banned
+	        img_src
         )
         VALUES (
 	        #{registerDto.email}, 
@@ -25,8 +24,7 @@
 	        #{registerDto.name},
 	        #{registerDto.phoneNumber}, 
 	        #{registerDto.address},
-	        #{defaultProfileImgSrc},
-	        0
+	        #{defaultProfileImgSrc}
         )
     </insert>
     
@@ -44,8 +42,7 @@
 	        address,
 	        email,
 	        phone_number,
-	        img_src,
-	        is_banned
+	        img_src
 	    FROM member
 	    WHERE email = #{email}    		
     </select>

@@ -14,8 +14,8 @@ public class GetScheduleCategoryDto {
 	private Long scheduleCategoryId;
 	
 	@Schema(description = "일정 카테고리 이름", defaultValue = "스터디")
-	private String scheduleCategoryName;
+	private String categoryName;
 	
 	@Schema(description = "일정 색깔", defaultValue = "green")
-	private String scheduleColor;
+	private String color;
 }

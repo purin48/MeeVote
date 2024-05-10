@@ -23,7 +23,5 @@ public class GetMyInfoDto {
 	
 	@Schema(description = "프로필이미지 경로", defaultValue = "default.jpg")
 	private String imgSrc;
-	
-	@Schema(description = "밴 여부", defaultValue = "false")
-	private Boolean isBanned;
+
 }

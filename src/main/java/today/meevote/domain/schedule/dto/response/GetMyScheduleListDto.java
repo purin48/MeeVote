@@ -19,16 +19,13 @@ public class GetMyScheduleListDto {
 	private Long scheduleCategoryId;
 	
 	@Schema(description = "일정 카테고리 이름", defaultValue = "스터디")
-	private String scheduleCategoryName;
+	private String categoryName;
 	
 	@Schema(description = "일정 색깔", defaultValue = "green")
-	private String scheduleColor;
+	private String color;
 	
 	@Schema(description = "그룹 일정 여부", defaultValue = "true")
 	private Boolean isGroup;
-	
-	@Schema(description = "일정 기간", defaultValue = "7")
-	private int duration;
 	
 	@Schema(description = "시작일시", defaultValue = "2024-05-11 09:00")
 	private String startDate;

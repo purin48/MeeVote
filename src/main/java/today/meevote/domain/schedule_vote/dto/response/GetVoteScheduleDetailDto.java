@@ -1,4 +1,4 @@
-package today.meevote.domain.schedule.dto.response;
+package today.meevote.domain.schedule_vote.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,9 +7,9 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class GetScheduleDetailDto {
+@NoArgsConstructor
+public class GetVoteScheduleDetailDto {
     private long scheduleId;
     private long scheduleCategoryId;
     private String categoryName;
@@ -18,10 +18,8 @@ public class GetScheduleDetailDto {
     private String description;
     private String startDate;
     private String endDate;
-    private boolean isGroup;
-    private String placeName;
-    private String lat;
-    private String lng;
-    private List<ScheduleMemberDto> scheduleMemberList;
+    private String voteDeadline;
+    private List<PlaceToVote> placeToVoteList;
+    private List<ScheduleMemberVoteDto> memberList;
     private boolean isRequesterOwner;
 }

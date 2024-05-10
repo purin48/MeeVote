@@ -7,18 +7,13 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class GetScheduleListToVoteDto {
+public class GetScheduleListDto {
 
     private long scheduleId;
-
-    private String name;
-
     private String categoryName;
-    private String categoryColor;
-
-    private boolean isDateVote;
-    private boolean isPlaceVote;
-
-    private String voteDeadline;
-
+    private boolean isGroup;
+    private String color;
+    private String name;
+    private String startDate;
+    private String placeName;
 }

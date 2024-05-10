@@ -33,41 +33,41 @@ import java.util.List;
 public class ScheduleController {
 
 	private final ScheduleService scheduleService;
-	
+
 	@Operation(summary = "내 일정 생성")
-    @ApiResponse(responseCode = "1", description = "성공")
-    @ApiResponse(responseCode = "2", description = "실패",
-	    content = @Content(examples = {
-        @ExampleObject(name = "존재하지않는 회원", value = "{\"isSuccess\": false, \"code\": \"B01\", \"message\": \"존재하지않는 회원입니다.\"}"),
-        @ExampleObject(name = "존재하지않는 카테고리", value = "{\"isSuccess\": false, \"code\": \"S01\", \"message\": \"존재하지 않는 카테고리입니다.\"}"),
-        @ExampleObject(name = "인증되지않은 요청", value = "{\"isSuccess\": false, \"code\": \"Z97\", \"message\": \"인증되지않은 요청입니다.\"}"),
-        @ExampleObject(name = "유효하지않은 입력값", value = "{\"isSuccess\": false, \"code\": \"Z98\", \"message\": \"입력값이 유효하지 않습니다.\"}"),
-        @ExampleObject(name = "내부 서버 오류", value = "{\"isSuccess\": false, \"code\": \"Z99\", \"message\": \"서버 오류가 발생했습니다.\"}")
-    }))
+	@ApiResponse(responseCode = "1", description = "성공")
+	@ApiResponse(responseCode = "2", description = "실패",
+			content = @Content(examples = {
+					@ExampleObject(name = "존재하지않는 회원", value = "{\"isSuccess\": false, \"code\": \"B01\", \"message\": \"존재하지않는 회원입니다.\"}"),
+					@ExampleObject(name = "존재하지않는 카테고리", value = "{\"isSuccess\": false, \"code\": \"S01\", \"message\": \"존재하지 않는 카테고리입니다.\"}"),
+					@ExampleObject(name = "인증되지않은 요청", value = "{\"isSuccess\": false, \"code\": \"Z97\", \"message\": \"인증되지않은 요청입니다.\"}"),
+					@ExampleObject(name = "유효하지않은 입력값", value = "{\"isSuccess\": false, \"code\": \"Z98\", \"message\": \"입력값이 유효하지 않습니다.\"}"),
+					@ExampleObject(name = "내부 서버 오류", value = "{\"isSuccess\": false, \"code\": \"Z99\", \"message\": \"서버 오류가 발생했습니다.\"}")
+			}))
 	@PostMapping("/personal")
 	public BaseResponse createPersonalSchedule(@Valid @RequestBody CreatePersonalScheduleDto dto) {
 		scheduleService.createPersonalSchedule(dto);
 		return new BaseResponse(SuccessInfo.CREATE_SCHEDULE);
 	}
-	
+
 	@Operation(summary = "내 일정 삭제")
-    @ApiResponse(responseCode = "1", description = "성공")
-    @ApiResponse(responseCode = "2", description = "실패",
-	    content = @Content(examples = {
-        @ExampleObject(name = "존재하지않는 회원", value = "{\"isSuccess\": false, \"code\": \"B01\", \"message\": \"존재하지않는 회원입니다.\"}"),
-        @ExampleObject(name = "존재하지않는 일정", value = "{\"isSuccess\": false, \"code\": \"S02\", \"message\": \"존재하지 않는 일정입니다.\"}"),
-        @ExampleObject(name = "인증되지않은 요청", value = "{\"isSuccess\": false, \"code\": \"Z97\", \"message\": \"인증되지않은 요청입니다.\"}"),
-        @ExampleObject(name = "내부 서버 오류", value = "{\"isSuccess\": false, \"code\": \"Z99\", \"message\": \"서버 오류가 발생했습니다.\"}")
-    }))
+	@ApiResponse(responseCode = "1", description = "성공")
+	@ApiResponse(responseCode = "2", description = "실패",
+			content = @Content(examples = {
+					@ExampleObject(name = "존재하지않는 회원", value = "{\"isSuccess\": false, \"code\": \"B01\", \"message\": \"존재하지않는 회원입니다.\"}"),
+					@ExampleObject(name = "존재하지않는 일정", value = "{\"isSuccess\": false, \"code\": \"S02\", \"message\": \"존재하지 않는 일정입니다.\"}"),
+					@ExampleObject(name = "인증되지않은 요청", value = "{\"isSuccess\": false, \"code\": \"Z97\", \"message\": \"인증되지않은 요청입니다.\"}"),
+					@ExampleObject(name = "내부 서버 오류", value = "{\"isSuccess\": false, \"code\": \"Z99\", \"message\": \"서버 오류가 발생했습니다.\"}")
+			}))
 	@DeleteMapping("/personal")
 	public BaseResponse deletePersonalSchedule(
 			@Schema(description = "스케줄 id", defaultValue = "1")
-			@Min(value=1, message = "스케줄 id값을 확인해주세요.")
-			@RequestParam 
+			@Min(value = 1, message = "스케줄 id값을 확인해주세요.")
+			@RequestParam
 			Long scheduleId
-		) {
-	    scheduleService.deletePersonalSchedule(scheduleId);
-	    return new BaseResponse(SuccessInfo.DELETE_SCHEDULE);
+	) {
+		scheduleService.deletePersonalSchedule(scheduleId);
+		return new BaseResponse(SuccessInfo.DELETE_SCHEDULE);
 	}
 
 	@Operation(summary = "캘린더 일정조회")
@@ -91,7 +91,7 @@ public class ScheduleController {
 			@Schema(description = "월", defaultValue = "05")
 			@NotBlank(message = "월을 입력해주세요.")
 			@Pattern(regexp = "^(0[1-9]|1[0-2])$", message = "올바른 월 형식이 아닙니다.")
-			String month){
+			String month) {
 
 		return new DataResponse<>(SuccessInfo.GET_MY_SCHEDULE_LIST,
 				scheduleService.getMyScheduleList(isGroup, year, month));
@@ -105,39 +105,20 @@ public class ScheduleController {
 					@ExampleObject(name = "내부 서버 오류", value = "{\"isSuccess\": false, \"code\": \"Z99\", \"message\": \"서버 오류가 발생했습니다.\"}")
 			}))
 	@GetMapping("/category")
-	public DataResponse<List<GetScheduleCategoryDto>> getScheduleCategory(){
+	public DataResponse<List<GetScheduleCategoryDto>> getScheduleCategory() {
 		return new DataResponse<>(SuccessInfo.GET_SCHEDULE_CATEGORY, scheduleService.getCategory());
-
 	}
 
-	@Operation(summary = "모임일정 생성(미완)")
+	@Operation(summary = "모임 일정 생성하기(미완)")
 	@PostMapping("/group")
-	public BaseResponse createGroupSchedule(CreateGroupScheduleDto createGroupScheduleDto){
-		//모임장 및 초대된 인원들
-		//member_schedule에 데이터 넣어야함
-		//notify에는 모임장 빼고 초대된 인원들 데이터 넣어야함
-		//schedule_vote 생성해야함
+	public BaseResponse createGroupSchedule(@Valid @RequestBody CreateGroupScheduleDto createGroupScheduleDto){
 		return null;
 	}
 
-	@Operation(summary = "투표 중인 일정 목록(미완)")
-	@GetMapping("/vote/list")
-	public DataResponse<List<GetScheduleListToVoteDto>> getScheduleListToVote(){
-		//투표가 임박한 순으로 정렬해서 리턴
-		//투표 중인 걸 알기 위한 조건
-		// is_group이 1
-		// start_date와 end_date가 null -> 일정 투표 중임
-		// start_date랑 end_date는 있는데 place_~ 다 null -> 장소 투표 중임
-		// 리턴할때 이게 일정 투표 중인지 장소 투표 중인지 알려줘야함(날짜 투표 일정 상세보기랑 장소 투표 일정 상세보기랑 api가 달라서)
-		return null;
-	}
-
-	@Operation(summary = "확정된 일정 상세보기(미완)")
+	@Operation(summary = "일정 상세조회(미완)")
 	@GetMapping("/detail")
 	public DataResponse<GetScheduleDetailDto> getScheduleDetail(long scheduleId){
-		// 일정이 존재하는지 확인
-		// 요청자가 이 일정의 모임장인지 확인
-		// 이 일정이 찐 확정됐는지 확인
+		// 확정된 일정
 		return null;
 	}
 
@@ -156,6 +137,19 @@ public class ScheduleController {
 	public DataResponse<List<GetScheduleListDto>> getFutureScheduleList(){
 		//현재에서 가장 가까운 순으로 정렬
 		//확정된 일정
+		return null;
+	}
+
+	@Operation(summary = "일정 나가기(미완)")
+	@DeleteMapping("/out")
+	public BaseResponse outSchedule(long scheduleId){
+		// 일정장은 못나감
+		return null;
+	}
+
+	@Operation(summary = "일정에 회원 초대하기(미완)")
+	@PostMapping("/invite")
+	public BaseResponse inviteMember(InviteMemberDto inviteMemberDto){
 		return null;
 	}
 

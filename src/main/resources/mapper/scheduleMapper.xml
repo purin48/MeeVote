@@ -26,24 +26,16 @@
 	        description,
 	        is_group,
 	        schedule_category_id,
-	        duration,
 	        start_date,
-	        end_date,
-	        place_name,
-	        place_latitude,
-	        place_longitude
+	        end_date
 	    ) VALUES (
 	        #{id},
 	        #{dto.name},
 	        #{dto.description, jdbcType=VARCHAR},
 	        0,
 	        #{dto.scheduleCategoryId},
-	        #{duration},
 	        TO_DATE(#{dto.startDate}, 'YYYY-MM-DD HH24:MI'),
-	        TO_DATE(#{dto.endDate}, 'YYYY-MM-DD HH24:MI'),
-	        #{dto.placeName, jdbcType=VARCHAR},
-	        #{dto.placeLatitude, jdbcType=VARCHAR},
-	        #{dto.placeLongitude, jdbcType=VARCHAR}
+	        TO_DATE(#{dto.endDate}, 'YYYY-MM-DD HH24:MI')
 	    )
 	</insert>
 
@@ -52,13 +44,11 @@
         INSERT INTO member_schedule (
             email,
             schedule_id,
-            is_owner,
-			attendance
+            is_owner
         ) VALUES (
             #{email},
             #{scheduleId},
-            1, <!-- isOwner : 1로 설정 -->
-            1 <!-- 참여자 1명 -->
+            1 <!-- isOwner : 1로 설정 -->
         )
     </insert>
     
@@ -81,42 +71,52 @@
 
 	<select id="getMyScheduleList" resultType="today.meevote.domain.schedule.dto.response.GetMyScheduleListDto">
 		SELECT
-		s.schedule_id AS scheduleId,
-		s.name,
-		c.schedule_category_id AS scheduleCategoryId,
-		c.schedule_category_name AS scheduleCategoryName,
-		c.schedule_color AS scheduleColor,
-		s.is_group AS isGroup,
-		s.duration,
-		TO_CHAR(s.start_date, 'YYYY-MM-DD HH24:MI') AS startDate,
-		TO_CHAR(s.end_date, 'YYYY-MM-DD HH24:MI') AS endDate,
-		s.place_name AS placeName
+			s.schedule_id AS scheduleId,
+			s.name,
+			c.schedule_category_id AS scheduleCategoryId,
+			c.category_name AS categoryName,
+			c.color AS color,
+			s.is_group AS isGroup,
+			TO_CHAR(s.start_date, 'YYYY-MM-DD HH24:MI') AS startDate,
+			TO_CHAR(s.end_date, 'YYYY-MM-DD HH24:MI') AS endDate,
+			p.place_name AS placeName
 		FROM
-		member_schedule ms
+			member_schedule ms
 		JOIN schedule s ON ms.schedule_id = s.schedule_id
 		JOIN schedule_category c ON s.schedule_category_id = c.schedule_category_id
+		LEFT OUTER JOIN schedule_place p ON ms.schedule_id = p.schedule_id
 		WHERE
-		ms.email = #{email}
-		<if test="isGroup != null">
-			AND s.is_group = #{isGroup}
-		</if>
+			ms.email = #{email}
+			<if test="isGroup != null">
+				AND s.is_group = #{isGroup}
+			</if>
 		AND TO_CHAR(s.start_date, 'YYYY') = #{year}
 		AND TO_CHAR(s.start_date, 'MM') = #{month}
-		AND s.end_date IS NOT NULL
-		AND (
-		(s.is_group = 1
-		AND s.place_name IS NOT NULL
-		AND s.place_latitude IS NOT NULL
-		AND s.place_longitude IS NOT NULL)
-		OR s.is_group = 0)
+		AND ((s.is_group = 1 AND p.schedule_id IS NOT NULL) OR s.is_group = 0)
 	</select>
 
 	<select id="getCategory" resultType="today.meevote.domain.schedule.dto.response.GetScheduleCategoryDto">
 		SELECT
 			schedule_category_id,
-			schedule_category_name,
-			schedule_color
+			category_name,
+			color
 		FROM schedule_category
 	</select>
 
+	<insert id="createSchedulePlace" parameterType="map">
+		INSERT INTO schedule_place
+		(
+			schedule_id,
+			place_name,
+		   	lat,
+		    lng
+		)
+		VALUES
+		(
+			#{id},
+		 	#{dto.placeName},
+		 	#{dto.placeLatitude},
+		 	#{dto.placeLongitude}
+		)
+	</insert>
 </mapper>

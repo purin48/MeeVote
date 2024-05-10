@@ -1,4 +1,4 @@
-package today.meevote.domain.schedule_place.dto.response;
+package today.meevote.domain.schedule_vote.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,5 +9,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class PlaceVotedDto {
     private long placeVotedId;
-    private long placeVotingItemsId;
+    private long placeToVoteId;
 }

@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.util.StringUtils;
 import today.meevote.contextholder.MemberContextHolder;
 import today.meevote.domain.schedule.dao.ScheduleDao;
 import today.meevote.domain.schedule.dto.request.CreatePersonalScheduleDto;
@@ -26,7 +27,7 @@ public class ScheduleService {
 	private final ScheduleDao scheduleDao;
 
 	@Transactional
-	public void createPersonalSchedule(@Valid CreatePersonalScheduleDto dto) {
+	public void createPersonalSchedule(CreatePersonalScheduleDto dto) {
 		String email = MemberContextHolder.getEmail();
         if (!scheduleDao.isExistByEmail(email)) {
             throw new RestException(FailureInfo.NOT_EXIST_MEMBER);
@@ -39,20 +40,19 @@ public class ScheduleService {
         if (!DateUtil.validateDateOrder(dto.getStartDate(), dto.getEndDate())) {
             throw new RestException(FailureInfo.INVALID_DATE_FORMAT);
         }
-        
-        if (dto.getPlaceName() == null || dto.getPlaceLatitude() == null || dto.getPlaceLongitude() == null) {
-            throw new RestException(FailureInfo.INVALID_PLACE_INPUT);
-        }
-        
-        int duration = DateUtil.calculateDuration(dto.getStartDate(), dto.getEndDate());
-        
+
         Map<String, Object> params = new HashMap<>();
         params.put("dto", dto);
-        params.put("duration", duration);
-        
+
         scheduleDao.createPersonalSchedule(params);
         Long scheduleId = (Long) params.get("id"); 
         scheduleDao.createMemberSchedule(email, scheduleId);
+
+        if (StringUtils.hasText(dto.getPlaceName())
+                && StringUtils.hasText(dto.getPlaceLatitude())
+                && StringUtils.hasText(dto.getPlaceLongitude())) {
+            scheduleDao.createSchedulePlace(params);
+        }
 	}
 
 	@Transactional

@@ -40,5 +40,6 @@ public interface ScheduleDao {
 
 
 	List<GetScheduleCategoryDto> getCategory();
-	
+
+    public void createSchedulePlace(Map<String, Object> dto);
 }
