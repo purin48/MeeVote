@@ -29,8 +29,8 @@ prefix="c" %>
       rel="stylesheet"
       href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.2/themes/smoothness/jquery-ui.css"
     />
-    <link rel="stylesheet" href="css/inc/sidebar.css" />
-    <link rel="stylesheet" href="css/create/common.css" />
+    <link rel="stylesheet" href="/css/inc/sidebar.css">
+    <link rel="stylesheet" href="/css/create/common.css" />
     <!-- js import -->
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
@@ -46,8 +46,8 @@ prefix="c" %>
       src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"
       defer
     ></script>
-    <script src="js/inc/sidebar.js" defer></script>
-    <script src="js/create/common.js" defer></script>
+    <script src="/js/inc/sidebar.js" defer></script>
+    <script src="/js/create/common.js" defer></script>
   </head>
   <body>
     <!-- 사이드바 include -->
@@ -160,7 +160,7 @@ prefix="c" %>
                 <p>당일 날씨</p>
                 <p>19℃</p>
               </div>
-              <img src="image/weather/rainy.png" alt="" />
+              <img src="/image/weather/rainy.png" alt="" />
             </div>
           </div>
           <button id="save-btn">저장</button>
