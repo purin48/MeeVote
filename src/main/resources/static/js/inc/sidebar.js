@@ -74,7 +74,7 @@ $('#nav-create-btn').click(function(e) {
 
 
 // ----- 페이지 이동
-const menuList = ['', 'table', 'create-personal', 'create-group'];
+const menuList = ['calendar', 'table', 'create-personal', 'create-group'];
 $.each($('.nav-content').children(), function (index, el) {
   $(el).click(function(e) {
     window.location.href = `${baseURL}/${menuList[index]}`;
