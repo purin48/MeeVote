@@ -32,6 +32,8 @@ dependencies {
 	implementation 'org.springframework.security:spring-security-crypto'
 	
 	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
+
+	implementation 'org.springframework.data:spring-data-commons:3.2.2'
 	
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'com.oracle.database.jdbc:ojdbc8'
