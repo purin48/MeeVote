@@ -36,22 +36,29 @@
   margin: 0px;
 }
 
-.dateinput-container {
-  padding: 0px 10px;
+.date-container {
   width: 100%;
   display: flex;
+  gap: 10px;
+}
+
+.dateinput-container {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
   align-items: center;
   gap: 10px;
 }
 
 .dateinput-container > span{
+  flex-grow: 1;
   font-size: 14px;
 }
 
 .dateinput-container > input {
   border: #BBBBBB solid 1px;
+  font-family: sans-serif;
   font-size: 14px;
-  width: 35%;
 }
 
 .checkbox-container {

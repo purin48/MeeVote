@@ -10,7 +10,6 @@ $.ajax({
   dataType: "json",
   contentType: "application/json",
   success: function (response) {
-    console.log(response)
     if (!response.isSuccess) {
       // 예외 처리
       return;

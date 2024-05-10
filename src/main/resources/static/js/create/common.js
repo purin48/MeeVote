@@ -1,11 +1,23 @@
-
+// 달력 관련 변수
 let date = new Date();
 let year = date.getFullYear();
 let month = date.getMonth();
- 
-const prenexIcons = document
-    .querySelectorAll(".calendar-navigation span");
-calendarDisplay();
+// 날짜 선택 관련
+let now = new Date();
+let nowY = now.getFullYear();
+let nowM = now.getMonth();
+let nowD = now.getDate();
+let startDate;
+let endDate;
+
+
+// 함수 - 현재 날짜 및 시간 갱신
+function resetNow() {
+	now = new Date();
+	nowY = now.getFullYear();
+	nowM = now.getMonth();
+	nowD = now.getDate();
+}
 
 
 // 함수 - 달력 표시
@@ -89,7 +101,26 @@ $.each($(".calendar-navigation span"), function(index, icon) {
 		calendarDisplay();
 	})
 })
+// 이벤트 등록 - 달력 넘기기 ENd
 
-// 이벤트 등록 - 데이트 피커(Jquery UI)
-$( "#datepicker1" ).datepicker();
-$( "#datepicker2" ).datepicker();
+
+// 이벤트 등록 - 시작 날짜 등록
+$('#start-date').change(function (e) {
+	$(this).removeClass('is-invalid')
+	// 선택한 날짜
+	const pickDate = new Date($(this).val());
+	const pickY = pickDate.getFullYear();
+	const pickM = pickDate.getMonth();
+	const pickD = pickDate.getDate();
+	// 조건1. 현재 날짜 이상이어야함.
+	if (pickY < nowY || pickM < nowM || pickD < nowD) {
+		$(this).addClass('is-invalid')
+		$(this).val(null)
+	}
+	// 조건2. 종료 날짜가 정해진 경우 그 이하여야함.
+});
+
+// 이벤트 등록 - 시작 날짜 등록 End
+
+
+calendarDisplay();

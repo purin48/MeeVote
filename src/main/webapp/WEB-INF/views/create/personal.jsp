@@ -88,17 +88,23 @@ prefix="c" %>
         </div>
         <!-- 달력 End -->
         <!-- 날짜 입력 -->
-        <div class="dateinput-container">
-          <i class="bi bi-clock"></i>
-          <span>시작일</span>
-          <input type="date" class="date-input" />
-          <input type="time" class="time-input" />
-        </div>
-        <div class="dateinput-container">
-          <i class="bi bi-clock-fill"></i>
-          <span>종료일</span>
-          <input type="date" class="date-input" />
-          <input type="time" class="time-input" />
+        <div class="date-container">
+          <div class="dateinput-container">
+            <div class="date-text">
+              <i class="bi bi-clock"></i>
+              <span>시작일</span>
+            </div>
+            <input type="date" class="date-input form-control" id="start-date"/>
+            <input type="time" class="time-input form-control" id="start-time"/>
+          </div>
+          <div class="dateinput-container">
+            <div class="date-text">
+              <i class="bi bi-clock-fill"></i>
+              <span>종료일</span>
+            </div>
+            <input type="date" class="date-input form-control" id="end-date"/>
+            <input type="time" class="time-input form-control" id="end-time"/>
+          </div>
         </div>
         <!-- 날짜 입력End -->
         <!-- 하루종일 체크 -->
