@@ -65,7 +65,7 @@
 .headforbutton {
     display: flex;
     justify-content: space-between;
-    height: 15vm;
+    height: 15vh;
     margin-top: 1vh;
 }
 
@@ -110,7 +110,7 @@
     height: 100%;
     width: 15%;
     /* border-left: 1px solid #EBEBEB; */
-    background-color: var(--WHITE000S);
+    background-color: #ffffff;
     min-width: 100px;
     border-left-style: solid;
     border-left-width: 2px;
