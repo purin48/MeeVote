@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 public class GetScheduleCategoryDto {
 	
 	@Schema(description = "일정 카테고리 ID", defaultValue = "2")
-	private Long scheduleCategoryId;
+	private long scheduleCategoryId;
 	
 	@Schema(description = "일정 카테고리 이름", defaultValue = "스터디")
 	private String categoryName;
