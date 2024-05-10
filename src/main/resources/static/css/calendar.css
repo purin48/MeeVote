@@ -179,7 +179,7 @@ li {
 
 .fc .fc-toolbar-title {
     font-size: 2.3em;
-    margin: 0px;
+    /*margin: 0px;*/
     font-weight: bold;
 }
 
