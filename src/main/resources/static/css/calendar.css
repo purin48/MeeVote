@@ -1,0 +1,221 @@
+
+
+.head {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    background-color: #ffffff;
+    min-height: 1vh;
+    /* height: 10%; */
+    top: 0;
+    left: 0;
+    transition: all 0.5s ease;
+    /* width: calc(100% - 10%); */
+    width: 100%;
+    align-items: center;
+    padding: 1rem;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* .withoutside i {
+
+  position: fixed;
+  top: 1.5%;
+  right: 1.2%;
+  z-index: 9999;
+  font-size: 1.6rem;
+  padding: .4rem .8rem;
+  background-color: #4FD1C5;
+  color: #ffffff;
+  border-radius: 2.5rem;
+} */
+
+.dropdown {
+    align-items: start;
+}
+
+.full-contentbox {
+    display: flex;
+    width: 100%;
+}
+
+.withoutside {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100vh;
+
+}
+
+.calAndSide {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100vh;
+    /* flex-wrap: wrap; */
+    /* justify-content: space-between; */
+    /* 소민 */
+    /* min-width: 100px; */
+}
+
+.headforbutton {
+    display: flex;
+    justify-content: space-between;
+    height: 15vm;
+    margin-top: 1vh;
+}
+
+.headforbutton i {
+    position: fixed;
+    top: 1vh;
+    right: 1vh;
+    z-index: 10;
+    font-size: 1.6rem;
+    padding: .4rem .8rem;
+    background-color: #4FD1C5;
+    color: #ffffff;
+    border-radius: 2.5rem;
+}
+
+.main {
+    height: 100%;
+    display: flex;
+    /* flex-direction: column; */
+}
+
+.agenda_wrap {
+    display: flex;
+    flex-direction: column;
+}
+
+#calendar {
+    /* max-width: 1100px; */
+    width: 100%;
+    height: 100%;
+    /* max-height: 100%; */
+    margin: 0 0 0 0 ;
+    float: right;
+    /* width: 100%; */
+}
+
+.agenda_wrap {
+    /* 일정 상세 부분 */
+    position: relative;
+    z-index: 6;
+    order: 3;
+    height: 100%;
+    width: 15%;
+    /* border-left: 1px solid #EBEBEB; */
+    background-color: var(--WHITE000S);
+    min-width: 100px;
+    border-left-style: solid;
+    border-left-width: 2px;
+    border-left-color: #EBEBEB;
+
+}
+
+ul,
+li {
+    padding: 0 0 0 5px;
+    display: flex;
+    justify-content: start;
+    flex-direction : column;
+    list-style-type: none;
+    margin-bottom: 1rem;
+}
+
+.area_agenda .area_date {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    /* or start */
+    width: 100%;
+    height: 57px;
+    padding: 0 0 0 14px;
+    font-size: 12px;
+    box-sizing: border-box;
+
+}
+
+/* 캘린더에서 시간 표시X */
+.fc-event-time{
+    display : none;
+}
+.tit_date {
+    font-size: medium;
+    font-weight: bold;
+}
+
+/*  */
+
+.whyrano {
+    /* 캘린더 부분 */
+    width: 85%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction : column;
+    min-width: 300px;
+}
+
+.button {
+    width: 100%;
+}
+
+#myDropdownButton {
+    align-items: flex-start;
+}
+
+@media screen and (max-width: 768px) {
+    .content {
+        width: 100%;
+    }
+}
+
+
+.fc .fc-toolbar-title {
+    font-size: 2.3em;
+    margin: 0px;
+    font-weight: bold;
+}
+
+.fc-event {
+    border: none !important; /* 일정의 테두리 제거 */
+}
+
+.fc-event-title {
+    /* font-weight: bold;  */
+    /* 일정 제목을 굵게 설정합니다 */
+}
+
+.fc .fc-button-primary {
+    background-color: #f8f9fa;
+    /* border-color: rgba(255, 255, 255, 0.15); */
+    color: #495057;
+    /* font-weight: bold; */
+}
+
+.dropdown-menu {
+    display: none; /* 기본적으로 숨김 */
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.show {
+    display: block; /* 보이게 함 */
+}
+
+/* 추가함! */
+/* 드롭다운(전체,개인,그룹) */
+.dropdown-toggle {
+    width: 8%;
+    min-width: 70px;
+    margin-bottom: 3px;
+}
