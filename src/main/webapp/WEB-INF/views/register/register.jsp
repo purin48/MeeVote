@@ -26,10 +26,10 @@
 
 <body>
 	<div class="left-banner">
-		<img src="image/sidebar/logo_white.png" alt="MeeVote-logo" class="left-logo">
+		<img src="image/logo/logo_white.png" alt="MeeVote-logo" class="left-logo">
 	</div>
 	<div class="right-section">
-		<img src="image/sidebar/logo_mint.png" alt="MeeVote-logo" class="right-logo">
+		<img src="image/logo/logo_mint.png" alt="MeeVote-logo" class="right-logo">
 		<!-- 폼태그 -->
 		<form class="form-container">
 			<!-- 이메일 -->

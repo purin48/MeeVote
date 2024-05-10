@@ -81,6 +81,10 @@ body {
   text-align: center;
 }
 
+.input-btn:hover {
+  background-color: #35f2e1;
+  transition: all 0.3s;
+}
 /* 입력 폼 End*/
 
 
@@ -132,7 +136,7 @@ body {
 /* 완료 버튼 End */
 
 /* 반응형 쿼리 */
-@media (max-width: 900px) {
+@media (max-width: 800px) {
   .left-banner {
     width: 0px;
   }
