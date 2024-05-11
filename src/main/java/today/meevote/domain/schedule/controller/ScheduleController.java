@@ -109,7 +109,17 @@ public class ScheduleController {
 		return new DataResponse<>(SuccessInfo.GET_SCHEDULE_CATEGORY, scheduleService.getCategory());
 	}
 
-	@Operation(summary = "모임 일정 생성하기(미완)")
+
+	@Operation(summary = "모임 일정 생성하기")
+	@ApiResponse(responseCode = "1", description = "성공")
+	@ApiResponse(responseCode = "2", description = "실패",
+			content = @Content(examples = {
+					@ExampleObject(name = "존재하지않는 회원", value = "{\"isSuccess\": false, \"code\": \"B01\", \"message\": \"존재하지않는 회원입니다.\"}"),
+					@ExampleObject(name = "존재하지않는 카테고리", value = "{\"isSuccess\": false, \"code\": \"S01\", \"message\": \"존재하지 않는 카테고리입니다.\"}"),
+					@ExampleObject(name = "인증되지않은 요청", value = "{\"isSuccess\": false, \"code\": \"Z97\", \"message\": \"인증되지않은 요청입니다.\"}"),
+					@ExampleObject(name = "유효하지않은 입력값", value = "{\"isSuccess\": false, \"code\": \"Z98\", \"message\": \"입력값이 유효하지 않습니다.\"}"),
+					@ExampleObject(name = "내부 서버 오류", value = "{\"isSuccess\": false, \"code\": \"Z99\", \"message\": \"서버 오류가 발생했습니다.\"}")
+			}))
 	@PostMapping("/group")
 	public BaseResponse createGroupSchedule(@Valid @RequestBody CreateGroupScheduleDto createGroupScheduleDto){
 		scheduleService.createGroupSchedule(createGroupScheduleDto);
