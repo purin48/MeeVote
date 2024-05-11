@@ -40,5 +40,7 @@ public class CreateGroupScheduleDto {
             @Email(message = "유효한 이메일 형식이 아닙니다.")
             String> inviteEmailList;
 
+    @NotBlank(message = "투표 종료일을 입력해주세요.")
+    @Schema(description = "투표 종료일", defaultValue = "2024-05-08 21:00")
     private String voteDeadline;
 }

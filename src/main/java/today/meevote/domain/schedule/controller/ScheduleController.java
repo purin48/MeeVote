@@ -112,7 +112,8 @@ public class ScheduleController {
 	@Operation(summary = "모임 일정 생성하기(미완)")
 	@PostMapping("/group")
 	public BaseResponse createGroupSchedule(@Valid @RequestBody CreateGroupScheduleDto createGroupScheduleDto){
-		return null;
+		scheduleService.createGroupSchedule(createGroupScheduleDto);
+		return new BaseResponse(SuccessInfo.CREATE_GROUP_SCHEDULE);
 	}
 
 	@Operation(summary = "일정 상세조회(미완)")
