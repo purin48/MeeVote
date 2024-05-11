@@ -1,10 +1,20 @@
-// 달력 관련 변수
+// 변수
+// ---- 달력 관련 변수 ----
 let date = new Date();
 let year = date.getFullYear();
 let month = date.getMonth();
+// ---- 날짜 입력값 변수 ----
+let isAllDay = false;
 let startDate = new Date();;
 let endDate = new Date();
-let isAllDay = false;
+// ---- 카테고리 변수 ----
+let categoryList = [];
+let choosedCategory;
+// ---- 장소 변수 ----
+let placeList = [];
+let choosedPlace;
+
+// 변수 End
 
 // 함수
 // ---- 함수 : 달력 표시----
@@ -110,13 +120,26 @@ function allDaySync() {
 	endDate = new Date(startDate);
 	endDate.setHours('23');
 	endDate.setMinutes('59');
-	console.log(endDate)
 	dateToInput('#end-date', endDate);
 	timeToInput('#end-time', endDate);
+	calendarDisplay();
 }
 // ---- 함수 : 종료 날짜를 시작날짜 자정으로 맞추기 End ----
 
+// ---- 함수 : 장소 검색 ----
+async function searchPlace(keyword) {
+	const ps = new kakao.maps.services.Places(); 
+	ps.keywordSearch(keyword, (data, status, pagination) => {
+		placeList = [];
+		if (status === kakao.maps.services.Status.OK) placeList = data;
+		console.log('1', data);
+	});
+}
+// ---- 함수 : 카카오 맵 검색 End----
+// 함수 End
  
+
+
 // 이벤트 등록
 // ---- 이벤트 등록 : 달력 넘기기 ----
 $.each($('.calendar-navigation span'), function(index, icon) {
@@ -152,7 +175,6 @@ $('#start-date').change(function (e) {
 
 $('#start-time').change(function (e) {
 	inputToTime(this, startDate);
-	console.log(startDate)
 	// 시작 날짜 종료 날짜보다 크면 종료 날짜 자동 조정
 	if (startDate > endDate) {
 		endDate = new Date(startDate);
@@ -196,6 +218,55 @@ $('#allday-check').change(function(e) {
 })
 // ---- 이벤트 등록 : 하루 종일 체크 End----
 
+// ---- 이벤트 등록 : 카테고리 선택 ----
+$('#category-select').change(function(e){
+	choosedCategory = categoryList[$(this).val()];
+	$('#category-circle').css('background-color', choosedCategory.color);
+}) 
+// ---- 이벤트 등록 : 카테고리 선택 End ----
+
+// ---- 이벤트 등록 : 장소 검색 ----
+let timer;
+$('#search-container > input').on('input', function(e){
+	clearTimeout(timer);
+	timer = setTimeout(async () => {
+		// ul 태그 비우기
+		$('#search-list').empty();  
+		// 카카오맵 장소검색 
+		const ps = new kakao.maps.services.Places(); 
+		ps.keywordSearch($(this).val(), (data, status, pagination) => {
+			placeList = [];
+			if (status === kakao.maps.services.Status.OK) placeList = data;
+			$.each(placeList, function (index, val) { 
+				const li = $(`<li id=${index}><p>${val.place_name}</p><p>${val.address_name}</p></li>`)
+				// 장소 선택 이벤트 추가
+				$(li).click(function(e) {
+					choosedPlace = placeList[$(this).attr('id')];
+					$('#search-container > input').val(choosedPlace.place_name)
+					$('#search-list-container').css('display', 'none')
+				})
+				$('#search-list').append(li)
+			});
+		})
+		// 장소 목록 표시
+		$('#search-list-container').css('display', 'block');
+		console.log($('#search-list').children());
+	}, 700);
+})
+// ---- 이벤트 등록 : 장소 검색 End----
+
+// ---- 이벤트 등록 : 장소 선택 스크롤 숨기기 ----
+$('#search-container').click(function(event){
+	event.stopPropagation();
+});
+
+$(document).click(function(){
+	$('#search-list-container').css('display', 'none')
+});
+// ---- 이벤트 등록 : 장소 선택 스크롤 숨기기 End----
+// 이벤트 등록 End
+
+
 
 // 시작 이벤트
 // ---- 디폴트 일정 날짜 등록 ----
@@ -206,5 +277,30 @@ endDate.setHours(endDate.getHours() + 2);  // 종료 시간은 현재 + 1시간
 dateToInput('#end-date', endDate);
 timeToInput('#end-time', endDate);
 // ---- 디폴트 일정 날짜 등록 End ----
+
+// ---- 카테고리 db에서 불러오기
+$.ajax({
+	type: "GET",
+	dataType : 'json',
+	contentType: 'application/json',
+	url: "/api/schedule/category",
+	success: function (response) {
+		if(!response.isSuccess) {
+			// 예외 처리
+		}
+		// 카테고리 select 태그에 집어 넣기
+		categoryList = response.data;
+		$.each(categoryList, function (idx, category) {
+			const opt = $('<option></option>');
+			opt.attr('value', idx);
+			opt.text(category.categoryName);
+			$('#category-select').append(opt);
+		});
+		// 디폴트 카테고리로 설정
+		choosedCategory = categoryList[$('#category-select').val()];
+		$('#category-circle').css('background-color', choosedCategory.color);
+	}
+});
+//
 
 calendarDisplay();
