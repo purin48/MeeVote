@@ -12,4 +12,8 @@ public class ScheduleMemberDto {
     private String name;
     private String address;
     private String imgSrc;
+    private Boolean isOwner;
+    private String departurePlaceName;
+    private String lat;
+    private String lng;
 }
