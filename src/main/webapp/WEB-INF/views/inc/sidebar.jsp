@@ -11,7 +11,7 @@ pageEncoding="UTF-8"%>
 <nav class="side-nav">
   <!-- 로고 -->
   <div class="nav-head">
-    <img src="image/logo/logo_white2.png" alt="" id="logo-img"/>
+    <img src="/image/logo/logo_white2.png" alt="" id="logo-img"/>
     <i class="bi bi-arrow-left-circle" id="nav-delete-btn"></i>
   </div>
   <!-- 로고 End -->

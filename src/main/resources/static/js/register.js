@@ -19,7 +19,7 @@ $("#email-container >.input-btn").click(function (e) {
   // 이메일 중복 체크 ajax
   $.ajax({
     type: "GET",
-    url: `${baseURL}/api/auth/mail/duplicate`,
+    url: '/api/auth/mail/duplicate',
     dataType: "json",
     contentType: "application/json",
     data: { email: $("#email-input").val() },
@@ -57,7 +57,7 @@ $("#email-code-container > .input-btn").click(function (e) {
     $("#email-container > .valid-feedback").text("");
     $.ajax({
       type: "GET",
-      url: `${baseURL}/api/auth/mail/code`,
+      url: '/api/auth/mail/code',
       dataType: "json",
       contentType: "application/json",
       data: { email: $("#email-input").val() },
@@ -185,7 +185,7 @@ $('.complete-button').click(function(e) {
     }; 
     $.ajax({
       type: "POST",
-      url: `${baseURL}/api/auth/register`,
+      url: '/api/auth/register',
       dataType: "json",
       contentType: "application/json",
       data: JSON.stringify(data),
@@ -200,7 +200,7 @@ $('.complete-button').click(function(e) {
             // showConfirmButton: false
           }).then((result) => {
             if(result.isConfirmed) {
-              window.location.href = `${baseURL}/login`
+              window.location.href = '/login'
             }
           });
         } else {
