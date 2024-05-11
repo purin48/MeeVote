@@ -12,7 +12,7 @@ let categoryList = [];
 let choosedCategory;
 // ---- 장소 변수 ----
 let placeList = [];
-let choosedPlace;
+let choosedPlace = {place_name: '', x: '', y: ''};
 
 // 변수 End
 
@@ -158,6 +158,14 @@ $.each($('.calendar-navigation span'), function(index, icon) {
 })
 // ---- 이벤트 등록 : 달력 넘기기 End ----
 
+// ---- 이벤트 등록 : 이름 입력 ----
+$('#name-container > input').one('input', function(e) {
+	if($(this).hasClass('is-invalid')) {
+		$(this).removeClass('is-invalid');
+	}
+})
+// ---- 이벤트 등록 : 이름 입력 End ----
+
 // ---- 이벤트 등록 : 날짜 및 시간 등록 ----
 $('#start-date').change(function (e) {
 	inputToDate(this, startDate);
@@ -264,6 +272,52 @@ $(document).click(function(){
 	$('#search-list-container').css('display', 'none')
 });
 // ---- 이벤트 등록 : 장소 선택 스크롤 숨기기 End----
+
+// ---- 이벤트 등록 : 일정 등록하기 ----
+$('#save-btn').click(function(e) {
+	// 이름 검증
+	const name = $('#name-container > input').val();
+	if (name === '') {
+		$('#name-container > input').addClass('is-invalid');
+		$('#name-container > input').focus();
+		return;
+	}
+	// 보낼 데이터 선언
+	const data = {
+		"name": name,
+		"description": $('#description-container > textarea').val(),
+		"scheduleCategoryId": choosedCategory.scheduleCategoryId,
+		"startDate": `${$('#start-date').val()} ${$('#start-time').val()}`,
+		"endDate": `${$('#end-date').val()} ${$('#end-time').val()}`,
+		"placeName": choosedPlace.place_name,
+		"placeLatitude": choosedPlace.y,
+		"placeLongitude": choosedPlace.x
+	}
+	// api 요청
+	$.ajax({
+		type: "POST",
+		url: '/api/schedule/personal',
+		dataType: "json",
+		contentType: "application/json",
+		data: JSON.stringify(data),
+		success: function (response) {
+			if (!response.isSuccess) {
+				// 예외 처리
+			} 
+			// 일정 생성 성공
+			$('.top-container').css('display', 'none');
+			Swal.fire({
+				title: '일정 생성이 완료되었습니다',
+				icon: 'success',
+				confirmButtonColor: '#4fd1c5',
+				confirmButtonText: '완료',
+			}).then((result) => {
+				if(result.isConfirmed) window.location.href = '/';
+			});
+		},
+	});
+})
+// ---- 이벤트 등록 : 일정 등록하기 End----
 // 이벤트 등록 End
 
 

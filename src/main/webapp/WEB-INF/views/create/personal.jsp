@@ -45,6 +45,8 @@ prefix="c" %>
       crossorigin="anonymous"
       defer
     ></script>
+    <!-- sweet alert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
     <!-- kakao mpa -->
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6e5d6d2e61f5ab7c5909eee58f094989&libraries=services"></script>
     <!-- custom css -->
@@ -100,7 +102,7 @@ prefix="c" %>
         <!-- 일정명 -->
         <div class="content-container" id="name-container">
           <div id="category-circle"></div>
-          <input type="text" placeholder="일정 이름 입력" />
+          <input type="text" class="form-control" placeholder="일정 이름 입력" />
         </div>
         <!-- 날짜 입력 -->
         <div class="date-container">
@@ -130,8 +132,8 @@ prefix="c" %>
           </div>
         </div>
         <!-- 날짜 입력End -->
+        <!-- 하루종일 체크 -->
         <div class="row-container">
-          <!-- 하루종일 체크 -->
           <div class="content-container" id="checkbox-container">
             <span>하루종일</span>
             <input
@@ -150,40 +152,40 @@ prefix="c" %>
           <!-- 카테고리 End-->
         </div>
         <!-- 장소 -->
-          <div class="content-container" id="place-container">
-            <i class="bi bi-geo-alt"></i>
-            <div id="search-container">
-              <input type="text" placeholder="장소를 선택하세요" />
-              <div id="search-list-container">
-                <ul id="search-list">
-                  <li id="search-item">
-                    <p>혜화역</p>
-                    <p>서울 종로구 창경궁로</p>
-                  </li>
-                  <li id="search-item">
-                    <p>혜화역</p>
-                    <p>서울 종로구 창경궁로</p>
-                  </li>
-                  <li id="search-item">
-                    <p>혜화역</p>
-                    <p>서울 종로구 창경궁로</p>
-                  </li>
-                  <li id="search-item">
-                    <p>혜화역</p>
-                    <p>서울 종로구 창경궁로</p>
-                  </li>
-                  <li id="search-item">
-                    <p>혜화역</p>
-                    <p>서울 종로구 창경궁로</p>
-                  </li>
-                  <li id="search-item">
-                    <p>혜화역</p>
-                    <p>서울 종로구 창경궁로</p>
-                  </li>
-                </ul>
-              </div>
+        <div class="content-container" id="place-container">
+          <i class="bi bi-geo-alt"></i>
+          <div id="search-container">
+            <input type="text" placeholder="장소를 선택하세요" />
+            <div id="search-list-container">
+              <ul id="search-list">
+                <li id="search-item">
+                  <p>혜화역</p>
+                  <p>서울 종로구 창경궁로</p>
+                </li>
+                <li id="search-item">
+                  <p>혜화역</p>
+                  <p>서울 종로구 창경궁로</p>
+                </li>
+                <li id="search-item">
+                  <p>혜화역</p>
+                  <p>서울 종로구 창경궁로</p>
+                </li>
+                <li id="search-item">
+                  <p>혜화역</p>
+                  <p>서울 종로구 창경궁로</p>
+                </li>
+                <li id="search-item">
+                  <p>혜화역</p>
+                  <p>서울 종로구 창경궁로</p>
+                </li>
+                <li id="search-item">
+                  <p>혜화역</p>
+                  <p>서울 종로구 창경궁로</p>
+                </li>
+              </ul>
             </div>
           </div>
+        </div>
         <!-- 장소 End-->
         <!-- 상세 설명 -->
         <div class="content-container" id="description-container">
