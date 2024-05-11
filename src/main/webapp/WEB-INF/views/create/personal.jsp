@@ -8,13 +8,27 @@ prefix="c" %>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>MeeVote</title>
-    <!-- css import -->
+    <!-- font -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&display=swap"
       rel="stylesheet"
     />
+    <!-- jquery -->
+    <link
+      rel="stylesheet"
+      href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.2/themes/smoothness/jquery-ui.css"
+    />
+    <script
+      src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+      defer
+    ></script>
+    <script
+      src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"
+      defer
+    ></script>
+    <!-- bootstrap -->
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
@@ -25,29 +39,22 @@ prefix="c" %>
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
       crossorigin="anonymous"
     />
-    <link
-      rel="stylesheet"
-      href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.2/themes/smoothness/jquery-ui.css"
-    />
-    <link rel="stylesheet" href="css/inc/sidebar.css" />
-    <link rel="stylesheet" href="css/create/common.css" />
-    <!-- js import -->
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
       crossorigin="anonymous"
       defer
     ></script>
-    <script
-      src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"
-      defer
-    ></script>
-    <script
-      src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"
-      defer
-    ></script>
-    <script src="js/inc/sidebar.js" defer></script>
-    <script src="js/create/common.js" defer></script>
+    <!-- sweet alert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
+    <!-- kakao mpa -->
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6e5d6d2e61f5ab7c5909eee58f094989&libraries=services"></script>
+    <!-- custom css -->
+    <link rel="stylesheet" href="/css/inc/sidebar.css" />
+    <link rel="stylesheet" href="/css/create/common.css" />
+    <!-- custom js import -->
+    <script src="/js/inc/sidebar.js" defer></script>
+    <script src="/js/create/common.js" defer></script>
   </head>
   <body>
     <!-- 사이드바 include -->
@@ -57,7 +64,7 @@ prefix="c" %>
     <div class="top-container">
       <!-- 왼쪽 사이드 -->
       <div class="section" id="left-section">
-        <p>날짜를 선택해주세요</p>
+        <p>개인 일정 생성</p>
         <!-- 달력 -->
         <div class="calendar-container">
           <header class="calendar-header">
@@ -87,31 +94,6 @@ prefix="c" %>
           </table>
         </div>
         <!-- 달력 End -->
-        <!-- 날짜 입력 -->
-        <div class="dateinput-container">
-          <i class="bi bi-clock"></i>
-          <span>시작일</span>
-          <input type="date" class="date-input" />
-          <input type="time" class="time-input" />
-        </div>
-        <div class="dateinput-container">
-          <i class="bi bi-clock-fill"></i>
-          <span>종료일</span>
-          <input type="date" class="date-input" />
-          <input type="time" class="time-input" />
-        </div>
-        <!-- 날짜 입력End -->
-        <!-- 하루종일 체크 -->
-        <div class="checkbox-container">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            value=""
-            id="allday-check"
-          />
-          <label class="form-check-label" for="allday-check">하루종일</label>
-        </div>
-        <!-- 하루종일 체크 End-->
       </div>
       <!-- 왼쪽 사이드 End-->
 
@@ -120,27 +102,91 @@ prefix="c" %>
         <!-- 일정명 -->
         <div class="content-container" id="name-container">
           <div id="category-circle"></div>
-          <input type="text" placeholder="일정 이름 입력" />
+          <input type="text" class="form-control" placeholder="일정 이름 입력" />
         </div>
-        <!-- 카테고리 -->
-        <div class="content-container" id="category-container">
-          <i class="bi bi-pin-angle"></i>
-          <select>
-            <option>카테고리를 선택해주세요</option>
-            <option value="php">PHP</option>
-            <option value="java">Java</option>
-            <option value="golang">Golang</option>
-            <option value="python">Python</option>
-            <option value="c#">C#</option>
-            <option value="C++">C++</option>
-            <option value="erlang">Erlang</option>
-          </select>
+        <!-- 날짜 입력 -->
+        <div class="date-container">
+          <div class="dateinput-container">
+            <div class="date-text">
+              <i class="bi bi-clock"></i>
+              <span>시작일</span>
+            </div>
+            <input
+              type="date"
+              class="date-input form-control"
+              id="start-date"
+            />
+            <input
+              type="time"
+              class="time-input form-control"
+              id="start-time"
+            />
+          </div>
+          <div class="dateinput-container">
+            <div class="date-text">
+              <i class="bi bi-clock-fill"></i>
+              <span>종료일</span>
+            </div>
+            <input type="date" class="date-input form-control" id="end-date" />
+            <input type="time" class="time-input form-control" id="end-time" />
+          </div>
+        </div>
+        <!-- 날짜 입력End -->
+        <!-- 하루종일 체크 -->
+        <div class="row-container">
+          <div class="content-container" id="checkbox-container">
+            <span>하루종일</span>
+            <input
+              class="form-check-input"
+              type="checkbox"
+              value=""
+              id="allday-check"
+            />
+          </div>
+          <!-- 하루종일 체크 End-->
+          <!-- 카테고리 -->
+          <div class="content-container" id="category-container">
+            <i class="bi bi-pin-angle"></i>
+            <select id="category-select"></select>
+          </div>
+          <!-- 카테고리 End-->
         </div>
         <!-- 장소 -->
         <div class="content-container" id="place-container">
           <i class="bi bi-geo-alt"></i>
-          <input type="text" placeholder="장소를 선택하세요" />
+          <div id="search-container">
+            <input type="text" placeholder="장소를 선택하세요" />
+            <div id="search-list-container">
+              <ul id="search-list">
+                <li id="search-item">
+                  <p>혜화역</p>
+                  <p>서울 종로구 창경궁로</p>
+                </li>
+                <li id="search-item">
+                  <p>혜화역</p>
+                  <p>서울 종로구 창경궁로</p>
+                </li>
+                <li id="search-item">
+                  <p>혜화역</p>
+                  <p>서울 종로구 창경궁로</p>
+                </li>
+                <li id="search-item">
+                  <p>혜화역</p>
+                  <p>서울 종로구 창경궁로</p>
+                </li>
+                <li id="search-item">
+                  <p>혜화역</p>
+                  <p>서울 종로구 창경궁로</p>
+                </li>
+                <li id="search-item">
+                  <p>혜화역</p>
+                  <p>서울 종로구 창경궁로</p>
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
+        <!-- 장소 End-->
         <!-- 상세 설명 -->
         <div class="content-container" id="description-container">
           <i class="bi bi-text-paragraph"></i>
@@ -151,22 +197,24 @@ prefix="c" %>
             rows="5"
           ></textarea>
         </div>
-        <div id="right-section-foot">
-          <!-- 날씨 -->
-          <div class="content-container" id="weather-container">
-            <i class="bi bi-brightness-alt-high"></i>
-            <div id="weather-infos">
-              <div id="weather-texts">
-                <p>당일 날씨</p>
-                <p>19℃</p>
-              </div>
-              <img src="image/weather/rainy.png" alt="" />
-            </div>
-          </div>
-          <button id="save-btn">저장</button>
-        </div>
+        <!-- 상세 설명 End-->
+        <!-- 저장 버튼 -->
+        <button id="save-btn">저장</button>
+        <!-- 저장 버튼 End-->
       </div>
       <!-- 오른쪽 사이드 End-->
     </div>
   </body>
 </html>
+
+<!-- 날씨 -->
+<!-- <div class="content-container" id="weather-container">
+  <i class="bi bi-brightness-alt-high"></i>
+  <div id="weather-infos">
+    <div id="weather-texts">
+      <p>당일 날씨</p>
+      <p>19℃</p>
+    </div>
+    <img src="/image/weather/rainy.png" alt="" />
+  </div>
+</div> -->

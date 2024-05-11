@@ -6,11 +6,10 @@ const baseURL = fullURL.replace(path, "");
 // ----- 회원정보 GET -----
 $.ajax({
   type: "GET",
-  url: `${baseURL}/api/member/me`,
+  url: '/api/member/me',
   dataType: "json",
   contentType: "application/json",
   success: function (response) {
-    console.log(response)
     if (!response.isSuccess) {
       // 예외 처리
       return;
@@ -30,7 +29,7 @@ $.ajax({
 $('#logout-btn').click(function(e) {
   $.ajax({
     type: "POST",
-    url: `${baseURL}/api/auth/logout`,
+    url: '/api/auth/logout',
     dataType: "json",
     contentType: "application/json",
     success: function (response) {
@@ -39,7 +38,7 @@ $('#logout-btn').click(function(e) {
         return;
       }
       // 뒤로가기 방지
-      window.location.replace(`${baseURL}/login`);
+      window.location.replace('/login');
     }
   });
 })
@@ -74,9 +73,9 @@ $('#nav-create-btn').click(function(e) {
 
 
 // ----- 페이지 이동
-const menuList = ['calendar', 'table', 'create-personal', 'create-group'];
+const menuList = ['', 'table', 'create/personal', 'create/group'];
 $.each($('.nav-content').children(), function (index, el) {
   $(el).click(function(e) {
-    window.location.href = `${baseURL}/${menuList[index]}`;
+    window.location.href = `/${menuList[index]}`;
   })
 });

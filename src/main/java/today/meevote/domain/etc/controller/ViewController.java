@@ -17,27 +17,21 @@ public class ViewController {
 	}
 	
 	@GetMapping("/")
-	public String home() {
-		return "redirect:/calendar";
-	}
-
-	@GetMapping("/calendar")
-	public String getMethodName() {
+	public String calendar() {
 		return "calendar/calendar";
 	}
-	
 
 	@GetMapping("/table")
 	public String table() {
 		return "table/table";
 	}
 
-	@GetMapping("/create-personal")
+	@GetMapping("/create/personal")
 	public String createPersonalSchedule() {
 		return "create/personal";
 	}
 
-	@GetMapping("/create-group")
+	@GetMapping("/create/group")
 	public String createGroupSchedule() {
 		return "create/group";
 	}
