@@ -1,14 +1,10 @@
-package today.meevote.domain.schedule_vote.dto.response;
+package today.meevote.domain.vote_schedule.dto.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class GetVoteScheduleListDto {
+@Getter
+public class GetVotingScheduleListDto {
 
     @Schema(description = "일정 ID", defaultValue = "1")
     private long scheduleId;

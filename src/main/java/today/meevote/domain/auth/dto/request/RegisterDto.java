@@ -6,11 +6,10 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter
 public class RegisterDto {
 	
     @NotBlank(message = "이메일을 입력해주세요.")
@@ -37,5 +36,8 @@ public class RegisterDto {
     @Schema(description = "주소", defaultValue = "서울특별시 서대문구 거북골로 34")
     @NotBlank(message = "주소를 입력해주세요.")
 	private String address;
-    
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }

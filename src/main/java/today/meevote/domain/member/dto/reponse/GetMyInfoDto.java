@@ -3,11 +3,10 @@ package today.meevote.domain.member.dto.reponse;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter
 public class GetMyInfoDto {
 	@Schema(description = "이름", defaultValue = "김철수")
 	private String name;
