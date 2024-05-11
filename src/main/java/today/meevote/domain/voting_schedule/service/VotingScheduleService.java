@@ -1,10 +1,11 @@
-package today.meevote.domain.vote_schedule.service;
+package today.meevote.domain.voting_schedule.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import today.meevote.contextholder.MemberContextHolder;
-import today.meevote.domain.vote_schedule.dao.VotingScheduleDao;
-import today.meevote.domain.vote_schedule.dto.response.*;
+import today.meevote.domain.voting_schedule.dao.VotingScheduleDao;
+import today.meevote.domain.voting_schedule.dto.request.CreatePlaceDto;
+import today.meevote.domain.voting_schedule.dto.response.*;
 import today.meevote.exception.rest.RestException;
 import today.meevote.response.FailureInfo;
 
@@ -36,5 +37,17 @@ public class VotingScheduleService {
                 .placeToVoteList(placeToVoteList)
                 .memberList(memberList)
                 .build();
+    }
+
+    public void addPlaceToVote(long scheduleId, CreatePlaceDto addPlaceToVoteDto) {
+        String email = MemberContextHolder.getEmail();
+
+        if(!votingScheduleDao.isExistVotingSchedule(scheduleId, email))
+            throw new RestException(FailureInfo.NOT_EXIST_VOTING_SCHEDULE);
+
+        if(votingScheduleDao.isExistPlaceToVote(scheduleId, addPlaceToVoteDto))
+            throw new RestException(FailureInfo.ALREADY_EXIST_PLACE_TO_VOTE);
+
+        votingScheduleDao.addPlaceToVote(scheduleId, addPlaceToVoteDto);
     }
 }

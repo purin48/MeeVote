@@ -5,11 +5,9 @@ import java.util.Optional;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import jakarta.validation.Valid;
-import today.meevote.domain.auth.dto.request.LoginDto;
 import today.meevote.domain.auth.dto.request.RegisterDto;
-import today.meevote.domain.member.dto.reponse.GetMemberForInviteDto;
-import today.meevote.domain.member.dto.reponse.GetMyInfoDto;
+import today.meevote.domain.member.dto.response.GetMemberForInviteDto;
+import today.meevote.domain.member.dto.response.GetMyInfoDto;
 import today.meevote.domain.member.dto.request.EditMyInfoDto;
 
 @Mapper

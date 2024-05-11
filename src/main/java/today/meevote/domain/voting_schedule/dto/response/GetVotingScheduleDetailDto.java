@@ -1,4 +1,4 @@
-package today.meevote.domain.vote_schedule.dto.response;
+package today.meevote.domain.voting_schedule.dto.response;
 
 import lombok.*;
 

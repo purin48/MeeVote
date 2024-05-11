@@ -1,18 +1,19 @@
-package today.meevote.domain.vote_schedule.controller;
+package today.meevote.domain.voting_schedule.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import today.meevote.domain.vote_schedule.dto.request.CreatePlaceDto;
-import today.meevote.domain.vote_schedule.dto.request.DecidePlaceDto;
-import today.meevote.domain.vote_schedule.dto.response.GetVotingScheduleDetailDto;
-import today.meevote.domain.vote_schedule.dto.response.GetVotingScheduleListDto;
-import today.meevote.domain.vote_schedule.service.VotingScheduleService;
+import today.meevote.domain.voting_schedule.dto.request.CreatePlaceDto;
+import today.meevote.domain.voting_schedule.dto.request.DecidePlaceDto;
+import today.meevote.domain.voting_schedule.dto.response.GetVotingScheduleDetailDto;
+import today.meevote.domain.voting_schedule.dto.response.GetVotingScheduleListDto;
+import today.meevote.domain.voting_schedule.service.VotingScheduleService;
 import today.meevote.response.BaseResponse;
 import today.meevote.response.DataResponse;
 import today.meevote.response.SuccessInfo;
@@ -55,15 +56,24 @@ public class VotingScheduleController {
                 votingScheduleService.getVotingScheduleDetail(scheduleId));
     }
 
-    @Operation(summary = "장소 추가하기(미완)")
+    @Operation(summary = "투표받을 장소 추가하기")
+    @ApiResponse(responseCode = "1", description = "성공")
+    @ApiResponse(responseCode = "2", description = "실패",
+            content = @Content(examples = {
+                    @ExampleObject(name = "존재하지않는 투표일정", value = "{\"isSuccess\": false, \"code\": \"V00\", \"message\": \"존재하지않는 투표일정입니다.\"}"),
+                    @ExampleObject(name = "이미 존재하는 장소", value = "{\"isSuccess\": false, \"code\": \"P00\", \"message\": \"이미 존재하는 장소입니다.\"}"),
+                    @ExampleObject(name = "인증되지않은 요청", value = "{\"isSuccess\": false, \"code\": \"Z97\", \"message\": \"인증되지않은 요청입니다.\"}"),
+                    @ExampleObject(name = "내부 서버 오류", value = "{\"isSuccess\": false, \"code\": \"Z99\", \"message\": \"서버 오류가 발생했습니다.\"}")
+            }))
     @PostMapping("/place")
-    public BaseResponse createPlaceToVote(CreatePlaceDto createPlaceToVoteDto){
-        return null;
+    public BaseResponse addPlaceToVote(long scheduleId, @Valid @RequestBody CreatePlaceDto addPlaceToVoteDto){
+        votingScheduleService.addPlaceToVote(scheduleId, addPlaceToVoteDto);
+        return new BaseResponse(SuccessInfo.ADD_PLACE_TO_VOTE);
     }
 
     @Operation(summary = "내 출발지 수정하기(미완)")
     @PutMapping("/departure")
-    public BaseResponse createDeparturePlace(CreatePlaceDto createDeparturePlaceDto){
+    public BaseResponse createDeparturePlace(CreatePlaceDto updateDeparturePlaceDto){
         return null;
     }
 

@@ -1,4 +1,4 @@
-package today.meevote.domain.member.dto.reponse;
+package today.meevote.domain.member.dto.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
