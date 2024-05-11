@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="today.meevote.domain.vote_schedule.dao.VotingScheduleDao">
+
+    <select id="getVotingScheduleList">
+        SELECT
+            s.schedule_id,
+            s.name,
+            sc.category_name,
+            sc.color,
+            TO_CHAR(s.vote_deadline, 'YYYY-MM-DD HH24:MI') AS voteDeadline,
+            s.is_group
+        FROM
+            member_schedule ms
+            JOIN schedule s ON ms.schedule_id = s.schedule_id
+            JOIN schedule_category sc ON s.schedule_category_id = sc.schedule_category_id
+            LEFT JOIN schedule_place sp ON s.schedule_id = sp.schedule_id
+        WHERE
+            ms.email = #{email}
+            AND s.is_group = 1
+            AND sp.schedule_id IS NULL
+        ORDER BY s.vote_deadline ASC
+    </select>
+
+    <select id="getVotingScheduleInfoDto">
+        SELECT
+            s.schedule_id,
+            sc.schedule_category_id,
+            sc.category_name,
+            sc.color,
+            s.name,
+            s.description,
+            TO_CHAR(s.start_date, 'YYYY-MM-DD HH24:MI') AS startDate,
+            TO_CHAR(s.end_date, 'YYYY-MM-DD HH24:MI') AS endDate,
+            TO_CHAR(s.vote_deadline, 'YYYY-MM-DD HH24:MI') AS voteDeadline,
+            ms.is_owner AS isRequesterOwner
+        FROM
+            member_schedule ms
+            JOIN schedule s ON ms.schedule_id = s.schedule_id
+            JOIN schedule_category sc ON s.schedule_category_id = sc.schedule_category_id
+            LEFT JOIN schedule_place sp ON s.schedule_id = sp.schedule_id
+        WHERE
+            ms.email = #{email}
+            AND s.schedule_id = #{scheduleId}
+            AND s.is_group = 1
+            AND sp.schedule_id IS NULL
+    </select>
+
+    <select id="getPlaceToVoteDtoList">
+        SELECT
+            ptv.place_to_vote_id,
+            ptv.place_name,
+            ptv.lat,
+            ptv.lng,
+            NVL(pv.voted_count, 0) AS voted_count
+        FROM
+            place_to_vote ptv
+            LEFT JOIN (
+                SELECT place_to_vote_id, COUNT(*) AS voted_count
+                FROM place_voted
+                WHERE schedule_id = #{scheduleId}
+                GROUP BY place_to_vote_id
+            ) pv ON ptv.place_to_vote_id = pv.place_to_vote_id
+        WHERE ptv.schedule_id = #{scheduleId}
+        ORDER BY voted_count DESC
+    </select>
+
+    <select id="getVotingScheduleMemberDtoList">
+        SELECT
+            m.email,
+            m.name,
+            m.address,
+            m.img_src,
+            ms.is_owner,
+            dp.place_name AS departure_place_name,
+            dp.lat AS departure_lat,
+            dp.lng AS departure_lng
+        FROM
+            member m
+            JOIN member_schedule ms ON m.email = ms.email
+            LEFT JOIN departure_place dp ON ms.email = dp.email AND ms.schedule_id = dp.schedule_id
+        WHERE ms.schedule_id = #{scheduleId}
+        ORDER BY ms.is_owner DESC
+    </select>
+
+</mapper>

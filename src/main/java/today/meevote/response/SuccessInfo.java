@@ -22,7 +22,8 @@ public enum SuccessInfo {
 	CREATE_SCHEDULE("내 일정 생성이 완료되었습니다."),
 	DELETE_SCHEDULE("일정 삭제가 완료되었습니다."),
 
-    GET_VOTE_SCHEDULE_LIST("투표 중인 일정 목록 조회가 완료되었습니다.");
+    GET_VOTE_SCHEDULE_LIST("투표 중인 일정 목록 조회가 완료되었습니다."),
+	GET_VOTE_SCHEDULE_DETAIL("투표 중인 일정 상세조회가 완료되었습니다.");
     private final String code = "A00";
     private final String message;
 }
