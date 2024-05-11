@@ -76,8 +76,23 @@ public class ScheduleService {
 
     @Transactional
     public void createGroupSchedule(CreateGroupScheduleDto createGroupScheduleDto) {
+        String email = MemberContextHolder.getEmail();
+        if (scheduleDao.isExistGroupMember(createGroupScheduleDto)
+                != createGroupScheduleDto.getInviteEmailList().size()
+            || !scheduleDao.isExistByEmail(email)
+        ) {
+            throw new RestException(FailureInfo.NOT_EXIST_MEMBER);
+        }
+        if (!scheduleDao.isCategoryExist(createGroupScheduleDto.getScheduleCategoryId())) {
+            throw new RestException(FailureInfo.NOT_EXIST_CATEGORY);
+        }
+        if (!DateUtil.validateDateOrder(createGroupScheduleDto.getStartDate(), createGroupScheduleDto.getEndDate())) {
+            throw new RestException(FailureInfo.INVALID_DATE_FORMAT);
+        }
+
         Map<String, Object> params = new HashMap<>();
         params.put("dto", createGroupScheduleDto);
+        params.put("ownerEmail", email);
         scheduleDao.createGroupSchedule(params);
         scheduleDao.createGroupMemberSchedule(params);
     }

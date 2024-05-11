@@ -45,4 +45,6 @@ public interface ScheduleDao {
 	public void createGroupSchedule(Map<String, Object> dto);
 
 	public void createGroupMemberSchedule(Map<String, Object> dto);
+
+	public int isExistGroupMember(CreateGroupScheduleDto createGroupScheduleDto);
 }

@@ -115,25 +115,42 @@
 		)
 	</insert>
 
+	<select id="isExistGroupMember" parameterType="today.meevote.domain.schedule.dto.request.CreateGroupScheduleDto" resultType="int">
+		SELECT COUNT(*) FROM member
+		<where>
+			<if test="inviteEmailList != null and !inviteEmailList.isEmpty()">
+				email IN
+				<foreach collection="inviteEmailList" item="email" index="index" open="(" separator="," close=")">
+					#{email}
+				</foreach>
+			</if>
+		</where>
+	</select>
+
 	<insert id="createGroupSchedule" parameterType="map">
 		INSERT INTO Schedule (
-		schedule_id,
-		name,
-		description,
-		is_group,
-		schedule_category_id,
-		start_date,
-		end_date,
-		vote_deadline
-		) VALUES (
-		seq_schedule.NEXTVAL,
-		#{dto.name},
-		#{dto.description, jdbcType=VARCHAR},
-		1,
-		#{dto.scheduleCategoryId},
-		TO_DATE(#{dto.startDate}, 'YYYY-MM-DD HH24:MI'),
-		TO_DATE(#{dto.endDate}, 'YYYY-MM-DD HH24:MI'),
-		TO_DATE(#{dto.voteDeadline}, 'YYYY-MM-DD HH24:MI')
+			schedule_id,
+			name,
+			description,
+			is_group,
+			schedule_category_id,
+			start_date,
+			end_date,
+			vote_deadline
+		)
+		SELECT
+			seq_schedule.NEXTVAL,
+			#{dto.name},
+			#{dto.description, jdbcType=VARCHAR},
+			1,
+			#{dto.scheduleCategoryId},
+			TO_DATE(#{dto.startDate}, 'YYYY-MM-DD HH24:MI'),
+			TO_DATE(#{dto.endDate}, 'YYYY-MM-DD HH24:MI'),
+			TO_DATE(#{dto.voteDeadline}, 'YYYY-MM-DD HH24:MI')
+		FROM DUAL
+		WHERE EXISTS (
+			SELECT 1 FROM schedule_category
+			WHERE schedule_category_id = #{dto.scheduleCategoryId}
 		)
 		<selectKey keyProperty="id" resultType="long" order="AFTER">
 			SELECT seq_schedule.CURRVAL FROM DUAL
@@ -144,8 +161,12 @@
 		INSERT ALL
 		<foreach collection="dto.inviteEmailList" item="email" separator=" ">
 			INTO member_schedule (schedule_id, email, is_owner)
-			VALUES (#{id}, #{email}, 1)
+			VALUES (#{id}, #{email}, 0)
 		</foreach>
+		<!-- 모임장용 insert -->
+		INTO member_schedule (schedule_id, email, is_owner)
+		VALUES (#{id}, #{ownerEmail}, 1)
 		SELECT * FROM DUAL
 	</insert>
+
 </mapper>
