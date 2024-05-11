@@ -287,9 +287,7 @@
   color: #aaa;
 }
 
-.calendar-dates td.active {
-  color: #fff;
-}
+
 
 .calendar-dates td::before {
   position: absolute;
@@ -299,16 +297,22 @@
   left: 50%;
   width: 40px;
   height: 40px;
-  border-radius: 50%;
   transform: translate(-50%, -50%);
 }
 
-.calendar-dates td.active::before {
+.calendar-dates td.start-date-calendar::before {
+  border-top-left-radius: 50%;
+  border-bottom-left-radius: 50%;
   background: #4fd1c5;
 }
 
+.calendar-dates td.end-date-calendar::before {
+  border-top-right-radius: 50%;
+  border-bottom-right-radius: 50%;
+  background: #4fd1c5;
+}
 
-.calendar-dates td:not(.active):hover::before {
-  background: #e4e1e1;
+.calendar-dates td.between-date-calendar::before {
+  background: #4fd1c5;
 }
 /* 달력 End*/
