@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import jakarta.validation.Valid;
+import today.meevote.domain.schedule.dto.request.CreateGroupScheduleDto;
 import today.meevote.domain.schedule.dto.request.CreatePersonalScheduleDto;
 import today.meevote.domain.schedule.dto.response.GetMyScheduleListDto;
 import today.meevote.domain.schedule.dto.response.GetScheduleCategoryDto;
@@ -24,8 +25,6 @@ public interface ScheduleDao {
 
 	public boolean isExistScheduleByInfo(@Param("email") String email, @Param("scheduleId") long scheduleId);
 
-	public void deleteMemberSchedule(Long scheduleId);
-
 	public void deletePersonalSchedule(Long scheduleId);
 
 	List<GetMyScheduleListDto> getMyScheduleList(
@@ -42,4 +41,8 @@ public interface ScheduleDao {
 	List<GetScheduleCategoryDto> getCategory();
 
     public void createSchedulePlace(Map<String, Object> dto);
+
+	public void createGroupSchedule(Map<String, Object> dto);
+
+	public void createGroupMemberSchedule(Map<String, Object> dto);
 }

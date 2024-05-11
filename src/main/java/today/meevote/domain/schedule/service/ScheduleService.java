@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.util.StringUtils;
 import today.meevote.contextholder.MemberContextHolder;
 import today.meevote.domain.schedule.dao.ScheduleDao;
+import today.meevote.domain.schedule.dto.request.CreateGroupScheduleDto;
 import today.meevote.domain.schedule.dto.request.CreatePersonalScheduleDto;
 import today.meevote.domain.schedule.dto.response.GetMyScheduleListDto;
 import today.meevote.domain.schedule.dto.response.GetScheduleCategoryDto;
@@ -45,7 +46,7 @@ public class ScheduleService {
         params.put("dto", dto);
 
         scheduleDao.createPersonalSchedule(params);
-        Long scheduleId = (Long) params.get("id"); 
+        Long scheduleId = (Long) params.get("id");
         scheduleDao.createMemberSchedule(email, scheduleId);
 
         if (StringUtils.hasText(dto.getPlaceName())
@@ -61,7 +62,6 @@ public class ScheduleService {
         if (!scheduleDao.isExistScheduleByInfo(email, scheduleId)) {
             throw new RestException(FailureInfo.NOT_EXIST_SCHEDULE);
         }
-        scheduleDao.deleteMemberSchedule(scheduleId);
         scheduleDao.deletePersonalSchedule(scheduleId);
 	}
 
@@ -73,5 +73,12 @@ public class ScheduleService {
     public List<GetScheduleCategoryDto> getCategory() {
         return scheduleDao.getCategory();
     }
-	
+
+    @Transactional
+    public void createGroupSchedule(CreateGroupScheduleDto createGroupScheduleDto) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("dto", createGroupScheduleDto);
+        scheduleDao.createGroupSchedule(params);
+        scheduleDao.createGroupMemberSchedule(params);
+    }
 }
