@@ -34,7 +34,7 @@ public class CreateGroupScheduleDto {
     @Schema(description = "일정 종료일", defaultValue = "2024-05-08 21:00")
     private String endDate;
 
-    @Schema(description = "초대 이메일 목록", defaultValue = "[\"test@gmail.com\", \"test2@gmail.com\"]")
+    @Schema(description = "초대 이메일 목록", defaultValue = "[\"test2@gmail.com\", \"test3@gmail.com\"]")
     private List<
             @NotBlank(message = "이메일을 입력해주세요.")
             @Email(message = "유효한 이메일 형식이 아닙니다.")
