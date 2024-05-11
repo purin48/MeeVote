@@ -1,4 +1,4 @@
-package today.meevote.domain.vote_schedule.dto.request;
+package today.meevote.domain.voting_schedule.dto.request;
 
 import lombok.Getter;
 

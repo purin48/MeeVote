@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
-<mapper namespace="today.meevote.domain.vote_schedule.dao.VotingScheduleDao">
+<mapper namespace="today.meevote.domain.voting_schedule.dao.VotingScheduleDao">
 
     <select id="getVotingScheduleList">
         SELECT
@@ -83,5 +83,47 @@
         WHERE ms.schedule_id = #{scheduleId}
         ORDER BY ms.is_owner DESC
     </select>
+
+    <select id="isExistVotingSchedule">
+        SELECT COUNT(*)
+        FROM
+            member_schedule ms
+            JOIN schedule s ON ms.schedule_id = s.schedule_id
+            LEFT JOIN schedule_place sp ON s.schedule_id = sp.schedule_id
+        WHERE
+            ms.email = #{email}
+            AND s.schedule_id = #{scheduleId}
+            AND s.is_group = 1
+            AND sp.schedule_id IS NULL
+    </select>
+
+    <select id="isExistPlaceToVote">
+        SELECT COUNT(*)
+        FROM place_to_vote
+        WHERE
+            schedule_id = #{scheduleId}
+            AND place_name = #{dto.placeName}
+            AND lat = #{dto.lat}
+            AND lng = #{dto.lng}
+    </select>
+
+    <insert id="addPlaceToVote">
+        INSERT INTO place_to_vote
+            (
+             place_to_vote_id,
+             schedule_id,
+             place_name,
+             lat,
+             lng
+             )
+        VALUES
+            (
+             seq_place_to_vote.NEXTVAL,
+             #{scheduleId},
+             #{dto.placeName},
+             #{dto.lat},
+             #{dto.lng}
+             )
+    </insert>
 
 </mapper>

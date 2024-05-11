@@ -31,7 +31,8 @@ public enum FailureInfo {
     NOT_EXIST_CATEGORY("S01", "존재하지 않는 카테고리입니다."),
     NOT_EXIST_SCHEDULE("S02", "존재하지 않는 일정입니다."),
 
-    NOT_EXIST_VOTING_SCHEDULE("V00", "존재하지않는 투표일정입니다.");
+    NOT_EXIST_VOTING_SCHEDULE("V00", "존재하지않는 투표일정입니다."),
+    ALREADY_EXIST_PLACE_TO_VOTE("P00", "이미 존재하는 장소입니다.");
     private final String code;
     private final String message;
 
