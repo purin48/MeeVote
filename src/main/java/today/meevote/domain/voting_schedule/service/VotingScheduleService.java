@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import today.meevote.contextholder.MemberContextHolder;
 import today.meevote.domain.voting_schedule.dao.VotingScheduleDao;
 import today.meevote.domain.voting_schedule.dto.request.CreatePlaceDto;
-import today.meevote.domain.voting_schedule.dto.request.SelectPlaceDto;
 import today.meevote.domain.voting_schedule.dto.response.*;
 import today.meevote.exception.rest.RestException;
 import today.meevote.response.FailureInfo;
@@ -67,6 +66,9 @@ public class VotingScheduleService {
         Long scheduleId = votingScheduleDao.getScheduleIdByPlaceToVoteId(placeToVoteId)
                 .orElseThrow(() -> new RestException(FailureInfo.NOT_EXIST_PLACE_TO_VOTE));
 
+        if(!votingScheduleDao.isExistVotingSchedule(scheduleId))
+            throw new RestException(FailureInfo.NOT_EXIST_VOTING_SCHEDULE);
+
         if(!votingScheduleDao.isExistMemberSchedule(email, scheduleId))
             throw new RestException(FailureInfo.NOT_EXIST_MEMBER_SCHEDULE);
 
@@ -75,5 +77,34 @@ public class VotingScheduleService {
         else
             votingScheduleDao.createPlaceVoted(email, placeToVoteId);
 
+    }
+
+    public void updateDeparturePlace(long scheduleId, CreatePlaceDto updateDeparturePlaceDto) {
+        String email = MemberContextHolder.getEmail();
+
+        if(!votingScheduleDao.isExistVotingSchedule(scheduleId))
+            throw new RestException(FailureInfo.NOT_EXIST_VOTING_SCHEDULE);
+
+        if(!votingScheduleDao.isExistMemberSchedule(email, scheduleId))
+            throw new RestException(FailureInfo.NOT_EXIST_MEMBER_SCHEDULE);
+
+        if(votingScheduleDao.isExistDeparturePlace(email, scheduleId))
+            votingScheduleDao.updateDeparturePlace(email, scheduleId, updateDeparturePlaceDto);
+        else
+            votingScheduleDao.createDeparturePlace(email, scheduleId, updateDeparturePlaceDto);
+
+
+    }
+
+    public void deleteDeparturePlace(long scheduleId) {
+        String email = MemberContextHolder.getEmail();
+
+        if(!votingScheduleDao.isExistVotingSchedule(scheduleId))
+            throw new RestException(FailureInfo.NOT_EXIST_VOTING_SCHEDULE);
+
+        if(!votingScheduleDao.isExistMemberSchedule(email, scheduleId))
+            throw new RestException(FailureInfo.NOT_EXIST_MEMBER_SCHEDULE);
+
+        votingScheduleDao.deleteDeparturePlace(email, scheduleId);
     }
 }

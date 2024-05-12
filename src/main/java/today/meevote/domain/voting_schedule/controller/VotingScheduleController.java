@@ -10,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import today.meevote.domain.voting_schedule.dto.request.CreatePlaceDto;
-import today.meevote.domain.voting_schedule.dto.request.SelectPlaceDto;
 import today.meevote.domain.voting_schedule.dto.response.GetVotingScheduleDetailDto;
 import today.meevote.domain.voting_schedule.dto.response.GetVotingScheduleListDto;
 import today.meevote.domain.voting_schedule.service.VotingScheduleService;
@@ -46,8 +45,8 @@ public class VotingScheduleController {
     @ApiResponse(responseCode = "1", description = "성공")
     @ApiResponse(responseCode = "2", description = "실패",
             content = @Content(examples = {
-                    @ExampleObject(name = "해당 일정의 멤버가 아님", value = "{\"isSuccess\": false, \"code\": \"S99\", \"message\": \"해당 일정의 멤버가 아닙니다.\"}"),
                     @ExampleObject(name = "존재하지않는 투표일정", value = "{\"isSuccess\": false, \"code\": \"V00\", \"message\": \"존재하지않는 투표일정입니다.\"}"),
+                    @ExampleObject(name = "해당 일정의 멤버가 아님", value = "{\"isSuccess\": false, \"code\": \"S99\", \"message\": \"해당 일정의 멤버가 아닙니다.\"}"),
                     @ExampleObject(name = "인증되지않은 요청", value = "{\"isSuccess\": false, \"code\": \"Z97\", \"message\": \"인증되지않은 요청입니다.\"}"),
                     @ExampleObject(name = "내부 서버 오류", value = "{\"isSuccess\": false, \"code\": \"Z99\", \"message\": \"서버 오류가 발생했습니다.\"}")
             }))
@@ -61,8 +60,8 @@ public class VotingScheduleController {
     @ApiResponse(responseCode = "1", description = "성공")
     @ApiResponse(responseCode = "2", description = "실패",
             content = @Content(examples = {
-                    @ExampleObject(name = "해당 일정의 멤버가 아님", value = "{\"isSuccess\": false, \"code\": \"S99\", \"message\": \"해당 일정의 멤버가 아닙니다.\"}"),
                     @ExampleObject(name = "존재하지않는 투표일정", value = "{\"isSuccess\": false, \"code\": \"V00\", \"message\": \"존재하지않는 투표일정입니다.\"}"),
+                    @ExampleObject(name = "해당 일정의 멤버가 아님", value = "{\"isSuccess\": false, \"code\": \"S99\", \"message\": \"해당 일정의 멤버가 아닙니다.\"}"),
                     @ExampleObject(name = "이미 존재하는 장소", value = "{\"isSuccess\": false, \"code\": \"P00\", \"message\": \"이미 존재하는 장소입니다.\"}"),
                     @ExampleObject(name = "인증되지않은 요청", value = "{\"isSuccess\": false, \"code\": \"Z97\", \"message\": \"인증되지않은 요청입니다.\"}"),
                     @ExampleObject(name = "내부 서버 오류", value = "{\"isSuccess\": false, \"code\": \"Z99\", \"message\": \"서버 오류가 발생했습니다.\"}")
@@ -77,6 +76,7 @@ public class VotingScheduleController {
     @ApiResponse(responseCode = "1", description = "성공")
     @ApiResponse(responseCode = "2", description = "실패",
             content = @Content(examples = {
+                    @ExampleObject(name = "존재하지않는 투표일정", value = "{\"isSuccess\": false, \"code\": \"V00\", \"message\": \"존재하지않는 투표일정입니다.\"}"),
                     @ExampleObject(name = "해당 일정의 멤버가 아님", value = "{\"isSuccess\": false, \"code\": \"S99\", \"message\": \"해당 일정의 멤버가 아닙니다.\"}"),
                     @ExampleObject(name = "존재하지않는 투표장소", value = "{\"isSuccess\": false, \"code\": \"P01\", \"message\": \"존재하지않는 투표장소입니다.\"}"),
                     @ExampleObject(name = "인증되지않은 요청", value = "{\"isSuccess\": false, \"code\": \"Z97\", \"message\": \"인증되지않은 요청입니다.\"}"),
@@ -88,15 +88,39 @@ public class VotingScheduleController {
         return new BaseResponse(SuccessInfo.TOGGLE_VOTE_PLACE);
     }
 
-    @Operation(summary = "내 출발지 수정하기(미완)")
+    @Operation(summary = "내 출발지 수정하기")
+    @ApiResponse(responseCode = "1", description = "성공")
+    @ApiResponse(responseCode = "2", description = "실패",
+            content = @Content(examples = {
+                    @ExampleObject(name = "존재하지않는 투표일정", value = "{\"isSuccess\": false, \"code\": \"V00\", \"message\": \"존재하지않는 투표일정입니다.\"}"),
+                    @ExampleObject(name = "해당 일정의 멤버가 아님", value = "{\"isSuccess\": false, \"code\": \"S99\", \"message\": \"해당 일정의 멤버가 아닙니다.\"}"),
+                    @ExampleObject(name = "인증되지않은 요청", value = "{\"isSuccess\": false, \"code\": \"Z97\", \"message\": \"인증되지않은 요청입니다.\"}"),
+                    @ExampleObject(name = "내부 서버 오류", value = "{\"isSuccess\": false, \"code\": \"Z99\", \"message\": \"서버 오류가 발생했습니다.\"}")
+            }))
     @PutMapping("/departure")
-    public BaseResponse createDeparturePlace(CreatePlaceDto updateDeparturePlaceDto){
-        return null;
+    public BaseResponse updateDeparturePlace(long scheduleId, @Valid @RequestBody CreatePlaceDto updateDeparturePlaceDto){
+        votingScheduleService.updateDeparturePlace(scheduleId, updateDeparturePlaceDto);
+        return new BaseResponse(SuccessInfo.UPDATE_DEPARTURE_PLACE);
+    }
+
+    @Operation(summary = "내 출발지 삭제 (내 출발지 집으로 설정)")
+    @ApiResponse(responseCode = "1", description = "성공")
+    @ApiResponse(responseCode = "2", description = "실패",
+            content = @Content(examples = {
+                    @ExampleObject(name = "존재하지않는 투표일정", value = "{\"isSuccess\": false, \"code\": \"V00\", \"message\": \"존재하지않는 투표일정입니다.\"}"),
+                    @ExampleObject(name = "해당 일정의 멤버가 아님", value = "{\"isSuccess\": false, \"code\": \"S99\", \"message\": \"해당 일정의 멤버가 아닙니다.\"}"),
+                    @ExampleObject(name = "인증되지않은 요청", value = "{\"isSuccess\": false, \"code\": \"Z97\", \"message\": \"인증되지않은 요청입니다.\"}"),
+                    @ExampleObject(name = "내부 서버 오류", value = "{\"isSuccess\": false, \"code\": \"Z99\", \"message\": \"서버 오류가 발생했습니다.\"}")
+            }))
+    @DeleteMapping("/departure")
+    public BaseResponse deleteDeparturePlace(long scheduleId){
+        votingScheduleService.deleteDeparturePlace(scheduleId);
+        return new BaseResponse(SuccessInfo.DELETE_DEPARTURE_PLACE);
     }
 
     @Operation(summary = "장소 확정하기(미완)")
     @PostMapping("/place/confirm")
-    public BaseResponse decidePlace(SelectPlaceDto selectPlaceDto){
+    public BaseResponse decidePlace(long placeToVoteId){
         return null;
     }
 

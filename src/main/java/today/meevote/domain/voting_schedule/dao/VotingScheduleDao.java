@@ -3,7 +3,6 @@ package today.meevote.domain.voting_schedule.dao;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import today.meevote.domain.voting_schedule.dto.request.CreatePlaceDto;
-import today.meevote.domain.voting_schedule.dto.request.SelectPlaceDto;
 import today.meevote.domain.voting_schedule.dto.response.GetVotingScheduleListDto;
 import today.meevote.domain.voting_schedule.dto.response.PlaceToVoteDto;
 import today.meevote.domain.voting_schedule.dto.response.VotingScheduleInfoDto;
@@ -41,4 +40,12 @@ public interface VotingScheduleDao {
     public void createPlaceVoted(@Param("email") String email, @Param("placeToVoteId") long placeToVoteId);
 
     public Optional<Long> getScheduleIdByPlaceToVoteId(long placeToVoteId);
+
+    public boolean isExistDeparturePlace(@Param("email") String email, @Param("scheduleId") long scheduleId);
+
+    public void createDeparturePlace(@Param("email") String email, @Param("scheduleId") long scheduleId, @Param("dto") CreatePlaceDto updateDeparturePlaceDto);
+
+    public void updateDeparturePlace(@Param("email") String email, @Param("scheduleId") long scheduleId, @Param("dto") CreatePlaceDto updateDeparturePlaceDto);
+
+    public void deleteDeparturePlace(@Param("email") String email, @Param("scheduleId") long scheduleId);
 }
