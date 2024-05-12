@@ -93,8 +93,8 @@
             m.img_src,
             ms.is_owner,
             dp.place_name AS departure_place_name,
-            dp.lat AS departure_lat,
-            dp.lng AS departure_lng
+            dp.lat,
+            dp.lng
         FROM
             member m
             JOIN member_schedule ms ON m.email = ms.email
@@ -189,4 +189,42 @@
         FROM place_to_vote
         WHERE place_to_vote_id = #{placeToVoteId}
     </select>
+
+    <select id="isExistDeparturePlace">
+        SELECT COUNT(*)
+        FROM departure_place
+        WHERE email = #{email}
+        AND schedule_id =#{scheduleId}
+    </select>
+
+    <insert id="createDeparturePlace">
+        INSERT INTO departure_place
+        (email, schedule_id, place_name, lat, lng)
+        VALUES
+        (
+         #{email},
+         #{scheduleId},
+         #{dto.placeName},
+         #{dto.lat},
+         #{dto.lng}
+        )
+    </insert>
+
+    <update id="updateDeparturePlace">
+        UPDATE departure_place
+        SET
+            place_name = #{dto.placeName},
+            lat = #{dto.lat},
+            lng = #{dto.lng}
+        WHERE
+            email = #{email}
+            AND schedule_id = #{scheduleId}
+    </update>
+
+    <delete id="deleteDeparturePlace">
+        DELETE FROM departure_place
+        WHERE
+            email = #{email}
+            AND schedule_id = #{scheduleId}
+    </delete>
 </mapper>

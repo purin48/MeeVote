@@ -29,7 +29,9 @@ public enum SuccessInfo {
     GET_VOTE_SCHEDULE_LIST("투표 중인 일정 목록 조회가 완료되었습니다."),
 	GET_VOTE_SCHEDULE_DETAIL("투표 중인 일정 상세조회가 완료되었습니다."),
 	ADD_PLACE_TO_VOTE("장소 추가가 완료되었습니다."),
-	TOGGLE_VOTE_PLACE("장소 투표/투표취소가 완료되었습니다.");
+	TOGGLE_VOTE_PLACE("장소 투표/투표취소가 완료되었습니다."),
+	UPDATE_DEPARTURE_PLACE("내 출발지 수정하기가 완료되었습니다."),
+	DELETE_DEPARTURE_PLACE("내 출발지 삭제가 완료되었습니다.");
     private final String code = "A00";
     private final String message;
 }
