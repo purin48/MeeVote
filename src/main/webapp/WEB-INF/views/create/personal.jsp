@@ -54,7 +54,7 @@ prefix="c" %>
     <link rel="stylesheet" href="/css/create/common.css" />
     <!-- custom js import -->
     <script src="/js/inc/sidebar.js" defer></script>
-    <script src="/js/create/common.js" defer></script>
+    <script src="/js/create/personal.js" defer></script>
   </head>
   <body>
     <!-- 사이드바 include -->
@@ -105,7 +105,7 @@ prefix="c" %>
           <input type="text" class="form-control" placeholder="일정 이름 입력" />
         </div>
         <!-- 날짜 입력 -->
-        <div class="date-container">
+        <div class="row-container">
           <div class="dateinput-container">
             <div class="date-text">
               <i class="bi bi-clock"></i>
@@ -132,8 +132,14 @@ prefix="c" %>
           </div>
         </div>
         <!-- 날짜 입력End -->
-        <!-- 하루종일 체크 -->
         <div class="row-container">
+          <!-- 카테고리 -->
+          <div class="content-container" id="category-container">
+            <i class="bi bi-pin-angle"></i>
+            <select id="category-select"></select>
+          </div>
+          <!-- 카테고리 End-->
+          <!-- 하루종일 체크 -->
           <div class="content-container" id="checkbox-container">
             <span>하루종일</span>
             <input
@@ -144,12 +150,6 @@ prefix="c" %>
             />
           </div>
           <!-- 하루종일 체크 End-->
-          <!-- 카테고리 -->
-          <div class="content-container" id="category-container">
-            <i class="bi bi-pin-angle"></i>
-            <select id="category-select"></select>
-          </div>
-          <!-- 카테고리 End-->
         </div>
         <!-- 장소 -->
         <div class="content-container" id="place-container">
@@ -158,30 +158,6 @@ prefix="c" %>
             <input type="text" placeholder="장소를 선택하세요" />
             <div id="search-list-container">
               <ul id="search-list">
-                <li id="search-item">
-                  <p>혜화역</p>
-                  <p>서울 종로구 창경궁로</p>
-                </li>
-                <li id="search-item">
-                  <p>혜화역</p>
-                  <p>서울 종로구 창경궁로</p>
-                </li>
-                <li id="search-item">
-                  <p>혜화역</p>
-                  <p>서울 종로구 창경궁로</p>
-                </li>
-                <li id="search-item">
-                  <p>혜화역</p>
-                  <p>서울 종로구 창경궁로</p>
-                </li>
-                <li id="search-item">
-                  <p>혜화역</p>
-                  <p>서울 종로구 창경궁로</p>
-                </li>
-                <li id="search-item">
-                  <p>혜화역</p>
-                  <p>서울 종로구 창경궁로</p>
-                </li>
               </ul>
             </div>
           </div>

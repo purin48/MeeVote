@@ -139,17 +139,25 @@ body {
 .row-container {
   width: 100%;
   display: flex;
-  /* justify-content: space-between; */
   align-items: center;
   gap : 15px;
 }
 
 .column-container {
   width: 100%;
-  /* display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap : 15px; */
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  align-items: end;
+  gap : 15px;
+}
+
+#mid-container {
+  width: 100%;
+  display: flex;
+  align-items: end;
+  gap : 15px;
 }
 
 .content-container{
@@ -184,14 +192,8 @@ body {
 /* ---- 이름 입력 End ---- */
 
 /* ---- 날짜 입력 ---- */
-.date-container {
-  width: 100%;
-  display: flex;
-  gap: 10px;
-}
-
 .dateinput-container {
-  width: 50%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -212,6 +214,7 @@ body {
 
 /* ---- 하루종일 체크 ---- */
 #checkbox-container {
+  justify-content: end;
   padding: 0px 10px;
 }
 
@@ -223,6 +226,7 @@ body {
 
 /* ---- 카테고리 입력 ---- */
 #category-container > select, #category-container option{
+  width: 100%;
   padding: 5px;
   font-size: 14px;
   font-weight: bold;
@@ -332,19 +336,21 @@ body {
   color: white;
   background-color: #4fd1c5;
 }
-
 /* ---- 저장 버튼 End---- */
+
+/* ---- 경고 문구 ---- */
+.input-warning {
+  width: 100%;
+  text-align: center;
+  color: tomato;
+  display: none;
+}
+/* ---- 경고 문구 End---- */
 /* 우측 섹션 End */
 
 
 
 /* 반응형 미디어쿼리 */
-/* @media (max-width: 1400px) {
-  #right-section {
-    width: 46vw;
-  }
-} */
-
 @media (max-width: 1350px) {
   body {
     align-items: start;
