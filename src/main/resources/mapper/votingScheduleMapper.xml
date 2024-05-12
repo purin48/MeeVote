@@ -227,4 +227,11 @@
             email = #{email}
             AND schedule_id = #{scheduleId}
     </delete>
+
+    <insert id="confirmPlace">
+        INSERT INTO schedule_place (schedule_id, place_name, lat, lng)
+        SELECT schedule_id, place_name, lat, lng
+        FROM place_to_vote
+        WHERE place_to_vote_id = #{placeToVoteId}
+    </insert>
 </mapper>

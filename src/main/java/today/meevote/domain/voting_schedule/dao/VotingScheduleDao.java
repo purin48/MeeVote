@@ -48,4 +48,6 @@ public interface VotingScheduleDao {
     public void updateDeparturePlace(@Param("email") String email, @Param("scheduleId") long scheduleId, @Param("dto") CreatePlaceDto updateDeparturePlaceDto);
 
     public void deleteDeparturePlace(@Param("email") String email, @Param("scheduleId") long scheduleId);
+
+    public void confirmPlace(long placeToVoteId);
 }

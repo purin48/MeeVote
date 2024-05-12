@@ -107,4 +107,19 @@ public class VotingScheduleService {
 
         votingScheduleDao.deleteDeparturePlace(email, scheduleId);
     }
+
+    public void confirmPlace(long placeToVoteId) {
+        String email = MemberContextHolder.getEmail();
+
+        Long scheduleId = votingScheduleDao.getScheduleIdByPlaceToVoteId(placeToVoteId)
+                .orElseThrow(() -> new RestException(FailureInfo.NOT_EXIST_PLACE_TO_VOTE));
+
+        if(!votingScheduleDao.isExistVotingSchedule(scheduleId))
+            throw new RestException(FailureInfo.NOT_EXIST_VOTING_SCHEDULE);
+
+        if(!votingScheduleDao.isScheduleOwner(email, scheduleId))
+            throw new RestException(FailureInfo.NOT_SCHEDULE_OWNER);
+
+        votingScheduleDao.confirmPlace(placeToVoteId);
+    }
 }
