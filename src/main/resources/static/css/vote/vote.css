@@ -1,0 +1,42 @@
+body {
+  /* position: relative; */
+  width: 100%;
+}
+
+.map-container {
+  width: 100%;
+  height: 100vh;
+  z-index: 0;
+}
+
+/* 검색창 */
+.place-search {
+  position: fixed;
+  left: 50%;
+  width: 200px;
+  padding: 5px 10px;
+  border: 1px solid #BBBBBB;
+  border-radius: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1;
+  background-color: white;
+}
+
+.place-search > input{
+  width: 90%;
+  border: none;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.place-search > i{
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.place-search > i:hover{
+  color: #4fd1c5;
+}
+/* 검색창 End */
