@@ -47,8 +47,6 @@ prefix="c" %>
     ></script>
     <!-- sweet alert -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
-    <!-- kakao mpa -->
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6e5d6d2e61f5ab7c5909eee58f094989&libraries=services"></script>
     <!-- custom css -->
     <link rel="stylesheet" href="/css/inc/sidebar.css" />
     <link rel="stylesheet" href="/css/create/group.css" />
@@ -226,8 +224,8 @@ prefix="c" %>
           ></textarea>
         </div>
         <!-- 상세 설명 End-->
-        <button id="save-btn">저장</button>
         <p class="input-warning">마감일은 현재 시각 이후여야합니다.</p>
+        <button id="save-btn">저장</button>
       </div>
       <!-- 오른쪽 사이드 End-->
 

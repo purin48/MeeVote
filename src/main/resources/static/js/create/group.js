@@ -243,7 +243,32 @@ $('#category-select').change(function(e){
 }) 
 // ---- 이벤트 등록 : 카테고리 선택 End ----
 
-// ---- 이벤트 등록 : 장소 검색 ----
+// ---- 이벤트 등록 : 회원 검색 ----
+$('#name-serach > i').click(function(e){
+		$.ajax({
+		type: "POST",
+		url: '/api/schedule/personal',
+		dataType: "json",
+		contentType: "application/json",
+		data: JSON.stringify(data),
+		success: function (response) {
+			if (!response.isSuccess) {
+				// 예외 처리
+			} 
+			// 일정 생성 성공
+			$('.top-container').css('display', 'none');
+			Swal.fire({
+				title: '일정 생성이 완료되었습니다',
+				icon: 'success',
+				confirmButtonColor: '#4fd1c5',
+				confirmButtonText: '완료',
+			}).then((result) => {
+				if(result.isConfirmed) window.location.href = '/';
+			});
+		},
+	});
+})
+
 let timer;
 $('#search-container > input').on('input', function(e){
 	clearTimeout(timer);
