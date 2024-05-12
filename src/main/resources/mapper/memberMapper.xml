@@ -36,7 +36,7 @@
     </select>
     
     
-    <select id="findMyInfoByEmail" resultType="today.meevote.domain.member.dto.reponse.GetMyInfoDto">
+    <select id="findMyInfoByEmail" resultType="today.meevote.domain.member.dto.response.GetMyInfoDto">
 	    SELECT 
 	        name,
 	        address,
@@ -64,7 +64,7 @@
         WHERE email = #{email}
     </update>
     
-    <select id="findMemberForInviteByEmail" resultType="today.meevote.domain.member.dto.reponse.GetMemberForInviteDto">
+    <select id="findMemberForInviteByEmail" resultType="today.meevote.domain.member.dto.response.GetMemberForInviteDto">
 	    SELECT 
 	        email,
 	        name

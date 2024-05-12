@@ -1,13 +1,9 @@
-package today.meevote.domain.member.dto.reponse;
+package today.meevote.domain.member.dto.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter
 public class GetMyInfoDto {
 	@Schema(description = "이름", defaultValue = "김철수")
 	private String name;

@@ -1,10 +1,10 @@
-package today.meevote.domain.schedule.dto.response;
+package today.meevote.domain.voting_schedule.dto.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 
 @Getter
-public class ScheduleMemberDto {
+public class VotingScheduleMemberDto {
     @Schema(description = "이메일", defaultValue = "test@gmail.com")
     private String email;
     @Schema(description = "이름", defaultValue = "김철수")
