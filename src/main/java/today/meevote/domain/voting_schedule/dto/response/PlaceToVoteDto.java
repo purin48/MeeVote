@@ -15,4 +15,6 @@ public class PlaceToVoteDto {
     private String lng;
     @Schema(description = "득표수", defaultValue = "2")
     private int votedCount;
+    @Schema(description = "요청자가 이 장소에 투표했는지?", defaultValue = "true")
+    private Boolean didRequesterVoteHere;
 }

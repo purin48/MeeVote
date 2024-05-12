@@ -23,6 +23,5 @@ public class VotingScheduleInfoDto {
     private String endDate;
     @Schema(description = "투표마감일시", defaultValue = "2024-05-18 23:00")
     private String voteDeadline;
-    @Schema(description = "요청자가 모임장이면 true, 아니면 false", defaultValue = "true")
-    private Boolean isRequesterOwner;
+
 }
