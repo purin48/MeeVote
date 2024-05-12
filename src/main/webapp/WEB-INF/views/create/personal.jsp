@@ -51,7 +51,7 @@ prefix="c" %>
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6e5d6d2e61f5ab7c5909eee58f094989&libraries=services"></script>
     <!-- custom css -->
     <link rel="stylesheet" href="/css/inc/sidebar.css" />
-    <link rel="stylesheet" href="/css/create/common.css" />
+    <link rel="stylesheet" href="/css/create/personal.css" />
     <!-- custom js import -->
     <script src="/js/inc/sidebar.js" defer></script>
     <script src="/js/create/personal.js" defer></script>
@@ -96,7 +96,6 @@ prefix="c" %>
         <!-- 달력 End -->
       </div>
       <!-- 왼쪽 사이드 End-->
-
       <!-- 오른쪽 사이드 -->
       <div class="section" id="right-section">
         <!-- 일정명 -->

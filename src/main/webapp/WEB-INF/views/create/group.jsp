@@ -51,7 +51,7 @@ prefix="c" %>
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6e5d6d2e61f5ab7c5909eee58f094989&libraries=services"></script>
     <!-- custom css -->
     <link rel="stylesheet" href="/css/inc/sidebar.css" />
-    <link rel="stylesheet" href="/css/create/common.css" />
+    <link rel="stylesheet" href="/css/create/group.css" />
     <!-- custom js import -->
     <script src="/js/inc/sidebar.js" defer></script>
     <script src="/js/create/group.js" defer></script>
@@ -96,6 +96,43 @@ prefix="c" %>
         <!-- 달력 End -->
       </div>
       <!-- 왼쪽 사이드 End-->
+      
+      <!-- 맴버 추가 사이드 -->
+      <div class="section" id="mid-section">
+        <!-- 맴버 검색창 -->
+        <div id="search-container">
+          <div id="name-serach">
+            <input type="text" placeholder="함께할 인원 검색">
+            <i class="bi bi-search"></i>
+          </div>
+          <div id="search-list-container">
+            <ul id="search-list">
+              <li class="search-item">
+                <div class="member-image"> 
+                  <img src="/image/profile.png" alt="">
+                </div>
+                <div class="member-info">
+                  <p>김한주</p>
+                  <p>rlagkswn37@naver.com</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <!-- 추가된 맴버 -->
+        <ul class="member-list">
+          <li class="search-item">
+            <div class="member-image"> 
+              <img src="/image/profile.png" alt="">
+            </div>
+            <div class="member-info">
+              <p>김한주</p>
+              <p>rlagkswn37@naver.com</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <!-- 맴버 추가 사이드 End-->
 
       <!-- 오른쪽 사이드 -->
       <div class="section" id="right-section">
@@ -189,12 +226,11 @@ prefix="c" %>
           ></textarea>
         </div>
         <!-- 상세 설명 End-->
-        <!-- 저장 버튼 -->
-        <p class="input-warning">마감일은 현재 시각 이후여야합니다.</p>
         <button id="save-btn">저장</button>
-        <!-- 저장 버튼 End-->
+        <p class="input-warning">마감일은 현재 시각 이후여야합니다.</p>
       </div>
       <!-- 오른쪽 사이드 End-->
+
     </div>
   </body>
 </html>

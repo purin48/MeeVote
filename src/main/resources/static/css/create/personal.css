@@ -252,17 +252,6 @@ body {
   border: #BBBBBB 1px solid;
 }
 
-#search-list-container{ 
-  position: absolute;
-  width: 100%;
-  max-height: 100px;
-  overflow-y: auto; 
-  border: #BBBBBB 1px solid;
-  border-radius: 5px;
-  background-color: white;
-  z-index: 1;
-}
-
 #search-list-container { 
   position: absolute;
   width: 100%;
@@ -377,41 +366,3 @@ body {
   }
 }
 /* 반응형 미디어쿼리 End*/
-
-
-#weather-container{
-  align-items: start;
-}
-
-#weather-infos {
-  width: 220px;
-  height: 150px;
-  padding: 10px;
-  border-radius: 10px;
-  background: linear-gradient(to right, #2A8484, #4fd1c5);
-  box-shadow: 5px 10px 15px lightgray;
-  display: flex;
-  justify-content: space-between;
-}
-
-#weather-infos > div {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  color: white;
-}
-
-#weather-texts > p {
-  margin: 0px;
-}
-
-#weather-texts > p:last-child {
-  font-size: 36px;
-}
-
-#right-section-foot {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-}
