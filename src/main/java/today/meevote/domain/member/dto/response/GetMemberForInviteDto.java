@@ -15,4 +15,7 @@ public class GetMemberForInviteDto {
 	
 	@Schema(description = "이름", defaultValue = "김철수")
 	private String name;
+
+	@Schema(description = "프로필 이미지 경로", defaultValue = "default.jpg")
+	private String imgSrc;
 }

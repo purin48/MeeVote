@@ -15,6 +15,8 @@ import today.meevote.domain.member.dto.request.EditMyPasswordDto;
 import today.meevote.exception.rest.RestException;
 import today.meevote.response.FailureInfo;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class MemberService {
@@ -61,5 +63,10 @@ public class MemberService {
 		
 		return memberDao.findMemberForInviteByEmail(email)
 			.orElseThrow(() -> new RestException(FailureInfo.NOT_EXIST_MEMBER));
+	}
+
+	public List<GetMemberForInviteDto> searchMemberListByName(String name) {
+		String email = MemberContextHolder.getEmail();
+		return memberDao.searchMemberListByName(name, email);
 	}
 }

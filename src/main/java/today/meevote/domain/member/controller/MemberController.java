@@ -31,6 +31,8 @@ import today.meevote.response.DataResponse;
 import today.meevote.response.SuccessInfo;
 import today.meevote.utils.SessionUtil;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/member")
@@ -110,6 +112,18 @@ public class MemberController {
     		String email) {
 		return new DataResponse<>(SuccessInfo.GET_MEMBER_FOR_INVITE,
 								memberService.getMemberForInvite(email));
+	}
+	@Operation(summary = "이름으로 회원목록 검색(본인은 검색 결과에 안나옴)")
+	@ApiResponse(responseCode = "1", description = "성공")
+	@ApiResponse(responseCode = "2", description = "실패",
+			content = @Content(examples = {
+					@ExampleObject(name = "인증되지않은 요청", value = "{\"isSuccess\": false, \"code\": \"Z97\", \"message\": \"인증되지않은 요청입니다.\"}"),
+					@ExampleObject(name = "내부 서버 오류", value = "{\"isSuccess\": false, \"code\": \"Z99\", \"message\": \"서버 오류가 발생했습니다.\"}")
+			}))
+	@GetMapping("/search")
+	public DataResponse<List<GetMemberForInviteDto>> searchMemberListByName(String name) {
+		return new DataResponse<>(SuccessInfo.GET_MEMBER_FOR_INVITE,
+				memberService.searchMemberListByName(name));
 	}
     
 }
