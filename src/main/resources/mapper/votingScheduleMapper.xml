@@ -23,7 +23,7 @@
         ORDER BY s.vote_deadline ASC
     </select>
 
-    <select id="getVotingScheduleInfoDto">
+    <select id="getVotingScheduleInfo">
         SELECT
             s.schedule_id,
             sc.schedule_category_id,
@@ -33,27 +33,46 @@
             s.description,
             TO_CHAR(s.start_date, 'YYYY-MM-DD HH24:MI') AS startDate,
             TO_CHAR(s.end_date, 'YYYY-MM-DD HH24:MI') AS endDate,
-            TO_CHAR(s.vote_deadline, 'YYYY-MM-DD HH24:MI') AS voteDeadline,
-            ms.is_owner AS isRequesterOwner
+            TO_CHAR(s.vote_deadline, 'YYYY-MM-DD HH24:MI') AS voteDeadline
         FROM
-            member_schedule ms
-            JOIN schedule s ON ms.schedule_id = s.schedule_id
+            schedule s
             JOIN schedule_category sc ON s.schedule_category_id = sc.schedule_category_id
             LEFT JOIN schedule_place sp ON s.schedule_id = sp.schedule_id
         WHERE
-            ms.email = #{email}
-            AND s.schedule_id = #{scheduleId}
+            s.schedule_id = #{scheduleId}
             AND s.is_group = 1
             AND sp.schedule_id IS NULL
     </select>
 
-    <select id="getPlaceToVoteDtoList">
+    <select id="isExistMemberSchedule">
+        SELECT COUNT(*)
+        FROM member_schedule
+        WHERE
+            email = #{email}
+          AND schedule_id = #{scheduleId}
+    </select>
+
+    <select id="isScheduleOwner">
+        SELECT is_owner
+        FROM member_schedule
+        WHERE
+            email = #{email}
+          AND schedule_id = #{scheduleId}
+    </select>
+
+    <select id="getPlaceToVoteList">
         SELECT
             ptv.place_to_vote_id,
             ptv.place_name,
             ptv.lat,
             ptv.lng,
-            NVL(pv.voted_count, 0) AS voted_count
+            NVL(pv.voted_count, 0) AS voted_count,
+            (
+                SELECT COUNT(*)
+                FROM place_voted
+                WHERE place_voted.email = #{email}
+                      AND place_voted.place_to_vote_id = ptv.place_to_vote_id
+            ) AS didRequesterVoteHere
         FROM
             place_to_vote ptv
             LEFT JOIN (
@@ -66,7 +85,7 @@
         ORDER BY voted_count DESC
     </select>
 
-    <select id="getVotingScheduleMemberDtoList">
+    <select id="getVotingScheduleMemberList">
         SELECT
             m.email,
             m.name,
@@ -87,17 +106,15 @@
     <select id="isExistVotingSchedule">
         SELECT COUNT(*)
         FROM
-            member_schedule ms
-            JOIN schedule s ON ms.schedule_id = s.schedule_id
+            schedule s
             LEFT JOIN schedule_place sp ON s.schedule_id = sp.schedule_id
         WHERE
-            ms.email = #{email}
-            AND s.schedule_id = #{scheduleId}
+            s.schedule_id = #{scheduleId}
             AND s.is_group = 1
             AND sp.schedule_id IS NULL
     </select>
 
-    <select id="isExistPlaceToVote">
+    <select id="isDuplicatePlaceToVote">
         SELECT COUNT(*)
         FROM place_to_vote
         WHERE
@@ -126,4 +143,50 @@
              )
     </insert>
 
+    <select id="isExistPlaceToVote">
+        SELECT COUNT(*)
+        FROM place_to_vote
+        WHERE
+            place_to_vote_id = #{placeToVoteId}
+    </select>
+
+    <select id="isExistPlaceVoted">
+        SELECT COUNT(*)
+        FROM place_voted
+        WHERE
+            email = #{email}
+            AND place_to_vote_id = #{placeToVoteId}
+    </select>
+
+    <delete id="deletePlaceVoted">
+        DELETE FROM place_voted
+        WHERE
+            email = #{email}
+            AND place_to_vote_id = #{placeToVoteId}
+    </delete>
+
+    <insert id="createPlaceVoted">
+        INSERT INTO place_voted
+        (
+         place_voted_id,
+         email,
+         schedule_id,
+         place_to_vote_id
+        )
+        VALUES
+        (
+         seq_place_voted.NEXTVAL,
+         #{email},
+         (SELECT schedule_id
+          FROM place_to_vote
+          WHERE place_to_vote_id = #{placeToVoteId}),
+         #{placeToVoteId}
+        )
+    </insert>
+
+    <select id="getScheduleIdByPlaceToVoteId">
+        SELECT schedule_id
+        FROM place_to_vote
+        WHERE place_to_vote_id = #{placeToVoteId}
+    </select>
 </mapper>

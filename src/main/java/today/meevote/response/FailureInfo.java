@@ -30,9 +30,13 @@ public enum FailureInfo {
     INVALID_PLACE_INPUT("Z98", "잘못된 주소 입력입니다. 주소 입력값을 확인 후 다시 시도해주세요."),
     NOT_EXIST_CATEGORY("S01", "존재하지 않는 카테고리입니다."),
     NOT_EXIST_SCHEDULE("S02", "존재하지 않는 일정입니다."),
+    NOT_EXIST_MEMBER_SCHEDULE("S99", "해당 일정의 멤버가 아닙니다."),
 
+
+    // 투표중인 일정
     NOT_EXIST_VOTING_SCHEDULE("V00", "존재하지않는 투표일정입니다."),
-    ALREADY_EXIST_PLACE_TO_VOTE("P00", "이미 존재하는 장소입니다.");
+    ALREADY_EXIST_PLACE_TO_VOTE("P00", "이미 존재하는 투표장소입니다."),
+    NOT_EXIST_PLACE_TO_VOTE("P01", "존재하지않는 투표장소입니다.");
     private final String code;
     private final String message;
 
