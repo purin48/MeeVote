@@ -67,9 +67,22 @@
     <select id="findMemberForInviteByEmail" resultType="today.meevote.domain.member.dto.response.GetMemberForInviteDto">
 	    SELECT 
 	        email,
-	        name
+	        name,
+	        img_src
 	    FROM member
 	    WHERE email = #{email}    		
     </select>
+
+	<select id="searchMemberListByName">
+		SELECT
+			email,
+			name,
+			img_src
+		FROM
+			member
+		WHERE
+			name LIKE '%' || #{name} || '%'
+			AND email != #{email}
+	</select>
     
 </mapper>
