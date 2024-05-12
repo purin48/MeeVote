@@ -1,5 +1,6 @@
 package today.meevote.domain.member.dao;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -31,4 +32,6 @@ public interface MemberDao {
 			 				   @Param("password") String password);
 	
 	public Optional<GetMemberForInviteDto> findMemberForInviteByEmail(String email);
+
+	public List<GetMemberForInviteDto> searchMemberListByName(@Param("name") String name, @Param("email") String email);
 }
