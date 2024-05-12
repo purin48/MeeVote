@@ -321,7 +321,6 @@ $('#save-btn').click(function(e) {
 // 이벤트 등록 End
 
 
-
 // 시작 이벤트
 // ---- 디폴트 일정 날짜 등록 ----
 startDate.setHours(startDate.getHours() + 1); // 시작 시간은 현재 + 1시간

@@ -1,0 +1,431 @@
+body {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.top-container {
+  font-family: "Nanum Gothic Coding", monospace;
+  font-weight: bold;
+  font-style: normal;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  height: fit-content;
+  gap: 50px;
+  padding: 60px 20px;
+  border-radius: 20px;
+  box-shadow: 0px 10px 10px 5px #BBBBBB;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 20px;
+  padding: 20px;
+}
+
+
+/* 좌측 섹션 */
+#left-section {
+  width: 350px;
+  gap: 20px;
+}
+
+
+#left-section > p {
+  text-align: center;
+  width: 100%;
+  font-size: 28px;
+  font-weight: bold;
+  margin: 0px;
+}
+
+/* ---- 달력 ---- */
+.calendar-container {
+  background: #fff;
+  width: 100%;
+  border-radius: 10px;
+}
+
+.calendar-container header {
+  display: flex;
+  align-items: center;
+  padding: 25px 10px 10px;
+  justify-content: space-between;
+}
+
+.calendar-navigation {
+  display: flex;
+}
+
+.calendar-navigation span {
+  height: 38px;
+  width: 38px;
+  cursor: pointer;
+  text-align: center;
+  line-height: 38px;
+  border-radius: 50%;
+  user-select: none;
+  color: #aeabab;
+  font-size: 1.9rem;
+}
+
+.calendar-navigation span:hover {
+  background: #f2f2f2;
+}
+
+.calendar-current-date {
+  font-size: 18px;
+  margin: 0px;
+}
+
+.calendar-body {
+  width: 100%;
+}
+
+.calendar-weekdays th {
+  cursor: default;
+  font-weight: 500;
+  text-align: center;
+  padding: 10px 0px;
+}
+
+.calendar-dates td{
+  height: calc(width/7);
+  color: #414141;
+  text-align: center;
+  padding: 10px 0px;
+}
+
+.calendar-dates td.inactive {
+  color: #aaa;
+}
+
+
+.calendar-dates td.start-date-calendar {
+  border-top-left-radius: 50%;
+  border-bottom-left-radius: 50%;
+  background: #4fd1c5;
+}
+
+.calendar-dates td.end-date-calendar {
+  border-top-right-radius: 50%;
+  border-bottom-right-radius: 50%;
+  background: #4fd1c5;
+}
+
+.calendar-dates td.between-date-calendar {
+  background: #4fd1c5;
+}
+/* ---- 달력 End---- */
+/* 좌측 섹션 End */
+
+
+/* 중간 섹션 */
+#mid-section {
+  width: 300px;
+  align-self: self-start;
+}
+
+/* ---- 이름 검색 ---- */
+#name-serach {
+  width: 100%;
+  padding: 5px 10px;
+  border: 1px solid #BBBBBB;
+  border-radius: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#name-serach > input{
+  width: 90%;
+  border: none;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+#name-serach > i{
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+#name-serach > i:hover{
+  color: #4fd1c5;
+}
+/* ---- 이름 검색 End ---- */
+
+/* ---- 검색 리스트 ---- */
+#search-container {
+  position: relative;
+  width: 100%;
+}
+
+#search-list-container{ 
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 85%;
+  max-height: 200px;
+  overflow-y: auto; 
+  border: #BBBBBB 1px solid;
+  border-radius: 5px;
+  background-color: white;
+  z-index: 1;
+  display: none;
+}
+
+#search-list-container > ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.search-item {
+  width: 100%;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 5px;
+  cursor: pointer;
+}
+
+.member-image {
+  width: 50px;
+  height: 50px;
+}
+
+.member-image > img{
+  width: 50px;
+  height: 50px;
+  border-radius: 10px;
+  object-fit: contain;
+}
+
+.member-info > p {
+  margin: 0px;
+}
+
+.member-info > p:first-child {
+  font-size: 14px;
+}
+
+.member-info > p:nth-child(2) {
+  font-size: 12px;
+}
+
+#search-list > .search-item:hover{
+  background-color: lightgray;
+}
+
+.search-item > i {
+  margin-left: auto;
+  font-size: 28px;
+  cursor: pointer;
+}
+/* ---- 검색 리스트 End---- */
+
+/* ---- 추가된 맴버 ---- */
+.member-list {
+  width: 100%;
+  max-height: 400px;
+  overflow-y: auto; 
+  padding: 0;
+  margin: 0;
+}
+
+.member-list > .search-item{
+  cursor: auto;
+}
+/* ---- 추가된 맴버 End ---- */
+/* 중간 섹션 End*/
+
+
+/* 우측 섹션 */
+/* ---- 공통 속성 ---- */
+#right-section {
+  width: 400px;
+  gap: 20px;
+  box-shadow: 0px 10px 10px 5px #BBBBBB;
+  border-radius: 10px;
+  padding: 30px;
+}
+
+.row-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap : 15px;
+}
+
+.column-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  align-items: end;
+  gap : 15px;
+}
+
+#mid-container {
+  width: 100%;
+  display: flex;
+  align-items: end;
+  gap : 15px;
+}
+
+.content-container{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap : 15px;
+}
+
+.content-container > i {
+  font-size: 22px;
+}
+/* ---- 공통 속성 End ---- */
+
+/* ---- 이름 입력 ---- */
+#name-container > div {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+#name-container > input {
+  width: 85%;
+  border: 0px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+#name-container > input:focus {
+  outline: none;
+}
+/* ---- 이름 입력 End ---- */
+
+/* ---- 날짜 입력 ---- */
+.dateinput-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.dateinput-container > span{
+  flex-grow: 1;
+  font-size: 14px;
+}
+
+.dateinput-container > input {
+  border: #BBBBBB solid 1px;
+  font-family: sans-serif;
+  font-size: 14px;
+}
+/* ---- 날짜 입력 End ---- */
+
+/* ---- 하루종일 체크 ---- */
+#checkbox-container {
+  justify-content: end;
+  padding: 0px 10px;
+}
+
+#allday-check:checked {
+  background-color: #4fd1c5;
+  border-color: #4fd1c5;
+}
+/* ---- 하루종일 체크 End ---- */
+
+/* ---- 카테고리 입력 ---- */
+#category-container > select, #category-container option{
+  width: 100%;
+  padding: 5px;
+  font-size: 14px;
+  font-weight: bold;
+  border: #BBBBBB 1px solid;
+}
+/* ---- 카테고리 입력 End ---- */
+
+/* ---- 상세설명 입력 ---- */
+#description-container{
+  align-items: start;
+}
+
+#description-container > textarea{
+  width: 100%;
+  font-size: 14px;
+  font-weight: bold;
+  border: #BBBBBB 1px solid;
+}
+/* ---- 상세설명 입력 End ---- */
+
+/* ---- 저장 버튼 ---- */
+#save-btn {
+  width: 100px;
+  margin: auto;
+  padding: 10px;
+  background-color: rgba(79, 209, 197, 0.15);
+  font-size: 16px;
+  font-weight: bold;
+  color: #4fd1c5;
+  border: 0px;
+  border-radius: 10px;
+  box-shadow: 5px 5px 5px lightgray;
+  transition: all 0.3s;
+}
+
+#save-btn:hover {
+  color: white;
+  background-color: #4fd1c5;
+}
+/* ---- 저장 버튼 End---- */
+
+/* ---- 경고 문구 ---- */
+.input-warning {
+  width: 100%;
+  text-align: center;
+  color: tomato;
+  display: none;
+}
+/* ---- 경고 문구 End---- */
+/* 우측 섹션 End */
+
+
+
+/* 반응형 미디어쿼리 */
+@media (max-width: 1350px) {
+  body {
+    align-items: start;
+  }
+
+  .top-container {
+    flex-direction: column;
+    justify-content: start;
+    width: 100vw;
+    box-shadow: none;
+    gap: 0px;
+  }
+
+  #right-section {
+    width: 100%;
+  }
+
+  #right-section-foot {
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  #mid-section {
+    align-self: center;
+  }
+}
+/* 반응형 미디어쿼리 End*/
