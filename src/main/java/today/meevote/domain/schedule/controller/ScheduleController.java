@@ -166,7 +166,7 @@ public class ScheduleController {
 				scheduleService.getFutureScheduleList());
 	}
 
-	@Operation(summary = "일정 나가기(미완)")
+	@Operation(summary = "일정 나가기")
 	@ApiResponse(responseCode = "1", description = "성공")
 	@ApiResponse(responseCode = "2", description = "실패",
 			content = @Content(examples = {
