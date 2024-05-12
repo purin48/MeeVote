@@ -51,8 +51,8 @@ prefix="c" %>
     <link rel="stylesheet" href="/css/inc/sidebar.css" />
     <link rel="stylesheet" href="/css/create/group.css" />
     <!-- custom js import -->
-    <script src="/js/inc/sidebar.js" defer></script>
-    <script src="/js/create/group.js" defer></script>
+    <script type="module" src="/js/inc/sidebar.js" defer></script>
+    <script type="module" src="/js/create/group.js" defer></script>
   </head>
   <body>
     <!-- 사이드바 include -->
@@ -104,30 +104,11 @@ prefix="c" %>
             <i class="bi bi-search"></i>
           </div>
           <div id="search-list-container">
-            <ul id="search-list">
-              <li class="search-item">
-                <div class="member-image"> 
-                  <img src="/image/profile.png" alt="">
-                </div>
-                <div class="member-info">
-                  <p>김한주</p>
-                  <p>rlagkswn37@naver.com</p>
-                </div>
-              </li>
-            </ul>
+            <ul id="search-list"></ul>
           </div>
         </div>
         <!-- 추가된 맴버 -->
         <ul class="member-list">
-          <li class="search-item">
-            <div class="member-image"> 
-              <img src="/image/profile.png" alt="">
-            </div>
-            <div class="member-info">
-              <p>김한주</p>
-              <p>rlagkswn37@naver.com</p>
-            </div>
-          </li>
         </ul>
       </div>
       <!-- 맴버 추가 사이드 End-->

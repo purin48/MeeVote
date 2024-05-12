@@ -187,6 +187,7 @@ body {
 }
 
 .search-item {
+  width: 100%;
   display: flex;
   justify-content: start;
   align-items: center;
@@ -221,6 +222,12 @@ body {
 
 #search-list > .search-item:hover{
   background-color: lightgray;
+}
+
+.search-item > i {
+  margin-left: auto;
+  font-size: 28px;
+  cursor: pointer;
 }
 /* ---- 검색 리스트 End---- */
 

@@ -1,3 +1,5 @@
+import { getMyInfo } from '/js/module/memberFunc.js';
+
 // 변수
 // ---- 달력 관련 변수 ----
 let date = new Date();
@@ -11,9 +13,11 @@ let voteDate = new Date();
 // ---- 카테고리 변수 ----
 let categoryList = [];
 let choosedCategory;
-// ---- 장소 변수 ----
-let placeList = [];
-let choosedPlace = {place_name: '', x: '', y: ''};
+// ---- 맴버 변수 ----
+let myInfo = await getMyInfo();
+let memberList = [];
+let memberSearchList = [];
+
 
 // 변수 End
 
@@ -127,16 +131,62 @@ function allDaySync() {
 }
 // ---- 함수 : 종료 날짜를 시작날짜 자정으로 맞추기 End ----
 
-// ---- 함수 : 장소 검색 ----
-async function searchPlace(keyword) {
-	const ps = new kakao.maps.services.Places(); 
-	ps.keywordSearch(keyword, (data, status, pagination) => {
-		placeList = [];
-		if (status === kakao.maps.services.Status.OK) placeList = data;
-		console.log('1', data);
-	});
+// ---- 함수 : 맴버 검색 ----
+function memberSearch(e){
+	$.ajax({
+	type: "GET",
+	url: '/api/member/search',
+	dataType: "json",
+	contentType: "application/json",
+	data: {name: $('#name-serach > input').val()},
+	success: function (response) {
+		if(!response.isSuccess) {
+			// 예외처리
+			return;
+		}
+		// ul 태그 비우기
+		$('#search-list').empty();  
+		// 검색 리스트 구성
+		memberSearchList = response.data;
+		for (let index = 0; index < memberSearchList.length; index++) {
+			const val = memberSearchList[index]
+			// 이미 추가된 맴버는 표시 X
+			if (memberList.includes(val.email)) continue;
+			const li = $(`
+			<li class="search-item" id=${index}>
+				<div class="member-image"> 
+					<img src=${val.imgSrc} alt="">
+				</div>
+				<div class="member-info">
+					<p>${val.name}</p>
+					<p>${val.email}</p>
+				</div>
+			</li>`
+			)
+			// 맴버 추가 이벤트
+			$(li).click(function(e) {
+				const choosedMember = memberSearchList[$(this).attr('id')];
+				const memberEl = $(this).clone();
+				// 삭제 버튼 추가
+				const delBtn = $(`<i class="bi bi-person-x" id=${choosedMember.email}></i>`);
+				delBtn.click(function(e) {
+					memberList = memberList.filter(email => email !== choosedMember.email)
+					memberEl.remove();
+				});
+				memberEl.append(delBtn);
+				// 리스트 갱신
+				memberList.push(choosedMember.email);
+				$('.member-list').append(memberEl);
+				$(this).remove();
+			})
+			$('#search-list').append(li)
+		}
+		// 검색 리스트 표시
+		$('#search-list-container').css('display', 'block');
+		}
+	})
 }
-// ---- 함수 : 카카오 맵 검색 End----
+// ---- 함수 : 맴버 검색 End----
 // 함수 End
  
 
@@ -245,60 +295,15 @@ $('#category-select').change(function(e){
 
 // ---- 이벤트 등록 : 회원 검색 ----
 $('#name-serach > i').click(function(e){
-		$.ajax({
-		type: "POST",
-		url: '/api/schedule/personal',
-		dataType: "json",
-		contentType: "application/json",
-		data: JSON.stringify(data),
-		success: function (response) {
-			if (!response.isSuccess) {
-				// 예외 처리
-			} 
-			// 일정 생성 성공
-			$('.top-container').css('display', 'none');
-			Swal.fire({
-				title: '일정 생성이 완료되었습니다',
-				icon: 'success',
-				confirmButtonColor: '#4fd1c5',
-				confirmButtonText: '완료',
-			}).then((result) => {
-				if(result.isConfirmed) window.location.href = '/';
-			});
-		},
-	});
+		memberSearch();
 })
 
-let timer;
-$('#search-container > input').on('input', function(e){
-	clearTimeout(timer);
-	timer = setTimeout(async () => {
-		// ul 태그 비우기
-		$('#search-list').empty();  
-		// 카카오맵 장소검색 
-		const ps = new kakao.maps.services.Places(); 
-		ps.keywordSearch($(this).val(), (data, status, pagination) => {
-			placeList = [];
-			if (status === kakao.maps.services.Status.OK) placeList = data;
-			$.each(placeList, function (index, val) { 
-				const li = $(`<li id=${index}><p>${val.place_name}</p><p>${val.address_name}</p></li>`)
-				// 장소 선택 이벤트 추가
-				$(li).click(function(e) {
-					choosedPlace = placeList[$(this).attr('id')];
-					$('#search-container > input').val(choosedPlace.place_name)
-					$('#search-list-container').css('display', 'none')
-				})
-				$('#search-list').append(li)
-			});
-		})
-		// 장소 목록 표시
-		$('#search-list-container').css('display', 'block');
-		console.log($('#search-list').children());
-	}, 700);
+$('#name-serach > input').keypress(function (e) { 
+  if(e.keyCode && e.keyCode == 13) memberSearch();
 })
-// ---- 이벤트 등록 : 장소 검색 End----
+// ---- 이벤트 등록 : 회원 검색 End----
 
-// ---- 이벤트 등록 : 장소 선택 스크롤 숨기기 ----
+// ---- 이벤트 등록 : 맴버 선택 스크롤 숨기기 ----
 $('#search-container').click(function(event){
 	event.stopPropagation();
 });
@@ -333,6 +338,7 @@ $('#save-btn').click(function(e) {
     $('.input-warning').css('display','block');
     return;
   }
+
 	// 보낼 데이터 선언
 	const data = {
 		"name": name,
@@ -340,33 +346,33 @@ $('#save-btn').click(function(e) {
 		"scheduleCategoryId": choosedCategory.scheduleCategoryId,
 		"startDate": `${$('#start-date').val()} ${$('#start-time').val()}`,
 		"endDate": `${$('#end-date').val()} ${$('#end-time').val()}`,
-		"placeName": choosedPlace.place_name,
-		"placeLatitude": choosedPlace.y,
-		"placeLongitude": choosedPlace.x
+		"voteDeadline": `${$('#vote-date').val()} ${$('#vote-time').val()}`,
+		"inviteEmailList": [myInfo.email, ...memberList],
 	}
+
 	// api 요청
-	// $.ajax({
-	// 	type: "POST",
-	// 	url: '/api/schedule/personal',
-	// 	dataType: "json",
-	// 	contentType: "application/json",
-	// 	data: JSON.stringify(data),
-	// 	success: function (response) {
-	// 		if (!response.isSuccess) {
-	// 			// 예외 처리
-	// 		} 
-	// 		// 일정 생성 성공
-	// 		$('.top-container').css('display', 'none');
-	// 		Swal.fire({
-	// 			title: '일정 생성이 완료되었습니다',
-	// 			icon: 'success',
-	// 			confirmButtonColor: '#4fd1c5',
-	// 			confirmButtonText: '완료',
-	// 		}).then((result) => {
-	// 			if(result.isConfirmed) window.location.href = '/';
-	// 		});
-	// 	},
-	// });
+	$.ajax({
+		type: "POST",
+		url: '/api/schedule/group',
+		dataType: "json",
+		contentType: "application/json",
+		data: JSON.stringify(data),
+		success: function (response) {
+			if (!response.isSuccess) {
+				// 예외 처리
+			} 
+			// 일정 생성 성공
+			$('.top-container').css('display', 'none');
+			Swal.fire({
+				title: '일정 생성이 완료되었습니다',
+				icon: 'success',
+				confirmButtonColor: '#4fd1c5',
+				confirmButtonText: '완료',
+			}).then((result) => {
+				if(result.isConfirmed) window.location.href = '/';
+			});
+		},
+	});
 })
 // ---- 이벤트 등록 : 일정 등록하기 End----
 // 이벤트 등록 End
@@ -408,6 +414,6 @@ $.ajax({
 		$('#category-circle').css('background-color', choosedCategory.color);
 	}
 });
-//
 
+// 달력 표시
 calendarDisplay();

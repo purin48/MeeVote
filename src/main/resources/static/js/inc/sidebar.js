@@ -2,6 +2,7 @@
 const fullURL = window.location.href;
 const path = window.location.pathname;
 const baseURL = fullURL.replace(path, "");
+let myInfo = {}
 
 // ----- 회원정보 GET -----
 $.ajax({
@@ -15,13 +16,12 @@ $.ajax({
       return;
     }
     // 회원정보 사이드바 하단에 넣기
-    $('#profile-img').attr('src', response.data.imgSrc);
-    $('#info-name').text(response.data.name);
-    $('#info-email').text(response.data.email);
+    myInfo = response.data
+    $('#profile-img').attr('src', myInfo.imgSrc);
+    $('#info-name').text(myInfo.name);
+    $('#info-email').text(myInfo.email);
   }
 });
-
-
 // ----- 회원정보 GET End -----
 
 
