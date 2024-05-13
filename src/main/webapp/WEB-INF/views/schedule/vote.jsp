@@ -51,10 +51,10 @@ prefix="c" %>
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6e5d6d2e61f5ab7c5909eee58f094989&libraries=services"></script>
     <!-- custom css -->
     <link rel="stylesheet" href="/css/inc/sidebar.css" />
-    <link rel="stylesheet" href="/css/vote/vote.css" />
+    <link rel="stylesheet" href="/css/schedule/vote.css" />
     <!-- custom js import -->
     <script type="module" src="/js/inc/sidebar.js" defer></script>
-    <script type="module" src="/js/vote.js" defer></script>
+    <script type="module" src="/js/schedule/vote.js" defer></script>
   </head>
   <body>
     <!-- 사이드바 include -->
