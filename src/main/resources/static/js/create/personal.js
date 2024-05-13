@@ -175,7 +175,7 @@ $('#start-date').change(function (e) {
 	}
 	else if (startDate > endDate) {
 		endDate = new Date(startDate);
-		endDate.setMinutes(endDate.getMinutes() + 1);
+		endDate.setMinutes(startDate.getMinutes() + 1);
 		dateToInput('#end-date', endDate);
 		timeToInput('#end-time', endDate);
 	}
@@ -187,7 +187,7 @@ $('#start-time').change(function (e) {
 	// 시작 날짜 종료 날짜보다 크면 종료 날짜 자동 조정
 	if (startDate > endDate) {
 		endDate = new Date(startDate);
-		endDate.setMinutes(endDate.getMinutes() + 1);
+		endDate.setMinutes(startDate.getMinutes() + 1);
 		dateToInput('#end-date', endDate);
 		timeToInput('#end-time', endDate);
 	}

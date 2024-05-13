@@ -101,3 +101,39 @@ export async function outSchedule(id) {
 
   return response;
 }
+
+
+// 투표 일정 목록
+export async function getVoteSchedules() {
+  const response = await $.ajax({
+    type: 'get',
+    url: '/api/voting/schedule/list',
+    dataType: 'json',
+    contentType: 'application/json',
+  });
+  
+  if (!response.isSuccess) {
+    // 실패 시 예외 처리
+    return [];
+  }
+
+  return response.data;
+}
+
+
+// 예정 일정 목록
+export async function getFutureSchedules() {
+  const response = await $.ajax({
+    type: 'get',
+    url: '/api/schedule/future/list',
+    dataType: 'json',
+    contentType: 'application/json',
+  });
+  
+  if (!response.isSuccess) {
+    // 실패 시 예외 처리
+    return [];
+  }
+
+  return response.data;
+}
