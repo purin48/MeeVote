@@ -41,7 +41,9 @@ public enum FailureInfo {
     ALREADY_EXIST_PLACE_TO_VOTE("P00", "이미 존재하는 투표장소입니다."),
     NOT_EXIST_PLACE_TO_VOTE("P01", "존재하지않는 투표장소입니다."),
 
-    ;
+    //알림
+    NOT_EXIST_NOTIFY("N00", "존재하지않는 알림입니다."),
+    NOT_NOTIFY_OWNER("N01", "알림의 소유자가 아닙니다.");
     private final String code;
     private final String message;
 
