@@ -14,15 +14,25 @@
     <select id="getNotifyList">
         SELECT
             n.notify_id,
-            n.email,
-            n.schedule_id,
             n.notify_category_id,
-            nc.category_name,
+            nc.category_name as notifyCategoryName,
             n.message,
-            n.is_read
+            n.is_read,
+            n.schedule_id,
+            s.name,
+            sc.category_name as scheduleCategoryName,
+            sc.color,
+            s.start_date,
+            s.end_date,
+            s.is_group,
+            s.vote_deadline,
+            sp.place_name
         FROM
-            notify n JOIN notify_category nc
-            ON n.notify_category_id = nc.notify_category_id
+            notify n
+            JOIN notify_category nc ON n.notify_category_id = nc.notify_category_id
+            JOIN schedule s ON n.schedule_id = s.schedule_id
+            JOIN schedule_category sc ON s.schedule_category_id = sc.schedule_category_id
+            LEFT JOIN schedule_place sp ON n.schedule_id = sp.schedule_id
         WHERE
             n.email = #{email}
         ORDER BY n.is_read ASC, n.notify_id DESC

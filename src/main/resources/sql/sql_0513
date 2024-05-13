@@ -34,7 +34,7 @@ BEGIN
                 WHERE ms.schedule_id = schedule_rec.schedule_id
             ) LOOP
                 INSERT INTO notify (notify_id, email, schedule_id, notify_category_id, message, is_read)
-                VALUES (seq_notify.NEXTVAL, member_rec.email, schedule_rec.schedule_id, 2, '[' || member_rec.schedule_name || '] 모임 일정 장소가 확정되었습니다.', 0);
+                VALUES (seq_notify.NEXTVAL, member_rec.email, schedule_rec.schedule_id, 2, '모임 일정 장소가 확정되었습니다. 장소 투표에 참여하세요.', 0);
             END LOOP;
         END IF;
     END LOOP;
@@ -67,7 +67,7 @@ BEGIN
     LOOP
         INSERT INTO notify (notify_id, email, schedule_id, notify_category_id, message, is_read)
         VALUES (seq_notify.nextval, schedule_rec.email, schedule_rec.schedule_id, 3,
-                '일정 [' || schedule_rec.name || '] 이 내일 ' || TO_CHAR(schedule_rec.start_date, 'HH24:MI') || '에 예정되어 있습니다.', 0);
+                '내일 예정된 일정이 있습니다.', 0);
     END LOOP;
     COMMIT;
 END schedule_reminder;
