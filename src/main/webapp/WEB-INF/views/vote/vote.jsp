@@ -59,13 +59,32 @@ prefix="c" %>
   <body>
     <!-- 사이드바 include -->
     <jsp:include page="/WEB-INF/views/inc/sidebar.jsp" />
+
     <!-- 검색창 -->
-    <div class="place-search">
-      <input type="text" placeholder="추가할 장소 검색">
-      <i class="bi bi-search"></i>
+    <div class="search-container">
+      <!-- 검색창 -->
+      <div class="place-search">
+        <input type="text" placeholder="추가할 장소 검색">
+        <i class="bi bi-search"></i>
+      </div>
+      <!-- 검색 항목 리스트 -->
+      <div class="search-list-container">
+        <ul class="search-list"></ul>
+      </div>
+      <!-- 투표항목 리스트 -->
+      <div class="vote-list-container">
+        <ul class="vote-list">
+        </ul>
+      </div>
     </div>
     <!-- 검색창 End-->
-    <div class="map-container">
-    </div>
+
+    <!-- 나가기 버튼 -->
+    <button class="delete-btn">일정 취소</button>
+    <!-- 나가기 버튼 -->
+
+    <!-- 맵 컨테이너 -->
+    <div class="map-container"></div>
+    <!-- 맵 컨테이너 End -->
   </body>
 </html>
