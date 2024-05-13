@@ -109,6 +109,7 @@ public class VotingScheduleController {
             content = @Content(examples = {
                     @ExampleObject(name = "존재하지않는 투표일정", value = "{\"isSuccess\": false, \"code\": \"V00\", \"message\": \"존재하지않는 투표일정입니다.\"}"),
                     @ExampleObject(name = "해당 일정의 멤버가 아님", value = "{\"isSuccess\": false, \"code\": \"S99\", \"message\": \"해당 일정의 멤버가 아닙니다.\"}"),
+                    @ExampleObject(name = "존재하지않는 투표장소", value = "{\"isSuccess\": false, \"code\": \"P01\", \"message\": \"존재하지않는 투표장소입니다.\"}"),
                     @ExampleObject(name = "인증되지않은 요청", value = "{\"isSuccess\": false, \"code\": \"Z97\", \"message\": \"인증되지않은 요청입니다.\"}"),
                     @ExampleObject(name = "내부 서버 오류", value = "{\"isSuccess\": false, \"code\": \"Z99\", \"message\": \"서버 오류가 발생했습니다.\"}")
             }))
@@ -118,10 +119,20 @@ public class VotingScheduleController {
         return new BaseResponse(SuccessInfo.DELETE_DEPARTURE_PLACE);
     }
 
-    @Operation(summary = "장소 확정하기(미완)")
+    @Operation(summary = "장소 확정하기")
+    @ApiResponse(responseCode = "1", description = "성공")
+    @ApiResponse(responseCode = "2", description = "실패",
+            content = @Content(examples = {
+                    @ExampleObject(name = "존재하지않는 투표일정", value = "{\"isSuccess\": false, \"code\": \"V00\", \"message\": \"존재하지않는 투표일정입니다.\"}"),
+                    @ExampleObject(name = "해당 일정의 소유자가 아님", value = "{\"isSuccess\": false, \"code\": \"S98\", \"message\": \"해당 일정의 소유자가 아닙니다.\"}"),
+                    @ExampleObject(name = "존재하지않는 투표장소", value = "{\"isSuccess\": false, \"code\": \"P01\", \"message\": \"존재하지않는 투표장소입니다.\"}"),
+                    @ExampleObject(name = "인증되지않은 요청", value = "{\"isSuccess\": false, \"code\": \"Z97\", \"message\": \"인증되지않은 요청입니다.\"}"),
+                    @ExampleObject(name = "내부 서버 오류", value = "{\"isSuccess\": false, \"code\": \"Z99\", \"message\": \"서버 오류가 발생했습니다.\"}")
+            }))
     @PostMapping("/place/confirm")
-    public BaseResponse decidePlace(long placeToVoteId){
-        return null;
+    public BaseResponse confirmPlace(long placeToVoteId){
+        votingScheduleService.confirmPlace(placeToVoteId);
+        return new BaseResponse(SuccessInfo.CONFIRM_PLACE);
     }
 
 }

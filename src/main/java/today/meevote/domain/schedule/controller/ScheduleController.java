@@ -1,6 +1,7 @@
 package today.meevote.domain.schedule.controller;
 
 import jakarta.validation.constraints.Pattern;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,7 +24,10 @@ import today.meevote.response.SuccessInfo;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -64,7 +68,7 @@ public class ScheduleController {
 			@Schema(description = "스케줄 id", defaultValue = "1")
 			@Min(value = 1, message = "스케줄 id값을 확인해주세요.")
 			@RequestParam
-			Long scheduleId
+			long scheduleId
 	) {
 		scheduleService.deletePersonalSchedule(scheduleId);
 		return new BaseResponse(SuccessInfo.DELETE_SCHEDULE);
@@ -121,9 +125,12 @@ public class ScheduleController {
 					@ExampleObject(name = "내부 서버 오류", value = "{\"isSuccess\": false, \"code\": \"Z99\", \"message\": \"서버 오류가 발생했습니다.\"}")
 			}))
 	@PostMapping("/group")
-	public BaseResponse createGroupSchedule(@Valid @RequestBody CreateGroupScheduleDto createGroupScheduleDto){
-		scheduleService.createGroupSchedule(createGroupScheduleDto);
-		return new BaseResponse(SuccessInfo.CREATE_GROUP_SCHEDULE);
+	public DataResponse<Map> createGroupSchedule(@Valid @RequestBody CreateGroupScheduleDto createGroupScheduleDto){
+		long scheduleId = scheduleService.createGroupSchedule(createGroupScheduleDto);
+		Map<String, Object> responseMap = new HashMap<>();
+		responseMap.put("scheduleId", scheduleId);
+
+		return new DataResponse(SuccessInfo.CREATE_GROUP_SCHEDULE, responseMap);
 	}
 
 	@Operation(summary = "일정 상세조회")
@@ -143,14 +150,29 @@ public class ScheduleController {
 				scheduleService.getScheduleDetail(scheduleId));
 	}
 
-	@Operation(summary = "지난 일정목록 조회(미완)")
+	@Operation(summary = "지난 일정목록 조회")
+	@ApiResponse(responseCode = "1", description = "성공")
+	@ApiResponse(responseCode = "2", description = "실패",
+			content = @Content(examples = {
+					@ExampleObject(name = "존재하지않는 일정", value = "{\"isSuccess\": false, \"code\": \"S02\", \"message\": \"존재하지 않는 일정입니다.\"}"),
+					@ExampleObject(name = "인증되지않은 요청", value = "{\"isSuccess\": false, \"code\": \"Z97\", \"message\": \"인증되지않은 요청입니다.\"}"),
+					@ExampleObject(name = "내부 서버 오류", value = "{\"isSuccess\": false, \"code\": \"Z99\", \"message\": \"서버 오류가 발생했습니다.\"}")
+			}))
 	@GetMapping("/past/list")
-	public DataResponse<Page<GetScheduleListDto>> getPastScheduleList(long categoryId, String keyword, Pageable pageable){
+	public DataResponse<Page<GetScheduleListDto>> getPastScheduleList(
+			@Schema(description = "카테고리 id", defaultValue = "1")
+			@Min(value = 1, message = "카테고리 id값을 확인해주세요.")
+			long categoryId,
+			@RequestParam(required = false)
+			@Schema(description = "키워드 검색어", defaultValue = "일정명1")
+			String keyword,
+			@PageableDefault(size = 10)
+			Pageable pageable){
 		// 확정된 지난 일정(endDate가 현재 일시보다 이전일때)
 		// 페이징 처리
 		// 카테고리 아이디, 키워드는 필수아님
 		// 최근순으로 정렬
-		return null;
+		return new DataResponse<>(SuccessInfo.GET_SCHEDULE_CATEGORY, scheduleService.getPastScheduleList(categoryId, keyword, pageable));
 	}
 
 	@Operation(summary = "예정 중인 일정목록 조회")
@@ -166,11 +188,21 @@ public class ScheduleController {
 				scheduleService.getFutureScheduleList());
 	}
 
-	@Operation(summary = "일정 나가기(미완)")
+	@Operation(summary = "일정 나가기")
+	@ApiResponse(responseCode = "1", description = "성공")
+	@ApiResponse(responseCode = "2", description = "실패",
+			content = @Content(examples = {
+					@ExampleObject(name = "나갈 수 없는 일정", value = "{\"isSuccess\": false, \"code\": \"S03\", \"message\": \"삭제가 불가능한 일정입니다. 확인 후 다시 시도해주세요.\"}"),
+					@ExampleObject(name = "인증되지않은 요청", value = "{\"isSuccess\": false, \"code\": \"Z97\", \"message\": \"인증되지않은 요청입니다.\"}"),
+					@ExampleObject(name = "내부 서버 오류", value = "{\"isSuccess\": false, \"code\": \"Z99\", \"message\": \"서버 오류가 발생했습니다.\"}")
+			}))
 	@DeleteMapping("/out")
-	public BaseResponse outSchedule(long scheduleId){
-		// 일정장은 못나감
-		return null;
+	public BaseResponse outSchedule(
+			@Schema(description = "스케줄 id", defaultValue = "1")
+			@Min(value = 1, message = "스케줄 id값을 확인해주세요.")
+			long scheduleId){
+		scheduleService.outGroupSchedule(scheduleId);
+		return new BaseResponse(SuccessInfo.OUT_SCHEDULE);
 	}
 
 	@Operation(summary = "일정에 회원 초대하기(미완)")

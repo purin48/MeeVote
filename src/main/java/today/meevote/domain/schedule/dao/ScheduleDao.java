@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Pageable;
 import today.meevote.domain.schedule.dto.request.CreateGroupScheduleDto;
 import today.meevote.domain.schedule.dto.request.CreatePersonalScheduleDto;
 import today.meevote.domain.schedule.dto.response.*;
@@ -17,7 +18,7 @@ public interface ScheduleDao {
 	
 	public boolean isExistByEmail(String email);
 	
-	public boolean isCategoryExist(int categoryId);
+	public boolean isCategoryExist(long categoryId);
 	
     public void createPersonalSchedule(Map<String, Object> dto);
     
@@ -25,7 +26,7 @@ public interface ScheduleDao {
 
 	public boolean isExistScheduleByInfo(@Param("email") String email, @Param("scheduleId") long scheduleId);
 
-	public void deletePersonalSchedule(Long scheduleId);
+	public void deletePersonalSchedule(@Param("email")String email, @Param("scheduleId") long scheduleId);
 
 	List<GetMyScheduleListDto> getMyScheduleList(
 			@Param("email")
@@ -44,6 +45,8 @@ public interface ScheduleDao {
 
 	public void createGroupSchedule(Map<String, Object> dto);
 
+	public void createOwnerMemberSchedule(Map<String, Object> dto);
+
 	public void createGroupMemberSchedule(Map<String, Object> dto);
 
 	public int isExistGroupMember(CreateGroupScheduleDto createGroupScheduleDto);
@@ -53,4 +56,11 @@ public interface ScheduleDao {
 	public List<ScheduleMemberDto> getScheduleMemberDtoList(long scheduleId);
 
     public List<GetScheduleListDto> getFutureScheduleList(String email);
+
+	public boolean isExistGroupMemberByInfo(String email, long scheduleId);
+	public void outGroupSchedule(String email, long scheduleId);
+
+	public List<GetScheduleListDto> getPastScheduleList(String email, long categoryId, String keyword, Pageable pageable);
+
+	public int countPastScheduleList(long categoryId, String keyword);
 }

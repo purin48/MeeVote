@@ -25,13 +25,21 @@ public enum SuccessInfo {
 	CREATE_SCHEDULE("내 일정 생성이 완료되었습니다."),
 	CREATE_GROUP_SCHEDULE("모임 일정 생성이 완료되었습니다."),
 	DELETE_SCHEDULE("일정 삭제가 완료되었습니다."),
+	OUT_SCHEDULE("일정 나가기가 완료되었습니다."),
 
     GET_VOTE_SCHEDULE_LIST("투표 중인 일정 목록 조회가 완료되었습니다."),
 	GET_VOTE_SCHEDULE_DETAIL("투표 중인 일정 상세조회가 완료되었습니다."),
 	ADD_PLACE_TO_VOTE("장소 추가가 완료되었습니다."),
 	TOGGLE_VOTE_PLACE("장소 투표/투표취소가 완료되었습니다."),
 	UPDATE_DEPARTURE_PLACE("내 출발지 수정하기가 완료되었습니다."),
-	DELETE_DEPARTURE_PLACE("내 출발지 삭제가 완료되었습니다.");
+	DELETE_DEPARTURE_PLACE("내 출발지 삭제가 완료되었습니다."),
+	CONFIRM_PLACE("장소 확정을 완료하였습니다."),
+
+    GET_UNREAD_NOTIFY_COUNT("안읽은 알림 개수 조회가 완료되었습니다."),
+
+	GET_NOTIFY_LIST("알림 목록 조회가 완료되었습니다."),
+
+	READ_NOTIFY("알림 읽기 처리가 완료되었습니다.");
     private final String code = "A00";
     private final String message;
 }

@@ -1,10 +1,10 @@
 package today.meevote.domain.schedule.service;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -52,12 +52,12 @@ public class ScheduleService {
 	}
 
 	@Transactional
-	public void deletePersonalSchedule(Long scheduleId) {
+	public void deletePersonalSchedule(long scheduleId) {
 		String email = MemberContextHolder.getEmail();
         if (!scheduleDao.isExistScheduleByInfo(email, scheduleId)) {
-            throw new RestException(FailureInfo.NOT_EXIST_SCHEDULE);
+            throw new RestException(FailureInfo.NOT_EXIST_DELETE_SCHEDULE);
         }
-        scheduleDao.deletePersonalSchedule(scheduleId);
+        scheduleDao.deletePersonalSchedule(email, scheduleId);
 	}
 
     public List<GetMyScheduleListDto> getMyScheduleList(Boolean isGroup, String year, String month) {
@@ -70,16 +70,21 @@ public class ScheduleService {
     }
 
     @Transactional
-    public void createGroupSchedule(CreateGroupScheduleDto createGroupScheduleDto) {
+    public long createGroupSchedule(CreateGroupScheduleDto createGroupScheduleDto) {
         String email = MemberContextHolder.getEmail();
+
+        // 세션의 email 제거
+        Set<String> emailSet = new HashSet<>(createGroupScheduleDto.getInviteEmailList());
+        emailSet.remove(email);
+        createGroupScheduleDto.setInviteEmailList(new ArrayList<>(emailSet));
+
         if (scheduleDao.isExistGroupMember(createGroupScheduleDto) != createGroupScheduleDto.getInviteEmailList().size()
                 || !scheduleDao.isExistByEmail(email)
-        ) {
-            throw new RestException(FailureInfo.NOT_EXIST_MEMBER);
-        }
-        if (!scheduleDao.isCategoryExist(createGroupScheduleDto.getScheduleCategoryId())) {
+        ) throw new RestException(FailureInfo.NOT_EXIST_MEMBER);
+
+        if (!scheduleDao.isCategoryExist(createGroupScheduleDto.getScheduleCategoryId()))
             throw new RestException(FailureInfo.NOT_EXIST_CATEGORY);
-        }
+
         DateUtil.validateDateOrder(
                 createGroupScheduleDto.getStartDate(),
                 createGroupScheduleDto.getEndDate(),
@@ -90,6 +95,7 @@ public class ScheduleService {
         params.put("ownerEmail", email);
         scheduleDao.createGroupSchedule(params);
         scheduleDao.createGroupMemberSchedule(params);
+        return (long) params.get("id");
     }
 
     public GetScheduleDetailDto getScheduleDetail(long scheduleId) {
@@ -108,5 +114,22 @@ public class ScheduleService {
     public List<GetScheduleListDto> getFutureScheduleList() {
         String email = MemberContextHolder.getEmail();
         return scheduleDao.getFutureScheduleList(email);
+    }
+
+    public void outGroupSchedule(long scheduleId) {
+        String email = MemberContextHolder.getEmail();
+        if(!scheduleDao.isExistGroupMemberByInfo(email, scheduleId))
+            throw new RestException(FailureInfo.NOT_OUT_MEMBER_SCHEDULE);
+        scheduleDao.outGroupSchedule(email, scheduleId);
+    }
+
+    public Page<GetScheduleListDto> getPastScheduleList(long categoryId, String keyword, Pageable pageable) {
+        String email = MemberContextHolder.getEmail();
+        if (!scheduleDao.isCategoryExist(categoryId)) {
+            throw new RestException(FailureInfo.NOT_EXIST_CATEGORY);
+        }
+        List<GetScheduleListDto> schedules = scheduleDao.getPastScheduleList(email, categoryId, keyword, pageable);
+        int total = scheduleDao.countPastScheduleList(categoryId, keyword);
+        return new PageImpl<>(schedules, pageable, total);
     }
 }
