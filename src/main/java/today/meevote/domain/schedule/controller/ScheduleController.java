@@ -150,7 +150,14 @@ public class ScheduleController {
 				scheduleService.getScheduleDetail(scheduleId));
 	}
 
-	@Operation(summary = "지난 일정목록 조회(미완)")
+	@Operation(summary = "지난 일정목록 조회")
+	@ApiResponse(responseCode = "1", description = "성공")
+	@ApiResponse(responseCode = "2", description = "실패",
+			content = @Content(examples = {
+					@ExampleObject(name = "존재하지않는 일정", value = "{\"isSuccess\": false, \"code\": \"S02\", \"message\": \"존재하지 않는 일정입니다.\"}"),
+					@ExampleObject(name = "인증되지않은 요청", value = "{\"isSuccess\": false, \"code\": \"Z97\", \"message\": \"인증되지않은 요청입니다.\"}"),
+					@ExampleObject(name = "내부 서버 오류", value = "{\"isSuccess\": false, \"code\": \"Z99\", \"message\": \"서버 오류가 발생했습니다.\"}")
+			}))
 	@GetMapping("/past/list")
 	public DataResponse<Page<GetScheduleListDto>> getPastScheduleList(
 			@Schema(description = "카테고리 id", defaultValue = "1")
