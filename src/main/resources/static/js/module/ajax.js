@@ -137,3 +137,23 @@ export async function getFutureSchedules() {
 
   return response.data;
 }
+
+
+// 일정 상세 보기
+export async function getScheduleDetail(scheduleId) {
+  const response = await $.ajax({
+    type: 'GET',
+    url: `/api/schedule/detail?scheduleId=${scheduleId}`,
+    dataType: 'json',
+    contentType: 'application/json',
+  });
+  
+  if (!response.isSuccess) {
+    // 실패 시 예외 처리
+    // return [];
+  }
+
+  console.log(response)
+
+  return response;
+}

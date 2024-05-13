@@ -92,3 +92,19 @@ export function createOverlay(map, marker, content) {
   return overlay
 };
 // ---- 오버레이 생성 End ----
+
+
+// ---- 폴리라인 그리기 ----
+export function createPolyline(map, linePath) {
+  const polyline = new kakao.maps.Polyline({
+    path: linePath,
+    strokeWeight: 7,
+    strokeColor: '#4fd1c5',
+    strokeOpacity: 1,
+    strokeStyle: 'solid'
+  });
+
+  polyline.setMap(map);
+
+  return polyline;
+};

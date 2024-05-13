@@ -6,8 +6,7 @@ import {getRoute} from '/js/module/mobility.js'
 // 변수
 // ---- 스케쥴 관련 정보
 const urlSearch = new URLSearchParams(location.search);
-let scheduleId; 
-scheduleId = await urlSearch.get('scheduleId');
+let scheduleId = await urlSearch.get('scheduleId');
 let scheduleInfo = await getVotingDetail(scheduleId);
 // ---- 사용자 정보 ----
 const myInfo = await getMyInfo();

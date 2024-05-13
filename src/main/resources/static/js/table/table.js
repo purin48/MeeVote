@@ -80,7 +80,7 @@ function createCarousel(schedule, isVoting) {
   carousel.css('border-color', schedule.color);
   carousel.find('.category').css('background-color', schedule.color);
   carousel.click(function(e){
-    location.href = `/${isVoting? 'vote':'detail'}?scheduleId=${schedule.scheduleId}`
+    location.href = `/schedule/${isVoting? 'vote':'detail'}?scheduleId=${schedule.scheduleId}`
   })
 
   return carousel;

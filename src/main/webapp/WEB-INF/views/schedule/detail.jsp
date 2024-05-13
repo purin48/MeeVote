@@ -51,14 +51,24 @@ prefix="c" %>
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6e5d6d2e61f5ab7c5909eee58f094989&libraries=services"></script>
     <!-- custom css -->
     <link rel="stylesheet" href="/css/inc/sidebar.css" />
-    <link rel="stylesheet" href="/css/schedule/schedule.css" />
+    <link rel="stylesheet" href="/css/schedule/detail.css" />
     <!-- custom js import -->
     <script type="module" src="/js/inc/sidebar.js" defer></script>
-    <script type="module" src="/js/schedule/schedule.js" defer></script>
+    <script type="module" src="/js/schedule/detail.js" defer></script>
   </head>
   <body>
     <!-- 사이드바 include -->
     <jsp:include page="/WEB-INF/views/inc/sidebar.jsp" />
+    
+    <!-- 일정 정보 -->
 
+    <div class="info-container">
+
+    </div>
+    <!-- 일정 정보 End -->
+
+    <!-- 맵 컨테이너 -->
+    <div class="map-container"></div>
+    <!-- 맵 컨테이너 End -->
   </body>
 </html>
