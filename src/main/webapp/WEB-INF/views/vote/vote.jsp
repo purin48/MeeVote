@@ -80,7 +80,7 @@ prefix="c" %>
     <!-- 검색창 End-->
 
     <!-- 나가기 버튼 -->
-    <button class="delete-btn">일정 취소</button>
+    <button class="del-btn">일정 취소</button>
     <!-- 나가기 버튼 -->
 
     <!-- 맵 컨테이너 -->

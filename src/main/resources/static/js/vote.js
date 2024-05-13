@@ -1,12 +1,13 @@
 import {displayMap, createMarker, searchPlace, locFromAddress, addrFromLoc,  createOverlay,} from '/js/module/map.js'
-import {getMyInfo, getVotingDetail, postVotingItem, doVote} from '/js/module/ajax.js'
+import {getMyInfo, getVotingDetail, postVotingItem, doVote, deleteSchedule, outSchedule} from '/js/module/ajax.js'
 import {showPlaceList} from '/js/module/common.js'
 import {getRoute} from '/js/module/mobility.js'
 
 // 변수
 // ---- 스케쥴 관련 정보
 const urlSearch = new URLSearchParams(location.search);
-let scheduleId = urlSearch.get('scheduleId');
+let scheduleId; 
+scheduleId = await urlSearch.get('scheduleId');
 let scheduleInfo = await getVotingDetail(scheduleId);
 // ---- 사용자 정보 ----
 const myInfo = await getMyInfo();
@@ -246,6 +247,35 @@ $('.place-search > input').click(function (e) {
 // ---- 이벤트 등록 : 장소 선택 스크롤 컨트롤 End----
 
 
+// ---- 이벤트 등록 : 스케쥴 삭제 혹은 나가기 ----
+$('.del-btn').click(async function(e){
+  const isOwner = scheduleInfo.isRequesterOwner
+  const result = await Swal.fire({
+    title: isOwner? '일정 삭제' : '일정 나가기',
+    text: isOwner? 
+      '한 번 삭제된 일정은 되돌릴 수 없습니다. 정말 삭제하시겠습니까?' : 
+      '한 번 나가면 다시 초대받을 때까지 들어올 수 없습니다. 정말로 나가시겠습니까?',
+    icon: 'warning',
+    showConfirmButton: false,
+    showDenyButton: true,
+    showCancelButton: true,
+    cancelButtonText: '아니오',
+    denyButtonText: '네'
+  });
+
+  if (result.isDenied) {
+    console.log(scheduleId)
+    let response = isOwner? await deleteSchedule(scheduleId) : await outSchedule(scheduleId)
+    console.log(response)
+    if (response.isSuccess) {
+      location.replace('/');
+    }
+  }
+})
+// ---- 이벤트 등록 : 장소 선택 스크롤 컨트롤 End----
+
+
+
 // 시작 이벤트
 // ---- 시작 이벤트 : 참여자 마커 생성 ----
 $.each(scheduleInfo.memberList, async function (index, info) {
@@ -258,7 +288,7 @@ $.each(scheduleInfo.memberList, async function (index, info) {
 
 
 // ---- 시작 이벤트 : 투표 항목 표시 ----
-// resetVoteAll()
+resetVoteAll();
 // ---- 시작 이벤트 : 투표 항목 표시 End----
 
 

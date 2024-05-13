@@ -292,7 +292,7 @@ body {
 
 
 /* 기타 버튼들 */
-.delete-btn {
+.del-btn {
   position: fixed;
   right: 20px;
   bottom: 20px;
@@ -308,7 +308,7 @@ body {
   transition: all 0.3s;
 }
 
-.delete-btn:hover{
+.del-btn:hover{
   background-color: crimson;
 }
 /* 기타 버튼들 End */
