@@ -175,6 +175,7 @@ $('#start-date').change(function (e) {
 	}
 	else if (startDate > endDate) {
 		endDate = new Date(startDate);
+		endDate.setMinutes(endDate.getMinutes() + 1);
 		dateToInput('#end-date', endDate);
 		timeToInput('#end-time', endDate);
 	}
@@ -186,6 +187,7 @@ $('#start-time').change(function (e) {
 	// 시작 날짜 종료 날짜보다 크면 종료 날짜 자동 조정
 	if (startDate > endDate) {
 		endDate = new Date(startDate);
+		endDate.setMinutes(endDate.getMinutes() + 1);
 		dateToInput('#end-date', endDate);
 		timeToInput('#end-time', endDate);
 	}
@@ -197,6 +199,7 @@ $('#end-date').change(function (e) {
 	// 시작 날짜가 종료 날짜보다 크면 시작 날짜 자동 조정
 	if (startDate > endDate) {
 		startDate = new Date(endDate);
+		startDate.setMinutes(startDate.getMinutes() - 1);
 		dateToInput('#start-date', startDate);
 		timeToInput('#start-time', startDate);
 	}
@@ -208,6 +211,7 @@ $('#end-time').change(function (e) {
 	// 시작 날짜가 종료 날짜보다 크면 시작 날짜 자동 조정
 	if (startDate > endDate) {
 		startDate = new Date(endDate);
+		startDate.setMinutes(startDate.getMinutes() - 1);
 		dateToInput('#start-date', startDate);
 		timeToInput('#start-time', startDate);
 	}
