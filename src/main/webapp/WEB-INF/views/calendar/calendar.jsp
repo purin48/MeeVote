@@ -86,9 +86,9 @@ pageEncoding="UTF-8"%>
 
           <!-- drop down -->
           <div id="customDropdownMenu" class="dropdown-menu">
-            <a class="dropdown-item" href="#" data-category="all">c1</a>
-            <a class="dropdown-item" href="#" data-category="personal">c2</a>
-            <a class="dropdown-item" href="#" data-category="group">c3</a>
+            <a class="dropdown-item" href="#" data-category="all">전체 일정</a>
+            <a class="dropdown-item" href="#" data-category="personal">개인 일정</a>
+            <a class="dropdown-item" href="#" data-category="group">그룹 일정</a>
           </div>
 
           <!--우측 사이드바가 들어갈 부분-->

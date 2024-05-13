@@ -34,7 +34,7 @@ $(document).ready(function() {
             console.error("Error:", error); // 에러처리
         }
     });
-
+// console.log(data)
 
     // 캘린더에 일정 표시하는 함수
     function displayEventsOnCalendar(data) {
@@ -49,9 +49,9 @@ $(document).ready(function() {
             navLinks: false,  //  요일이랑 날짜 클릭 시 일이나 주단위 보여주는 화면으로 넘어감
             select: function (info) {
                 // 클릭한 날짜 정보를 콘솔에 출력
-                console.log('Clicked date:', info.start);
+                // console.log('Clicked date:', info.start);
                 // -> 확인용 코드
-                console.log(info);
+                // console.log(info);
                 // 클릭한 날짜에 해당하는 일정 가져오기
                 let selectedDate = info.start;
                 let selectedEvents = getEventsForDate(selectedDate);
@@ -85,39 +85,73 @@ $(document).ready(function() {
                         }
 
                         // 일정 카테고리에 따라 일정 필터링하는 함수
-                        //
-
                         function filterEventsByCategory(category) {
                             calendar.getEvents().forEach(function (event) {
-                                console.log(data.isGroup)
                                 if (category === 'all') {
-                                    event.setProp('display', 'block'); // 모든 일정 보이기
-                                    console.log(event)
+                                    // 전체 카테고리 선택 시 모든 일정을 표시합니다.
+                                    event.setProp('display', 'block');
                                 } else {
-                                    if (data.extendedProps.isGroup == 'personal') {
-                                        // console.log(data.isGroup)
-                                        event.setProp('display', 'none'); // 해당 카테고리가 아닌 일정 숨기기
-                                    } else if (event.extendedProps.isGroup == 'group') {
-                                        event.setProp('display', 'block'); // 해당 카테고리의 일정 보이기
+                                    // 개인, 그룹 카테고리 선택 시 해당 카테고리에 맞는 일정만 표시합니다.
+                                    let isGroup = event.extendedProps.isGroup;
+                                    console.log(isGroup)
+                                    if ((category === 'personal' && !isGroup) || (category === 'group' && isGroup)) {
+                                        event.setProp('display', 'block');
+                                    } else {
+                                        event.setProp('display', 'none');
                                     }
                                 }
-
                             });
                         }
 
 
                         // drop down 버튼 클릭 시 이벤트 처리
-                        $('#customDropdownMenu .dropdown-item').click(function (e) {
-                            e.preventDefault();
-                            let category = $(this).data('category');
-                            $('.btn-secondary').text($(this).text()); // drop down 버튼 텍스트 변경
-                            // console.log(category)
-                            hideDropdownMenu(); // 드롭다운 메뉴 숨기기
-                            filterEventsByCategory(category); // 선택한 카테고리에 따라 일정 필터링
+                        // $('#customDropdownMenu .dropdown-item').click(function (e) {
+                        //     e.preventDefault();
+                        //     let category = $(this).data('category');
+                        //     $('.customDropdownMenu').text($(this).text()); // drop down 버튼 텍스트 변경
+                        //     // console.log($('.btn-secondary').text($(this).text()))
+                        //     console.log($(this).text())
+                        //     hideDropdownMenu(); // 드롭다운 메뉴 숨기기
+                        //     filterEventsByCategory(category); // 선택한 카테고리에 따라 일정 필터링
+                        // });
+
+                        // $('#customDropdownMenu .dropdown-item').click(function(e) {
+                        //     e.preventDefault();
+                        //     // 클릭한 항목의 텍스트를 가져와서 변수에 저장
+                        //     let newText = $(this).text();
+                        //     // customDropdownMenu 클래스를 가진 요소의 텍스트를 변경
+                        //     $('customDropdownMenu').text(newText);
+                        //     console.log($(this).text())
+                        //     // 드롭다운 메뉴를 숨김
+                        //     $('#customDropdownMenu').removeClass('show');
+                        //     // 선택한 카테고리에 따라 일정 필터링
+                        //     filterEventsByCategory($(this).data('category'));
+                        // });
+
+                        $(document).ready(function() {
+                            // 리스트 요소 클릭 시 드롭다운 버튼의 텍스트 변경
+                            $('#customDropdownMenu .dropdown-item').click(function (e) {
+                                e.preventDefault();
+                                let newText = $(this).text(); // 클릭된 리스트 요소의 텍스트 가져오기
+                                $('.fc-customDropdownMenu-button').text(newText); // 드롭다운 버튼의 텍스트 변경
+                                $('#customDropdownMenu').removeClass('show');
+                                filterEventsByCategory($(this).data('category'));
+                            });
                         });
+
+                        // customDropdownMenu 위치 조정
+                        $('#customDropdownMenu').css({
+                            'position': 'absolute',
+                            'top': $('.fc-customDropdownMenu-button').offset().top + $('.fc-customDropdownMenu-button').outerHeight()+5,
+                            'left': $('.fc-customDropdownMenu-button').offset().left - $('#customDropdownMenu').outerWidth() + $('.fc-customDropdownMenu-button').outerWidth()+5
+                        });
+
+
                     }
+
                 }
             },
+
 
             initialDate: today, // 달력 처음 로드될 때 표시되는 날짜, default 는 현재 날짜
             editable: false,
@@ -127,6 +161,7 @@ $(document).ready(function() {
                 return {
                     title: event.name,
                     start: event.startDate,
+                    // propA: event.description,  -> 일정 상세는 데이터 안 받아오네...
                     backgroundColor: event.color,
                     textColor: "#ffffff"
                 };
@@ -193,7 +228,7 @@ $(document).ready(function() {
                     'flex': '1'
                 });
                 let titleSpan = $('<span>').text(event.name).addClass('event-title').css('margin-bottom', '5px');
-                let detailSpan = $('<span>').text(event.propA).addClass('event-detail');
+                let detailSpan = $('<span>').text(event.description).addClass('event-detail');
                 titleAndDetail.append(titleSpan, detailSpan);
                 li.append(titleAndDetail);
 
