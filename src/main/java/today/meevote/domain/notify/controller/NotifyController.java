@@ -23,7 +23,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/notify")
-@Tag(name = "알림 API 명세서")
+@Tag(name = "알 API 명세서")
 public class NotifyController {
     private final NotifyService notifyService;
     @Operation(summary = "안읽은 알림 개수 조회")
