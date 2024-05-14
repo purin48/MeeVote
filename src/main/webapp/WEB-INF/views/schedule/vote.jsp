@@ -90,16 +90,25 @@ prefix="c" %>
     </div>
 
     <div class="member-container">
-      <ul>
-
-      </ul>
-      <div></div>
+      <div class="del-btn"><i class="bi bi-door-open"></i></div>
+      <div class="section" id="mid-section">
+        <!-- 맴버 검색창 -->
+        <div id="search-container">
+          <div id="name-serach">
+            <input type="text" placeholder="맴버 검색">
+            <i class="bi bi-search"></i>
+          </div>
+          <div id="search-list-container">
+            <ul id="search-list">
+            </ul>
+          </div>
+        </div>
+        <!-- 추가된 맴버 -->
+        <ul class="member-list">
+        </ul>
+      </div>
     </div>
-
-    <!-- 나가기 버튼 -->
-    <button class="del-btn">일정 취소</button>
-    <!-- 나가기 버튼 -->
-
+    <button class="member-btn">맴버 관리</button>
     <!-- 맵 컨테이너 -->
     <div class="map-container"></div>
     <!-- 맵 컨테이너 End -->

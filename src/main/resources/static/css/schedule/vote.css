@@ -299,17 +299,140 @@ body {
 
 
 /* ---- 맴버 컨테이너 ---- */
+.member-container {
+  width: 150px;
+  height: 100vh;
+  position: fixed;
+  right: 0px;
+  top: 0px;
+  background-color: rgb(255, 255, 255, 0.5);
+  z-index: 1;
+  transition: all 0.5s;
+  padding: 70px 10px 50px;
+}
 
+.hide-container {
+  right: -150px;
+}
+
+#name-serach {
+  width: 100%;
+  padding: 5px 10px;
+  border: 1px solid #BBBBBB;
+  border-radius: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 5px;
+}
+
+#name-serach > input{
+  width: 90%;
+  border: none;
+  font-size: 14px;
+  font-weight: bold;
+  background-color: rgb(255, 255, 255, 0);
+}
+
+#name-serach > i{
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+#name-serach > i:hover{
+  color: #4fd1c5;
+}
+/* ---- 이름 검색 End ---- */
+
+/* ---- 검색 리스트 ---- */
+#search-container {
+  position: relative;
+  width: 100%;
+}
+
+#search-list-container{ 
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 85%;
+  max-height: 200px;
+  overflow-y: auto; 
+  border: #BBBBBB 1px solid;
+  border-radius: 5px;
+  background-color: white;
+  z-index: 1;
+  display: none;
+}
+
+#search-list-container > ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.search-item {
+  width: 100%;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 5px;
+  cursor: pointer;
+}
+
+.member-image {
+  width: 40px;
+  height: 40px;
+}
+
+.member-image > img{
+  width: 35px;
+  height: 35px;
+  border-radius: 10px;
+  object-fit: contain;
+}
+
+.member-info {
+  margin: 0px;
+  font-size: 12px;
+}
+
+#search-list > .search-item:hover{
+  background-color: lightgray;
+}
+
+.search-item > i {
+  margin-left: auto;
+  font-size: 28px;
+  cursor: pointer;
+}
+/* ---- 검색 리스트 End---- */
+
+/* ---- 추가된 맴버 ---- */
+.member-list {
+  width: 100%;
+  max-height: calc(100vh-200px);
+  overflow-y: auto; 
+  padding: 0;
+  margin: 0;
+}
+
+.member-list > .search-item{
+  cursor: pointer;
+}
+/* ---- 추가된 맴버 End ---- */
 /* ---- 맴버 컨테이너 ---- */
 
+
+
 /* 기타 버튼들 */
-.del-btn {
+.member-btn {
   position: fixed;
   right: 20px;
   bottom: 20px;
   padding: 7px 15px;
   color: white;
-  background-color: tomato;
+  background-color: #4fd1c5;
   font-size: 16px;
   font-weight: bold;
   border: 0px;
@@ -317,6 +440,31 @@ body {
   box-shadow: 5px 5px 5px lightgray;
   z-index: 1;
   transition: all 0.3s;
+}
+
+.member-btn:hover{
+  background-color: #35f2e1;
+}
+
+.del-btn {
+  width: 43px;
+  height: 43px;
+  position: absolute;
+  top: 11px;
+  left: 11px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  background-color: tomato;
+  font-size: 1.6rem;
+  padding: .1rem .55rem;
+  border: 0px;
+  border-radius: 10px;
+  box-shadow: 5px 5px 5px lightgray;
+  z-index: 1;
+  transition: all 0.3s;
+  cursor: pointer;
 }
 
 .del-btn:hover{

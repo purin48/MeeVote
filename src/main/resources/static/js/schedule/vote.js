@@ -1,5 +1,5 @@
 import {displayMap, createMarker, searchPlace, locFromAddress, addrFromLoc,  createOverlay, createPolyline} from '/js/module/map.js'
-import {getMyInfo, getVotingDetail, postVotingItem, doVote, deleteSchedule, outSchedule, updateDeparture} from '/js/module/ajax.js'
+import {getMyInfo, getVotingDetail, postVotingItem, doVote, deleteSchedule, outSchedule, updateDeparture, serachMember, inviteMember} from '/js/module/ajax.js'
 import {showPlaceList} from '/js/module/common.js'
 import {getRoute} from '/js/module/mobility.js'
 
@@ -15,7 +15,7 @@ let myPoint = myScheduleInfo.lat? [myScheduleInfo.lat, myScheduleInfo.lng] : awa
 // ---- 지도 객체 ----
 const map = await displayMap('.map-container', myPoint[0], myPoint[1]);
 // ---- 검색 위치 정보 ----
-let serachList = [];
+let list = [];
 // ---- 마커 ----
 let myMarker;
 let memberMarker = [];
@@ -25,7 +25,38 @@ let overlayArr = [];
 let nowOverlay;
 // ---- 투표 항목 ----
 let voteItems = {};
+// ---- 맴버 검색 ----
+let memberList = [];
 // 변수 End
+
+
+// ---- 함수 : 맴버 ui 추가----
+function createMemberUI(info) {
+  const li = $(`
+  <li class="search-item">
+    <div class="member-image"> 
+      <img src=${info.imgSrc} alt="">
+    </div>
+    <p class="member-info">${info.name}</p>
+  </li>
+  `)
+
+  $('.member-list').append(li);
+  return li;
+}
+// ---- 함수 : 맴버 ui 추가 ----
+
+
+// ---- 함수 : 맴버 ui 추가----
+async function createMemberMarker(info) {
+  const startPoint = info.lat? [info.lat, info.lng] : await locFromAddress(info.address);
+  let imgSrc = info.email === myInfo.email? 'my' : 'member';
+  const marker = createMarker(map, startPoint[0], startPoint[1], 72, `/image/marker/${imgSrc}.png`);
+
+  return marker;
+}
+// ---- 함수 : 맴버 ui 추가 ----
+
 
 
 // 함수
@@ -78,7 +109,7 @@ function createOverlayElement(place) {
 // ---- 함수 : 검색 마커와 리스트 클릭 이벤트 ----
 function searchClickEvent(idx) {
   // 해당 위치로 이동
-  const moveLatLon = new kakao.maps.LatLng(serachList[idx].y, serachList[idx].x);
+  const moveLatLon = new kakao.maps.LatLng(list[idx].y, list[idx].x);
   map.setLevel(5);
   map.panTo(moveLatLon);
   // 오버레이 표시
@@ -93,14 +124,14 @@ function searchClickEvent(idx) {
 async function serachTotal() {
   // 이전 마커 제거
   $.each(searchMarker, (idx, marker) => marker.setMap(null));
-  serachList = [];
+  list = [];
   searchMarker = [];
   overlayArr = [];
   // 장소 검색
-  serachList = await searchPlace($('.place-search > input').val());
-  showPlaceList(serachList, '.search-list-container', '.search-list')
+  list = await searchPlace($('.place-search > input').val());
+  showPlaceList(list, '.search-list-container', '.search-list')
   // 마커, 오버레이 추가
-  $.each(serachList, function(idx, place) {
+  $.each(list, function(idx, place) {
     const content = createOverlayElement(place).get(0);
     const marker = createMarker(map, place.y, place.x, 72);
     const overlay = createOverlay(map, marker, content);
@@ -191,7 +222,6 @@ function createVoteItemUI(id) {
   });
   // 마커로 이동하기 이벤트 추가
   li.click(async function(e) {
-    map.setLevel(3);
     map.panTo(new kakao.maps.LatLng(voteItemInfo.vote.lat, voteItemInfo.vote.lng));    
   })
 
@@ -235,8 +265,7 @@ async function resetVoteAll() {
 // --- 함수 : 투표 항목 갱신 End----
 
 
-
-// 출발 위치 옮기기
+// ---- 함수 : 출발 위치 옮기기 ----
 async function moveStart(lat, lng, name) {
   const result = await Swal.fire({
     title: "출발지를 변경합니다.",
@@ -257,14 +286,12 @@ async function moveStart(lat, lng, name) {
       "lng": lng
     };
     const response = await updateDeparture(scheduleId, data);
-    console.log(response)
     // 투표 정보 초기화
     if (response.isSuccess) {
       for (const key in voteItems) {
         voteItems[key].poly.setMap(null);
         voteItems[key].marker.setMap(null);
         voteItems[key].ui.remove();
-        console.log("AWrgawrha")
       }
       voteItems = {};
       resetVoteAll();
@@ -273,9 +300,49 @@ async function moveStart(lat, lng, name) {
 
   myMarker.setPosition(new kakao.maps.LatLng(myPoint[0], myPoint[1]));
 }
+// ---- 함수 : 출발 위치 옮기기 End ----
 
 
-// 출발 위치 옮기기 End 
+// ---- 함수 : 맴버 검색 함수 ----
+async function memberSearch(e){
+  // ul 태그 비우기
+  $('#search-list').empty();  
+  // 검색 리스트 구성
+  const response = await serachMember({name: $('#name-serach > input').val()});
+  const searchList = response.data
+
+  $.each(searchList, function (idx, member) { 
+    if (memberList.hasOwnProperty(member.email)) return;
+    // 요소 생성
+    let li = $(`
+      <li class="search-item">
+        <div class="member-image"> 
+          <img src=${member.imgSrc} alt="">
+        </div>
+        <p class="member-info">${member.name}</p>
+      </li>
+    `)
+    // 맴버 추가 이벤트
+    $(li).click(async function(e) {
+      const data = {
+          "scheduleId": scheduleId,
+          "inviteEmailList": [
+            member.email
+          ]
+      };
+      const response = await inviteMember(data);
+      console.log(response)
+      const marker = createMemberMarker(member);
+      $('.member-list').append($(this));
+    })
+
+    $('#search-list').append(li);
+  });
+
+  // 검색 리스트 표시
+  $('#search-list-container').css('display', 'block');
+}
+// ---- 함수 : 맴버 검색 이벤트 End ----
 
 // 이벤트 등록
 // ---- 이벤트 등록 : 장소 검색 ----
@@ -333,9 +400,7 @@ $('.del-btn').click(async function(e){
   });
 
   if (result.isDenied) {
-    console.log(scheduleId)
     let response = isOwner? await deleteSchedule(scheduleId) : await outSchedule(scheduleId)
-    console.log(response)
     if (response.isSuccess) {
       location.replace('/');
     }
@@ -344,15 +409,42 @@ $('.del-btn').click(async function(e){
 // ---- 이벤트 등록 : 장소 선택 스크롤 컨트롤 End----
 
 
+// ---- 이벤트 등록 : 맴버 관리 이벤트 ----
+$('.member-btn').click(function(e) {
+  $('.member-container').toggleClass('hide-container');
+})
+// ---- 이벤트 등록 : 맴버 관리 이벤트 ----
+
+
+// ---- 이벤트 등록 : 회원 검색 ----
+$('#name-serach > i').click(function(e){
+  memberSearch();
+})
+
+$('#name-serach > input').keypress(function (e) { 
+if(e.keyCode && e.keyCode == 13) memberSearch();
+})
+// ---- 이벤트 등록 : 회원 검색 End----
+
+// ---- 함수 : 맴버 추가하고 마커 추가 ----
+$('#search-container').click(function(e) {
+  e.stopPropagation();
+})
+
+$(document).click(function(e) {
+  $('#search-list-container').css('display', 'none');
+})
+// ---- 함수 : 맴버 추가하고 마커 추가 ----
 
 // 시작 이벤트
-// ---- 시작 이벤트 : 참여자 마커 생성 ----
+// ---- 시작 이벤트 : 참여자 ui 생성 ----
 $.each(scheduleInfo.memberList, async function (index, info) {
-  const startPoint = info.lat? [info.lat, info.lng] : await locFromAddress(info.address);
-  let imgSrc = info.email === myInfo.email? 'my' : 'member';
-  const marker = createMarker(map, startPoint[0], startPoint[1], 72, `/image/marker/${imgSrc}.png`);
+  const ui = createMemberUI(info);
+  const marker = await createMemberMarker(info);
+
+  memberList[info.email] = {"ui": ui, "marker" : marker};
+
   // 내 마커면 드래그앤드랍 이벤트 넣기
-  memberMarker.push(marker)
   if (info.email === myInfo.email) {
     myMarker = marker
     myMarker.setDraggable(true);
@@ -361,7 +453,7 @@ $.each(scheduleInfo.memberList, async function (index, info) {
     });
   }
 });
-// ---- 시작 이벤트 : 참여자 마커 생성 End----
+// ---- 시작 이벤트 : ui 생성 End----
 
 
 // ---- 시작 이벤트 : 투표 항목 표시 ----
