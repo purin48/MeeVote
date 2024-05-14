@@ -49,14 +49,17 @@ prefix="c" %>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
     <!-- kakao mpa -->
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6e5d6d2e61f5ab7c5909eee58f094989&libraries=services"></script>
-    <!-- custom css -->
+    <!-- sidebar -->
     <link rel="stylesheet" href="/css/inc/sidebar.css" />
+    <script type="module" src="/js/inc/sidebar.js" defer></script>
+    <!-- alarm -->
+    <link rel="stylesheet" href="/css/inc/alarm.css" />
+    <script src="/js/inc/alarm.js" defer></script>
+    <!-- custom css -->
     <link rel="stylesheet" href="/css/create/personal.css" />
     <!-- custom js import -->
-    <script src="/js/inc/sidebar.js" defer></script>
     <script src="/js/create/personal.js" defer></script>
-  </head>
-  <body>
+
     <!-- 사이드바 include -->
     <jsp:include page="/WEB-INF/views/inc/sidebar.jsp">
       <jsp:param value="personal" name="pageName" />

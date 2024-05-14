@@ -2,53 +2,11 @@ import {displayMap, createMarker, locFromAddress, addrFromLoc, createPolyline} f
 import {getMyInfo, getScheduleDetail, postVotingItem, doVote, deleteSchedule, outSchedule} from '/js/module/ajax.js'
 import {getRoute} from '/js/module/mobility.js'
 
-// 실험용 데이터
-const scheduleInfo = {
-  "scheduleDetailInfo": {
-    "scheduleId": 1,
-    "scheduleCategoryId": 2,
-    "categoryName": "스터디",
-    "color": "green",
-    "name": "스프링부트 스터디",
-    "description": "스프링부트 마스터하기",
-    "startDate": "2024-05-8 09:00",
-    "endDate": "2024-05-10 23:00",
-    "isGroup": true,
-    "placeName": "서울시 서초구",
-    "lat": "37.491810664483",
-    "lng": "126.995896931187",
-    "requesterOwner": true
-  },
-  "memberList": [
-    {
-      "email": "rlagkswn37@naver.com",
-      "name": "김한주",
-      "address": "서울 관악구 신림동1길 26-8",
-      "imgSrc": "default.jpg",
-      "isOwner": true,
-      "departurePlaceName": null,
-      "lat": null,
-      "lng": null
-    },
-    {
-      "email": "test@gmail.com",
-      "name": "김철수",
-      "address": "서울특별시 서대문구 거북골로 34",
-      "imgSrc": "default.jpg",
-      "isOwner": false,
-      "departurePlaceName": "한성대학교 중소기업직업훈련컨소시엄",
-      "lat": "37.58374455901329",
-      "lng": "126.99994905271778"
-    },
-  ]
-}
-// ---- 내 정보 불러오기 ----
-
 
 // ---- 스케쥴 관련 정보
 const urlSearch = new URLSearchParams(location.search);
 let scheduleId = await urlSearch.get('scheduleId');
-// let scheduleInfo = await getScheduleDetail(scheduleId);
+let scheduleInfo = await getScheduleDetail(scheduleId);
 const targetInfo = scheduleInfo.scheduleDetailInfo;
 // ---- 사용자 정보 ----
 const myInfo = await getMyInfo();

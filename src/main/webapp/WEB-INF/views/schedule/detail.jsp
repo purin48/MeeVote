@@ -49,11 +49,15 @@ prefix="c" %>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
     <!-- kakao mpa -->
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6e5d6d2e61f5ab7c5909eee58f094989&libraries=services"></script>
-    <!-- custom css -->
+    <!-- sidebar -->
     <link rel="stylesheet" href="/css/inc/sidebar.css" />
+    <script type="module" src="/js/inc/sidebar.js" defer></script>
+    <!-- alarm -->
+    <link rel="stylesheet" href="/css/inc/alarm.css" />
+    <script src="/js/inc/alarm.js" defer></script>
+    <!-- custom css -->
     <link rel="stylesheet" href="/css/schedule/detail.css" />
     <!-- custom js import -->
-    <script type="module" src="/js/inc/sidebar.js" defer></script>
     <script type="module" src="/js/schedule/detail.js" defer></script>
   </head>
   <body>

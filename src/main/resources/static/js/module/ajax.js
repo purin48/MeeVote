@@ -150,10 +150,26 @@ export async function getScheduleDetail(scheduleId) {
   
   if (!response.isSuccess) {
     // 실패 시 예외 처리
-    // return [];
   }
 
   console.log(response)
+
+  return response;
+}
+
+
+// 출발 위치 이동
+export async function updateDeparture(scheduleId, data) {
+  const response = await $.ajax({
+    type: 'PUT',
+    url: `/api/voting/schedule/departure?scheduleId=${scheduleId}`,
+    dataType: 'json',
+    contentType: 'application/json',
+    data : JSON.stringify(data)
+  });
+  if (!response.isSuccess) {
+    // 실패 시 예외 처리
+  }
 
   return response;
 }
