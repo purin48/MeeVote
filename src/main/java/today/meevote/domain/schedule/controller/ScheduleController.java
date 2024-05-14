@@ -215,7 +215,7 @@ public class ScheduleController {
 					@ExampleObject(name = "내부 서버 오류", value = "{\"isSuccess\": false, \"code\": \"Z99\", \"message\": \"서버 오류가 발생했습니다.\"}")
 			}))
 	@PostMapping("/invite")
-	public BaseResponse inviteMember(InviteMemberDto inviteMemberDto){
+	public BaseResponse inviteMember(@RequestBody InviteMemberDto inviteMemberDto){
 		scheduleService.inviteMember(inviteMemberDto);
 		return new BaseResponse(SuccessInfo.INVITE_GROUP_SCHEDULE);
 	}
