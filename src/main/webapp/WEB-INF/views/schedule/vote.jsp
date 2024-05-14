@@ -71,6 +71,15 @@ prefix="c" %>
 
     <!-- 검색창 -->
     <div class="search-container">
+      <div class="info-container">
+        <div class="text-container">
+          <p class="name">테스트 일정입니다.</p>
+          <p class="deadline">2024-05-17까지</p>
+        </div>
+        <div class="end-btn">
+          <i class="bi bi-alarm"></i>
+        </div>
+      </div>
       <!-- 검색창 -->
       <div class="place-search">
         <input type="text" placeholder="추가할 장소 검색">
@@ -88,11 +97,9 @@ prefix="c" %>
       <ul class="vote-list">
       </ul>
     </div>
-
     <div class="member-container">
       <div class="del-btn"><i class="bi bi-door-open"></i></div>
       <div class="section" id="mid-section">
-        <!-- 맴버 검색창 -->
         <div id="search-container">
           <div id="name-serach">
             <input type="text" placeholder="맴버 검색">
@@ -103,12 +110,13 @@ prefix="c" %>
             </ul>
           </div>
         </div>
-        <!-- 추가된 맴버 -->
         <ul class="member-list">
         </ul>
       </div>
     </div>
+
     <button class="member-btn">맴버 관리</button>
+
     <!-- 맵 컨테이너 -->
     <div class="map-container"></div>
     <!-- 맵 컨테이너 End -->

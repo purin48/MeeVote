@@ -209,14 +209,13 @@ export async function inviteMember(data) {
 }
 
 
-// 회원 정보 수정
-export async function inviteMember(data) {
+// 장소 투표 확정
+export async function endVote(scheduleID) {
   const response = await $.ajax({
-    type: "PUT",
-    url: '/api/member/me',
+    type: "POST",
+    url: `/api/voting/schedule/place/confirm?placeToVoteId=${scheduleID}`,
     dataType: "json",
-    contentType: "application/json",
-    data: JSON.stringify(data),
+    contentType: 'application/json',
   });
   if (!response.isSuccess) {
     // 실패 시 예외 처리

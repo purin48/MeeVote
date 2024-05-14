@@ -1,5 +1,5 @@
 import {displayMap, createMarker, searchPlace, locFromAddress, addrFromLoc,  createOverlay, createPolyline} from '/js/module/map.js'
-import {getMyInfo, getVotingDetail, postVotingItem, doVote, deleteSchedule, outSchedule, updateDeparture, serachMember, inviteMember} from '/js/module/ajax.js'
+import * as aj from '/js/module/ajax.js'
 import {showPlaceList} from '/js/module/common.js'
 import {getRoute} from '/js/module/mobility.js'
 
@@ -7,9 +7,9 @@ import {getRoute} from '/js/module/mobility.js'
 // ---- 스케쥴 관련 정보
 const urlSearch = new URLSearchParams(location.search);
 let scheduleId = await urlSearch.get('scheduleId');
-let scheduleInfo = await getVotingDetail(scheduleId);
+let scheduleInfo = await aj.getVotingDetail(scheduleId);
 // ---- 사용자 정보 ----
-const myInfo = await getMyInfo();
+const myInfo = await aj.getMyInfo();
 let myScheduleInfo = scheduleInfo.memberList.find(v => v.email === myInfo.email)
 let myPoint = myScheduleInfo.lat? [myScheduleInfo.lat, myScheduleInfo.lng] : await locFromAddress(myInfo.address);
 // ---- 지도 객체 ----
@@ -18,7 +18,6 @@ const map = await displayMap('.map-container', myPoint[0], myPoint[1]);
 let list = [];
 // ---- 마커 ----
 let myMarker;
-let memberMarker = [];
 let searchMarker = [];
 // ---- 오버레이 ----
 let overlayArr = [];
@@ -26,7 +25,7 @@ let nowOverlay;
 // ---- 투표 항목 ----
 let voteItems = {};
 // ---- 맴버 검색 ----
-let memberList = [];
+let memberList = {};
 // 변수 End
 
 
@@ -88,7 +87,7 @@ function createOverlayElement(place) {
       "lng": place.x
     }
     nowOverlay.setMap(null);
-    const response = await postVotingItem(scheduleId, placeInfo);
+    const response = await aj.postVotingItem(scheduleId, placeInfo);
     Swal.fire({
       title: response.message,
       icon: response.isSuccess? 'success' : 'info',
@@ -110,7 +109,6 @@ function createOverlayElement(place) {
 function searchClickEvent(idx) {
   // 해당 위치로 이동
   const moveLatLon = new kakao.maps.LatLng(list[idx].y, list[idx].x);
-  map.setLevel(5);
   map.panTo(moveLatLon);
   // 오버레이 표시
   if(nowOverlay !== undefined) nowOverlay.setMap(null);
@@ -211,7 +209,7 @@ function createVoteItemUI(id) {
   );
   // 투표하기 이벤트 추가
   li.find('.vote-head > i').click(async function(e) {
-    const result = await doVote(id);
+    const result = await aj.doVote(id);
     if(result.isSuccess) {
       voteItems[id].vote.didRequesterVoteHere = !voteItems[id].vote.didRequesterVoteHere;
       voteItems[id].vote.votedCount = voteItems[id].vote.didRequesterVoteHere? 
@@ -250,7 +248,7 @@ async function createVoteItemPoly(id) {
 
 // --- 함수 : 투표 항목 전부 갱신 ----
 async function resetVoteAll() {
-  scheduleInfo = await getVotingDetail(scheduleId);
+  scheduleInfo = await aj.getVotingDetail(scheduleId);
   $.each(scheduleInfo.placeToVoteList, async function (index, voteItem) {
     const id = voteItem.placeToVoteId;
     if (!voteItems.hasOwnProperty(id)) {
@@ -285,7 +283,7 @@ async function moveStart(lat, lng, name) {
       "lat": lat,
       "lng": lng
     };
-    const response = await updateDeparture(scheduleId, data);
+    const response = await aj.updateDeparture(scheduleId, data);
     // 투표 정보 초기화
     if (response.isSuccess) {
       for (const key in voteItems) {
@@ -308,7 +306,7 @@ async function memberSearch(e){
   // ul 태그 비우기
   $('#search-list').empty();  
   // 검색 리스트 구성
-  const response = await serachMember({name: $('#name-serach > input').val()});
+  const response = await aj.serachMember({name: $('#name-serach > input').val()});
   const searchList = response.data
 
   $.each(searchList, function (idx, member) { 
@@ -330,7 +328,7 @@ async function memberSearch(e){
             member.email
           ]
       };
-      const response = await inviteMember(data);
+      const response = await aj.inviteMember(data);
       console.log(response)
       const marker = createMemberMarker(member);
       $('.member-list').append($(this));
@@ -400,7 +398,7 @@ $('.del-btn').click(async function(e){
   });
 
   if (result.isDenied) {
-    let response = isOwner? await deleteSchedule(scheduleId) : await outSchedule(scheduleId)
+    let response = isOwner? await aj.deleteSchedule(scheduleId) : await aj.outSchedule(scheduleId)
     if (response.isSuccess) {
       location.replace('/');
     }
@@ -415,7 +413,6 @@ $('.member-btn').click(function(e) {
 })
 // ---- 이벤트 등록 : 맴버 관리 이벤트 ----
 
-
 // ---- 이벤트 등록 : 회원 검색 ----
 $('#name-serach > i').click(function(e){
   memberSearch();
@@ -426,7 +423,7 @@ if(e.keyCode && e.keyCode == 13) memberSearch();
 })
 // ---- 이벤트 등록 : 회원 검색 End----
 
-// ---- 함수 : 맴버 추가하고 마커 추가 ----
+// ----  이벤트 등록 : 맴버 검색 창 닫기 ----
 $('#search-container').click(function(e) {
   e.stopPropagation();
 })
@@ -434,13 +431,65 @@ $('#search-container').click(function(e) {
 $(document).click(function(e) {
   $('#search-list-container').css('display', 'none');
 })
-// ---- 함수 : 맴버 추가하고 마커 추가 ----
+// ----  이벤트 등록 : 맴버 추가하고 마커 추가 ----
+
+// ---- 이벤트 등록 : 투표 종료하기 -----
+$('.end-btn').click(async function(e) {
+  // 투표 종료 재차 확인
+  const modalResult = await Swal.fire({
+    title: "투표를 종료합니다.",
+    text: "진행 중인 투표를 종료합니다.",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#4FD1C5",
+    cancelButtonColor: "darkgray",
+    confirmButtonText: "확인",
+    cancelButtonText: "취소"
+  })
+
+  if (modalResult.isConfirmed) {
+      // 서버에 데이터 전송
+    let placeId = 0;
+    let maxCnt = -1;
+    const votingStatus = await aj.getVotingDetail(scheduleId);
+    $.each(votingStatus.placeToVoteList, function (idx, val) { 
+      if (val.votedCount > maxCnt) {
+        maxCnt = val.votedCount;
+        placeId = val.placeToVoteId;
+      }
+    });
+    const response = await aj.endVote(placeId);
+    // 이동 모달 표시
+    if (response.isSuccess) {
+      const finalResult = await Swal.fire({
+        title: "투표 종료 완료",
+        text: "진행 중인 투표를 종료합니다.",
+        icon: "success",
+        confirmButtonColor: "#4FD1C5",
+        confirmButtonText: "확인",
+      });
+      location.replace(`/schedule/detail?scheduleId=${scheduleId}`);
+    }
+  }
+})
+// ---- 이벤트 등록 : 투표 종료하기 End -----
+
 
 // 시작 이벤트
+// ---- 시작 이벤트 : 정보 표시 ----
+if (!scheduleInfo.isRequesterOwner) $('.end-btn').css('display', 'none');
+$('.text-container > .name').text(scheduleInfo.votingScheduleInfo.name);
+$('.text-container > .deadline').text(scheduleInfo.votingScheduleInfo.voteDeadline+"까지");
+// ---- 시작 이벤트 : 정보 표시 End----
+
+
 // ---- 시작 이벤트 : 참여자 ui 생성 ----
 $.each(scheduleInfo.memberList, async function (index, info) {
   const ui = createMemberUI(info);
   const marker = await createMemberMarker(info);
+  ui.click(async function(e) {
+    map.panTo(new kakao.maps.LatLng(marker.getPosition().Ma, marker.getPosition().La));    
+  })
 
   memberList[info.email] = {"ui": ui, "marker" : marker};
 

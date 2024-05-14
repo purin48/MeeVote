@@ -38,7 +38,7 @@ $('.future-container .carousel_prev').click(function(e) {
 })
 
 $('.future-container .carousel_next').click(function(e) {
-  if (rightSlide < voteCount-1) showRightSlide(rightSlide + 1);
+  if (rightSlide < futureCount-1) showRightSlide(rightSlide + 1);
 })
 
 showRightSlide(0);
