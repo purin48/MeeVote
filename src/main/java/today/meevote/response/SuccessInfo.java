@@ -40,7 +40,8 @@ public enum SuccessInfo {
 
 	GET_NOTIFY_LIST("알림 목록 조회가 완료되었습니다."),
 
-	READ_NOTIFY("알림 읽기 처리가 완료되었습니다.");
+	READ_NOTIFY("알림 읽기 처리가 완료되었습니다."),
+	READ_ALL_NOTIFY("모든 알림 읽기 처리가 완료되었습니다.");
     private final String code = "A00";
     private final String message;
 }

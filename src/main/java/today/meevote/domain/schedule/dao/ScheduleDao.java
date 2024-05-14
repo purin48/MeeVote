@@ -46,7 +46,7 @@ public interface ScheduleDao {
 
 	public void createGroupMemberSchedule(Map<String, Object> dto);
 
-	public int isExistGroupMember(@Param("inviteEmailList") List<String> inviteEmailList);
+	public int isExistGroupMember(@Param("list") List<String> inviteEmailList);
 
     public Optional<ScheduleDetailInfoDto> getScheduleDetailInfoDto(@Param("email") String email, @Param("scheduleId") long scheduleId);
 

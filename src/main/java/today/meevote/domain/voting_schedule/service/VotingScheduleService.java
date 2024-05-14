@@ -3,6 +3,7 @@ package today.meevote.domain.voting_schedule.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import today.meevote.contextholder.MemberContextHolder;
+import today.meevote.domain.notify.dao.NotifyDao;
 import today.meevote.domain.voting_schedule.dao.VotingScheduleDao;
 import today.meevote.domain.voting_schedule.dto.request.CreatePlaceDto;
 import today.meevote.domain.voting_schedule.dto.response.*;
@@ -16,6 +17,7 @@ import java.util.List;
 public class VotingScheduleService {
 
     private final VotingScheduleDao votingScheduleDao;
+    private final NotifyDao notifyDao;
 
     public List<GetVotingScheduleListDto> getVotingScheduleList() {
         String email = MemberContextHolder.getEmail();
@@ -121,5 +123,7 @@ public class VotingScheduleService {
             throw new RestException(FailureInfo.NOT_SCHEDULE_OWNER);
 
         votingScheduleDao.confirmPlace(placeToVoteId);
+
+        notifyDao.createAllConfirmNotify(scheduleId);
     }
 }

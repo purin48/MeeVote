@@ -35,4 +35,8 @@ public class NotifyService {
 
         notifyDao.updateIsRead(notifyId, true);
     }
+
+    public void updateAllNotifyRead() {
+        notifyDao.updateAllIsRead(MemberContextHolder.getEmail(), true);
+    }
 }
