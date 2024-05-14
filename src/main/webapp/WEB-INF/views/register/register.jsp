@@ -22,6 +22,12 @@
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js" defer></script>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
 	<script src="/js/register.js" defer></script>
+	<!-- sidebar -->
+	<link rel="stylesheet" href="/css/inc/sidebar.css" />
+	<script type="module" src="/js/inc/sidebar.js" defer></script>
+	<!-- alarm -->
+	<link rel="stylesheet" href="/css/inc/alarm.css" />
+	<script src="/js/inc/alarm.js" defer></script>
 </head>
 
 <body>

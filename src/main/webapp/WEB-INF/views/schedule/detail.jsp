@@ -49,39 +49,27 @@ prefix="c" %>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
     <!-- kakao mpa -->
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6e5d6d2e61f5ab7c5909eee58f094989&libraries=services"></script>
-    <!-- custom css -->
+    <!-- sidebar -->
     <link rel="stylesheet" href="/css/inc/sidebar.css" />
-    <link rel="stylesheet" href="/css/vote/vote.css" />
-    <!-- custom js import -->
     <script type="module" src="/js/inc/sidebar.js" defer></script>
-    <script type="module" src="/js/vote.js" defer></script>
+    <!-- alarm -->
+    <link rel="stylesheet" href="/css/inc/alarm.css" />
+    <script src="/js/inc/alarm.js" defer></script>
+    <!-- custom css -->
+    <link rel="stylesheet" href="/css/schedule/detail.css" />
+    <!-- custom js import -->
+    <script type="module" src="/js/schedule/detail.js" defer></script>
   </head>
   <body>
     <!-- 사이드바 include -->
     <jsp:include page="/WEB-INF/views/inc/sidebar.jsp" />
+    
+    <!-- 일정 정보 -->
 
-    <!-- 검색창 -->
-    <div class="search-container">
-      <!-- 검색창 -->
-      <div class="place-search">
-        <input type="text" placeholder="추가할 장소 검색">
-        <i class="bi bi-search"></i>
-      </div>
-      <!-- 검색 항목 리스트 -->
-      <div class="search-list-container">
-        <ul class="search-list"></ul>
-      </div>
-      <!-- 투표항목 리스트 -->
-      <div class="vote-list-container">
-        <ul class="vote-list">
-        </ul>
-      </div>
+    <div class="info-container">
+
     </div>
-    <!-- 검색창 End-->
-
-    <!-- 나가기 버튼 -->
-    <button class="del-btn">일정 취소</button>
-    <!-- 나가기 버튼 -->
+    <!-- 일정 정보 End -->
 
     <!-- 맵 컨테이너 -->
     <div class="map-container"></div>

@@ -1,23 +1,23 @@
-import {displayMap, createMarker, searchPlace, locFromAddress, addrFromLoc,  createOverlay,} from '/js/module/map.js'
-import {getMyInfo, getVotingDetail, postVotingItem, doVote, deleteSchedule, outSchedule} from '/js/module/ajax.js'
+import {displayMap, createMarker, searchPlace, locFromAddress, addrFromLoc,  createOverlay, createPolyline} from '/js/module/map.js'
+import {getMyInfo, getVotingDetail, postVotingItem, doVote, deleteSchedule, outSchedule, updateDeparture} from '/js/module/ajax.js'
 import {showPlaceList} from '/js/module/common.js'
 import {getRoute} from '/js/module/mobility.js'
 
 // 변수
 // ---- 스케쥴 관련 정보
 const urlSearch = new URLSearchParams(location.search);
-let scheduleId; 
-scheduleId = await urlSearch.get('scheduleId');
+let scheduleId = await urlSearch.get('scheduleId');
 let scheduleInfo = await getVotingDetail(scheduleId);
 // ---- 사용자 정보 ----
 const myInfo = await getMyInfo();
-const myScheduleInfo = scheduleInfo.memberList.find(v => v.email === myInfo.email)
-const myPoint = myScheduleInfo.lat? [myScheduleInfo.lat, myScheduleInfo.lng] : await locFromAddress(myInfo.address);
+let myScheduleInfo = scheduleInfo.memberList.find(v => v.email === myInfo.email)
+let myPoint = myScheduleInfo.lat? [myScheduleInfo.lat, myScheduleInfo.lng] : await locFromAddress(myInfo.address);
 // ---- 지도 객체 ----
 const map = await displayMap('.map-container', myPoint[0], myPoint[1]);
 // ---- 검색 위치 정보 ----
 let serachList = [];
 // ---- 마커 ----
+let myMarker;
 let memberMarker = [];
 let searchMarker = [];
 // ---- 오버레이 ----
@@ -67,6 +67,9 @@ function createOverlayElement(place) {
 
     if(response.isSuccess) resetVoteAll();
   })
+  crosshairIcon.click(function(e) {
+    moveStart(place.y, place.x, place.address_name)
+  }) 
   return container;
 }
 // ---- 함수 : 오버레이 요소 생성 함수 End----
@@ -76,7 +79,7 @@ function createOverlayElement(place) {
 function searchClickEvent(idx) {
   // 해당 위치로 이동
   const moveLatLon = new kakao.maps.LatLng(serachList[idx].y, serachList[idx].x);
-  map.setLevel(3);
+  map.setLevel(5);
   map.panTo(moveLatLon);
   // 오버레이 표시
   if(nowOverlay !== undefined) nowOverlay.setMap(null);
@@ -132,7 +135,8 @@ async function getVoteItemData(id, voteItem) {
   voteItemInfo.summary = routeInfo.routes[0].summary;
   voteItemInfo.address = addr;
   // 전역 변수에 저장
-  voteItems[id] = voteItemInfo;
+
+  return voteItemInfo
 }
 // ---- 함수 : 투표 항목 정보 불러오기 ----
 
@@ -175,22 +179,44 @@ function createVoteItemUI(id) {
     </li>`
   );
   // 투표하기 이벤트 추가
-  li.find('.vote-head > i').click(async function() {
+  li.find('.vote-head > i').click(async function(e) {
     const result = await doVote(id);
-
     if(result.isSuccess) {
       voteItems[id].vote.didRequesterVoteHere = !voteItems[id].vote.didRequesterVoteHere;
       voteItems[id].vote.votedCount = voteItems[id].vote.didRequesterVoteHere? 
       voteItems[id].vote.votedCount + 1 : voteItems[id].vote.votedCount - 1;
       li.toggleClass('choosed');
-      li.find('.vote-count').text(voteItems[id].vote.votedCount);
+      li.find('.vote-count').text(voteItems[id].vote.votedCount + "명");
     }
   });
+  // 마커로 이동하기 이벤트 추가
+  li.click(async function(e) {
+    map.setLevel(3);
+    map.panTo(new kakao.maps.LatLng(voteItemInfo.vote.lat, voteItemInfo.vote.lng));    
+  })
+
+  $('.vote-list').append(li);
 
   return li;
 }
 // ---- 함수 : 투표 항목 ui 생성 함수 End----
 
+// ---- 함수 : 투표 항목 폴리라인 생성 함수 ----
+async function createVoteItemPoly(id) {
+  const cordArr = [];
+  const roads = voteItems[id].sections.roads;
+  
+  $.each(roads, function (index, road) {
+    for (let i = 0; i < road.vertexes.length; i += 2) {
+      cordArr.push(new kakao.maps.LatLng(road.vertexes[i+1], road.vertexes[i]));
+    } 
+  });
+
+  const polyLine = createPolyline(map, cordArr);
+
+  return polyLine; 
+}
+// ---- 함수 : 투표 항목 폴리라인 생성 함수 End ----
 
 // --- 함수 : 투표 항목 전부 갱신 ----
 async function resetVoteAll() {
@@ -198,15 +224,58 @@ async function resetVoteAll() {
   $.each(scheduleInfo.placeToVoteList, async function (index, voteItem) {
     const id = voteItem.placeToVoteId;
     if (!voteItems.hasOwnProperty(id)) {
-      await getVoteItemData(id, voteItem);
-      const li = createVoteItemUI(id);
-      $('.vote-list').append(li);
+      // 객체 구성
+      voteItems[id] = await getVoteItemData(id, voteItem);
+      voteItems[id].ui = createVoteItemUI(id);
+      voteItems[id].marker = await createMarker(map, voteItems[id].vote.lat, voteItems[id].vote.lng, 60, '/image/marker/target.png');
+      voteItems[id].poly = await createVoteItemPoly(id);
     }
   });
 }
 // --- 함수 : 투표 항목 갱신 End----
 
 
+
+// 출발 위치 옮기기
+async function moveStart(lat, lng, name) {
+  const result = await Swal.fire({
+    title: "출발지를 변경합니다.",
+    text: "현재 마커가 위치한 곳으로 출발지를 변경합니다.",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "4FD1C5",
+    cancelButtonColor: "darkgray",
+    confirmButtonText: "확인",
+    cancelButtonText: "취소"
+  })
+
+  if (result.isConfirmed) {
+    myPoint = [lat, lng];
+    const data = {
+      "placeName": name,
+      "lat": lat,
+      "lng": lng
+    };
+    const response = await updateDeparture(scheduleId, data);
+    console.log(response)
+    // 투표 정보 초기화
+    if (response.isSuccess) {
+      for (const key in voteItems) {
+        voteItems[key].poly.setMap(null);
+        voteItems[key].marker.setMap(null);
+        voteItems[key].ui.remove();
+        console.log("AWrgawrha")
+      }
+      voteItems = {};
+      resetVoteAll();
+    }
+  }
+
+  myMarker.setPosition(new kakao.maps.LatLng(myPoint[0], myPoint[1]));
+}
+
+
+// 출발 위치 옮기기 End 
 
 // 이벤트 등록
 // ---- 이벤트 등록 : 장소 검색 ----
@@ -282,7 +351,15 @@ $.each(scheduleInfo.memberList, async function (index, info) {
   const startPoint = info.lat? [info.lat, info.lng] : await locFromAddress(info.address);
   let imgSrc = info.email === myInfo.email? 'my' : 'member';
   const marker = createMarker(map, startPoint[0], startPoint[1], 72, `/image/marker/${imgSrc}.png`);
+  // 내 마커면 드래그앤드랍 이벤트 넣기
   memberMarker.push(marker)
+  if (info.email === myInfo.email) {
+    myMarker = marker
+    myMarker.setDraggable(true);
+    kakao.maps.event.addListener(myMarker, 'dragend', function(e) {
+      moveStart(myMarker.getPosition().Ma, myMarker.getPosition().La, "마커 이동");
+    });
+  }
 });
 // ---- 시작 이벤트 : 참여자 마커 생성 End----
 

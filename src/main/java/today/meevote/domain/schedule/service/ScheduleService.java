@@ -12,6 +12,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.util.StringUtils;
 import today.meevote.contextholder.MemberContextHolder;
+import today.meevote.domain.notify.dao.NotifyDao;
 import today.meevote.domain.schedule.dao.ScheduleDao;
 import today.meevote.domain.schedule.dto.request.CreateGroupScheduleDto;
 import today.meevote.domain.schedule.dto.request.CreatePersonalScheduleDto;
@@ -28,6 +29,7 @@ import today.meevote.utils.DateUtil;
 public class ScheduleService {
 
 	private final ScheduleDao scheduleDao;
+    private final NotifyDao notifyDao;
 
 	@Transactional
 	public void createPersonalSchedule(CreatePersonalScheduleDto dto) {
@@ -97,6 +99,9 @@ public class ScheduleService {
         params.put("ownerEmail", email);
         scheduleDao.createGroupSchedule(params);
         scheduleDao.createGroupMemberSchedule(params);
+
+        notifyDao.createAllInviteNotify((Long) params.get("id"));
+
         return (long) params.get("id");
     }
 
@@ -125,9 +130,9 @@ public class ScheduleService {
         scheduleDao.outGroupSchedule(email, scheduleId);
     }
 
-    public Page<GetScheduleListDto> getPastScheduleList(long categoryId, String keyword, Pageable pageable) {
+    public Page<GetScheduleListDto> getPastScheduleList(Long categoryId, String keyword, Pageable pageable) {
         String email = MemberContextHolder.getEmail();
-        if (!scheduleDao.isCategoryExist(categoryId)) {
+        if ( categoryId != null && categoryId != 0 && !scheduleDao.isCategoryExist(categoryId)) {
             throw new RestException(FailureInfo.NOT_EXIST_CATEGORY);
         }
         List<GetScheduleListDto> schedules = scheduleDao.getPastScheduleList(email, categoryId, keyword, pageable);
@@ -135,6 +140,7 @@ public class ScheduleService {
         return new PageImpl<>(schedules, pageable, total);
     }
 
+    @Transactional
     public void inviteMember(InviteMemberDto inviteMemberDto) {
         String email = MemberContextHolder.getEmail();
 
@@ -154,5 +160,7 @@ public class ScheduleService {
         if (!existingEmails.isEmpty())
             throw new RestException(FailureInfo.ALREADY_EXIST_MEMBER);
         scheduleDao.inviteMember(inviteMemberDto.getScheduleId(), inviteMemberDto);
+
+        notifyDao.createAllInviteNotify(inviteMemberDto.getScheduleId());
     }
 }

@@ -155,23 +155,24 @@ public class ScheduleController {
 	@ApiResponse(responseCode = "1", description = "성공")
 	@ApiResponse(responseCode = "2", description = "실패",
 			content = @Content(examples = {
-					@ExampleObject(name = "존재하지않는 일정", value = "{\"isSuccess\": false, \"code\": \"S02\", \"message\": \"존재하지 않는 일정입니다.\"}"),
-					@ExampleObject(name = "인증되지않은 요청", value = "{\"isSuccess\": false, \"code\": \"Z97\", \"message\": \"인증되지않은 요청입니다.\"}"),
+					@ExampleObject(name = "존재하지 않는 일정", value = "{\"isSuccess\": false, \"code\": \"S02\", \"message\": \"존재하지 않는 일정입니다.\"}"),
+					@ExampleObject(name = "인증되지 않은 요청", value = "{\"isSuccess\": false, \"code\": \"Z97\", \"message\": \"인증되지 않은 요청입니다.\"}"),
 					@ExampleObject(name = "내부 서버 오류", value = "{\"isSuccess\": false, \"code\": \"Z99\", \"message\": \"서버 오류가 발생했습니다.\"}")
 			}))
 	@GetMapping("/past/list")
 	public DataResponse<Page<GetScheduleListDto>> getPastScheduleList(
-			@Schema(description = "카테고리 id", defaultValue = "1")
-			@Min(value = 1, message = "카테고리 id값을 확인해주세요.")
-			long categoryId,
 			@RequestParam(required = false)
-			@Schema(description = "키워드 검색어", defaultValue = "일정명1")
+			@Schema(description = "카테고리 ID", example = "0")
+			Long categoryId,
+			@RequestParam(required = false)
+			@Schema(description = "키워드 검색어", example = "스터디")
 			String keyword,
 			@ParameterObject
 			@PageableDefault(size = 10)
 			Pageable pageable){
 		return new DataResponse<>(SuccessInfo.GET_SCHEDULE_CATEGORY, scheduleService.getPastScheduleList(categoryId, keyword, pageable));
 	}
+
 
 	@Operation(summary = "예정 중인 일정목록 조회")
 	@ApiResponse(responseCode = "1", description = "성공")

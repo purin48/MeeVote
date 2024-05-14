@@ -48,11 +48,17 @@ prefix="c" %>
     <!-- sweet alert -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
     <!-- custom css -->
-    <link rel="stylesheet" href="/css/inc/sidebar.css" />
     <link rel="stylesheet" href="/css/create/group.css" />
+    <!-- kakao mpa -->
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6e5d6d2e61f5ab7c5909eee58f094989&libraries=services"></script>
     <!-- custom js import -->
-    <script type="module" src="/js/inc/sidebar.js" defer></script>
     <script type="module" src="/js/create/group.js" defer></script>
+    <!-- sidebar -->
+    <link rel="stylesheet" href="/css/inc/sidebar.css" />
+    <script type="module" src="/js/inc/sidebar.js" defer></script>
+    <!-- alarm -->
+    <link rel="stylesheet" href="/css/inc/alarm.css" />
+    <script src="/js/inc/alarm.js" defer></script>
   </head>
   <body>
     <!-- 사이드바 include -->

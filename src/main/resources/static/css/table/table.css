@@ -1,0 +1,95 @@
+/* 공통 부분 */
+body {
+  font-family: "Nanum Gothic Coding", monospace;
+  font-weight: bold;
+  font-style: normal;
+}
+
+.head-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+  padding: 30px;
+}
+
+.root-container {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: center;
+}
+
+.root-container > p {
+  font-size: 22px;
+}
+
+.carousel-container {
+  display: flex;
+  align-items: center;
+  gap: 10px
+}
+
+.carousel-container > i {
+  font-size: 32px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.carousel-container > i:hover {
+  color: #4FD1C5;
+}
+/* 공통 부분 End */
+
+
+
+.carousel_main {
+  width: 330px; 
+  position: relative;
+  overflow: hidden;
+  margin: 0 auto;
+  user-select: none;
+}
+
+.carousel_wrapper {
+  display: flex;
+  transition: transform 1s;
+}
+
+
+/* 캐러셀  */
+.carousel {
+  width: 330px;
+  border: 3px solid ;
+  border-radius: 10px;
+  padding: 10px 0px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: relative;
+  cursor: pointer;
+}
+
+.carousel > div {
+  width: 330px ;
+  padding: 0px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.carousel-head > .name{
+  font-size: 16px;
+}
+
+.carousel-content > .category{
+  font-size: 12px;
+  color: white;
+  border-radius: 10px;
+  padding: 5px 10px;
+}
+
+.carousel-footer > .place{
+  font-size: 14px;
+}
+/* 캐러셀 End */

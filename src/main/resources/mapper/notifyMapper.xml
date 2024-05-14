@@ -60,4 +60,29 @@
         where notify_id = #{notifyId}
     </select>
 
+    <insert id="createAllInviteNotify">
+        INSERT INTO notify (notify_id, email, schedule_id, notify_category_id, message, is_read)
+        SELECT seq_notify.NEXTVAL, m.email, ms.schedule_id, 1, '모임 일정에 초대되었습니다. 장소 투표를 시작하세요.', 0
+        FROM member m JOIN member_schedule ms ON m.email = ms.email
+        WHERE
+            ms.schedule_id = #{scheduleId}
+            AND ms.is_owner = 0
+    </insert>
+
+    <insert id="createAllConfirmNotify">
+        INSERT INTO notify (notify_id, email, schedule_id, notify_category_id, message, is_read)
+        SELECT seq_notify.NEXTVAL, m.email, ms.schedule_id, 2, '모임 일정 장소가 확정되었습니다.', 0
+        FROM member m JOIN member_schedule ms ON m.email = ms.email
+        WHERE
+            ms.schedule_id = #{scheduleId}
+            AND ms.is_owner = 0
+    </insert>
+
+    <update id="updateAllIsRead">
+        UPDATE notify
+        SET
+            is_read = #{isRead}
+        WHERE
+            email = #{email}
+    </update>
 </mapper>

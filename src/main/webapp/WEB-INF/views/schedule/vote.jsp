@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8"%>
+pageEncoding="UTF-8"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core"
+prefix="c" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -47,60 +48,60 @@ pageEncoding="UTF-8"%>
     <!-- sweet alert -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
     <!-- kakao mpa -->
-    <script
-      type="text/javascript"
-      src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6e5d6d2e61f5ab7c5909eee58f094989&libraries=services"
-    ></script>
-    <!-- custom css -->
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6e5d6d2e61f5ab7c5909eee58f094989&libraries=services"></script>
+    <!-- sidebar -->
     <link rel="stylesheet" href="/css/inc/sidebar.css" />
-    <link rel="stylesheet" href="/css/table/table.css" />
-    <!-- custom js import -->
     <script type="module" src="/js/inc/sidebar.js" defer></script>
-    <script type="module" src="/js/table/table.js" defer></script>
+    <!-- alarm -->
+    <link rel="stylesheet" href="/css/inc/alarm.css" />
+    <script src="/js/inc/alarm.js" defer></script>
+    <!-- custom css -->
+    <link rel="stylesheet" href="/css/schedule/vote.css" />
+    <!-- custom js import -->
+    <script type="module" src="/js/schedule/vote.js" defer></script>
   </head>
   <body>
     <!-- 사이드바 include -->
-    <jsp:include page="/WEB-INF/views/inc/sidebar.jsp">
-      <jsp:param value="table" name="pageName" />
+    <jsp:include page="/WEB-INF/views/inc/sidebar.jsp" />
+
+    <!-- 알람 include -->
+    <jsp:include page="/WEB-INF/views/inc/alarm.jsp">
+      <jsp:param value="calendar" name="scheduleName" />
     </jsp:include>
 
-    <div class="top-container">
-      <!-- 상단부 -->
-      <div class="head-container">
-
-        <!-- 투표 중인 일정 -->
-        <div class="root-container">
-          <p>투표 중인 일정</p>
-          <div class="carousel-container voting-container">
-            <i class="bi bi-arrow-left-circle-fill carousel_prev"></i>
-            <div class="carousel_main">
-              <div class="carousel_wrapper">
-              </div>
-            </div>
-            <i class="bi bi-arrow-right-circle-fill carousel_next"></i>
-          </div>
-        </div>
-        <!-- 투표 중인 일정 End-->
-
-        <!-- 예정된 일정 -->
-        <div class="root-container">
-          <p>예정된 일정</p>
-          <div class="carousel-container future-container">
-            <i class="bi bi-arrow-left-circle-fill carousel_prev"></i>
-            <div class="carousel_main">
-              <div class="carousel_wrapper"></div>
-            </div>
-            <i class="bi bi-arrow-right-circle-fill carousel_next"></i>
-          </div>
-        </div>
-        <!-- 예정된 일정 End -->
-
+    <!-- 검색창 -->
+    <div class="search-container">
+      <!-- 검색창 -->
+      <div class="place-search">
+        <input type="text" placeholder="추가할 장소 검색">
+        <i class="bi bi-search"></i>
       </div>
-      <!-- 상단부 End -->
-
-      <!-- 테이블 -->
-      <div class="main-container"></div>
-      <!-- 테이블 End -->
+      <!-- 검색 항목 리스트 -->
+      <div class="search-list-container">
+        <ul class="search-list"></ul>
+      </div>
     </div>
+    <!-- 검색창 End-->
+
+    <!-- 투표항목 리스트 -->
+    <div class="vote-list-container">
+      <ul class="vote-list">
+      </ul>
+    </div>
+
+    <div class="member-container">
+      <ul>
+
+      </ul>
+      <div></div>
+    </div>
+
+    <!-- 나가기 버튼 -->
+    <button class="del-btn">일정 취소</button>
+    <!-- 나가기 버튼 -->
+
+    <!-- 맵 컨테이너 -->
+    <div class="map-container"></div>
+    <!-- 맵 컨테이너 End -->
   </body>
 </html>

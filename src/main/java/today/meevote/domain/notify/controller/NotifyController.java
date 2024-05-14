@@ -66,4 +66,17 @@ public class NotifyController {
         notifyService.updateNotifyRead(notifyId);
         return new BaseResponse(SuccessInfo.READ_NOTIFY);
     }
+
+    @Operation(summary = "모든 알림 읽기 처리")
+    @ApiResponse(responseCode = "1", description = "성공")
+    @ApiResponse(responseCode = "2", description = "실패",
+            content = @Content(examples = {
+                    @ExampleObject(name = "인증되지않은 요청", value = "{\"isSuccess\": false, \"code\": \"Z97\", \"message\": \"인증되지않은 요청입니다.\"}"),
+                    @ExampleObject(name = "내부 서버 오류", value = "{\"isSuccess\": false, \"code\": \"Z99\", \"message\": \"서버 오류가 발생했습니다.\"}")
+            }))
+    @PutMapping("/read/all")
+    public BaseResponse updateAllNotifyRead(){
+        notifyService.updateAllNotifyRead();
+        return new BaseResponse(SuccessInfo.READ_ALL_NOTIFY);
+    }
 }
