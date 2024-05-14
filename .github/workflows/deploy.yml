@@ -54,6 +54,7 @@ jobs:
         key: ${{ secrets.EC2_KEY }}
         port: ${{ secrets.EC2_SSH_PORT }}
         script: |
+          sudo fuser -k 80/tcp
           cd /home/ubuntu/build/libs
           sudo nohup java -jar meevote-0.0.1-SNAPSHOT.war -Dspring.profiles.active=prod -Duser.timezone="Asia/Seoul" &
 
