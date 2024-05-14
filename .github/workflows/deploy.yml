@@ -43,8 +43,8 @@ jobs:
         username: ${{ secrets.EC2_USERNAME }}
         key: ${{ secrets.EC2_KEY }}
         port: ${{ secrets.EC2_SSH_PORT }}
-        source: "build/libs/meevote-0.0.1-SNAPSHOT.war"
-        target: "/home/ubuntu"
+        source: "meevote-0.0.1-SNAPSHOT.war"
+        target: "/home/ubuntu/"
 
     - name: SSH into EC2 and deploy
       uses: appleboy/ssh-action@master
