@@ -55,5 +55,5 @@ jobs:
         port: ${{ secrets.EC2_SSH_PORT }}
         script: |
           sudo pkill -f ".war"
-          cd home/ubuntu
-          sudo nohup java -jar -Dspring.profiles.active=prod -Duser.timezone="Asia/Seoul" meevote-0.0.1-SNAPSHOT.war
+          cd /home/ubuntu
+          sudo nohup java -jar -Dspring.profiles.active=prod -Duser.timezone="Asia/Seoul" meevote-0.0.1-SNAPSHOT.war &
