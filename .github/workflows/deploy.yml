@@ -43,8 +43,8 @@ jobs:
         username: ${{ secrets.EC2_USERNAME }}
         key: ${{ secrets.EC2_KEY }}
         port: ${{ secrets.EC2_SSH_PORT }}
-        source: "build/libs/meevote-0.0.1-SNAPSHOT.war"
-        target: "/home/ubuntu/"
+        source: "./build/libs/meevote-0.0.1-SNAPSHOT.war"
+        target: "/"
 
     - name: SSH into EC2 and deploy
       uses: appleboy/ssh-action@master
@@ -54,6 +54,5 @@ jobs:
         key: ${{ secrets.EC2_KEY }}
         port: ${{ secrets.EC2_SSH_PORT }}
         script: |
-          sudo pkill -f ".war"
           cd /home/ubuntu
           sudo nohup java -jar -Dspring.profiles.active=prod -Duser.timezone="Asia/Seoul" meevote-0.0.1-SNAPSHOT.war &
