@@ -213,12 +213,12 @@ REFERENCES member_schedule (
 	email, schedule_id
 );
 
-INSERT INTO schedule_category VALUES (seq_schedule_category.nextval, '기타', 'blue');
+INSERT INTO schedule_category VALUES (seq_schedule_category.nextval, '기타', '#4FD1C5');
 INSERT INTO schedule_category VALUES (seq_schedule_category.nextval, '스터디', 'green');
 INSERT INTO schedule_category VALUES (seq_schedule_category.nextval, '회의', 'orange');
 INSERT INTO schedule_category VALUES (seq_schedule_category.nextval, '식사', 'yellow');
 INSERT INTO schedule_category VALUES (seq_schedule_category.nextval, '회식', 'tomato');
-INSERT INTO schedule_category VALUES (seq_schedule_category.nextval, '여행', 'mint');
+INSERT INTO schedule_category VALUES (seq_schedule_category.nextval, '여행', 'blue');
 
 commit;
 
