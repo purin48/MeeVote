@@ -49,27 +49,30 @@ public interface ScheduleDao {
 
 	public void createGroupMemberSchedule(Map<String, Object> dto);
 
-	public int isExistGroupMember(List<String> inviteEmailList);
+	public int isExistGroupMember(@Param("inviteEmailList") List<String> inviteEmailList);
 
-    public Optional<ScheduleDetailInfoDto> getScheduleDetailInfoDto(String email, long scheduleId);
+    public Optional<ScheduleDetailInfoDto> getScheduleDetailInfoDto(@Param("email") String email, @Param("scheduleId") long scheduleId);
 
 	public List<ScheduleMemberDto> getScheduleMemberDtoList(long scheduleId);
 
     public List<GetScheduleListDto> getFutureScheduleList(String email);
 
-	public boolean isExistGroupMemberByInfo(String email, long scheduleId);
+	public boolean isExistGroupMemberByInfo(@Param("email") String email, @Param("scheduleId") long scheduleId);
 	public void outGroupSchedule(@Param("email") String email, @Param("scheduleId") long scheduleId);
 
-	public List<GetScheduleListDto> getPastScheduleList(String email, long categoryId, String keyword, Pageable pageable);
+	public List<GetScheduleListDto> getPastScheduleList(
+			@Param("email") String email,
+			@Param("categoryId") long categoryId,
+			@Param("keyword") String keyword,
+			@Param("pageable") Pageable pageable);
 
-	public int countPastScheduleList(long categoryId, String keyword);
+	public int countPastScheduleList(@Param("categoryId") long categoryId, @Param("keyword") String keyword);
 
-	public boolean isOwner(String email, long scheduleId);
+	public boolean isOwner(@Param("email") String email, @Param("scheduleId") long scheduleId);
 
+	public List<String> findRegisteredEmails(@Param("emails") Set<String> emails);
 
-	public List<String> findRegisteredEmails(Set<String> emails);
+	public List<String> findExistingMembers(@Param("scheduleId") long scheduleId, @Param("emails") Set<String> emails);
 
-	public List<String> findExistingMembers(long scheduleId, Set<String> emails);
-
-	public void inviteMember(long scheduleId, InviteMemberDto inviteMemberDto);
+	public void inviteMember(@Param("scheduleId") long scheduleId, @Param("inviteMemberDto") InviteMemberDto inviteMemberDto);
 }
