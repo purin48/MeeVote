@@ -427,7 +427,13 @@ if(e.keyCode && e.keyCode == 13) memberSearch();
 // ---- 이벤트 등록 : 회원 검색 End----
 
 // ---- 함수 : 맴버 추가하고 마커 추가 ----
+$('#search-container').click(function(e) {
+  e.stopPropagation();
+})
 
+$(document).click(function(e) {
+  $('#search-list-container').css('display', 'none');
+})
 // ---- 함수 : 맴버 추가하고 마커 추가 ----
 
 // 시작 이벤트

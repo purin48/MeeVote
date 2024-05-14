@@ -199,7 +199,7 @@ export async function inviteMember(data) {
     url: '/api/schedule/invite',
     dataType: "json",
     contentType: "application/json",
-    data: data,
+    data: JSON.stringify(data),
   });
   if (!response.isSuccess) {
     // 실패 시 예외 처리
