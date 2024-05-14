@@ -26,7 +26,7 @@ $(document).ready(function() {
             month: mm
         },
         success: function(response) {
-            console.log(response.data);
+            // console.log(response.data);
             // 일정 가져오는데 성공하면 캘린더에 표시
             displayEventsOnCalendar(response.data);
         },
@@ -102,31 +102,6 @@ $(document).ready(function() {
                                 }
                             });
                         }
-
-
-                        // drop down 버튼 클릭 시 이벤트 처리
-                        // $('#customDropdownMenu .dropdown-item').click(function (e) {
-                        //     e.preventDefault();
-                        //     let category = $(this).data('category');
-                        //     $('.customDropdownMenu').text($(this).text()); // drop down 버튼 텍스트 변경
-                        //     // console.log($('.btn-secondary').text($(this).text()))
-                        //     console.log($(this).text())
-                        //     hideDropdownMenu(); // 드롭다운 메뉴 숨기기
-                        //     filterEventsByCategory(category); // 선택한 카테고리에 따라 일정 필터링
-                        // });
-
-                        // $('#customDropdownMenu .dropdown-item').click(function(e) {
-                        //     e.preventDefault();
-                        //     // 클릭한 항목의 텍스트를 가져와서 변수에 저장
-                        //     let newText = $(this).text();
-                        //     // customDropdownMenu 클래스를 가진 요소의 텍스트를 변경
-                        //     $('customDropdownMenu').text(newText);
-                        //     console.log($(this).text())
-                        //     // 드롭다운 메뉴를 숨김
-                        //     $('#customDropdownMenu').removeClass('show');
-                        //     // 선택한 카테고리에 따라 일정 필터링
-                        //     filterEventsByCategory($(this).data('category'));
-                        // });
 
                         $(document).ready(function() {
                             // 리스트 요소 클릭 시 드롭다운 버튼의 텍스트 변경
