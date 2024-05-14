@@ -96,6 +96,7 @@ export function createOverlay(map, marker, content) {
 
 // ---- 폴리라인 그리기 ----
 export function createPolyline(map, linePath) {
+
   const polyline = new kakao.maps.Polyline({
     path: linePath,
     strokeWeight: 7,
@@ -108,3 +109,5 @@ export function createPolyline(map, linePath) {
 
   return polyline;
 };
+// ---- 폴리라인 그리기 End ----
+

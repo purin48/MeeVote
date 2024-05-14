@@ -22,6 +22,12 @@
 	crossorigin="anonymous" defer></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js" defer></script>
 	<script src="/js/login.js" defer></script>
+	<!-- sidebar -->
+	<link rel="stylesheet" href="/css/inc/sidebar.css" />
+	<script type="module" src="/js/inc/sidebar.js" defer></script>
+	<!-- alarm -->
+	<link rel="stylesheet" href="/css/inc/alarm.css" />
+	<script src="/js/inc/alarm.js" defer></script>
 </head>
 
 <body>
