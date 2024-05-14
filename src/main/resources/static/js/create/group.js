@@ -1,4 +1,5 @@
-import { getMyInfo } from '/js/module/ajax.js';
+import { getMyInfo, getVotingDetail, postVotingItem } from '/js/module/ajax.js';
+import { locFromAddress, } from '/js/module/map.js'
 
 // 변수
 // ---- 달력 관련 변수 ----
@@ -369,12 +370,36 @@ $('#save-btn').click(function(e) {
 		dataType: "json",
 		contentType: "application/json",
 		data: JSON.stringify(data),
-		success: function (response) {
+		success: async function (response) {
 			if (!response.isSuccess) {
 				// 요청 실패 예외 처리
 				console.log(response);
 				return;
-			} 
+			}
+			// 중간 지점 투표 항목에 넣기
+			const voteDetail = await getVotingDetail(response.data.scheduleId);
+
+			const promise = [];
+			for (const member of voteDetail.memberList) {
+				const memberHome = await locFromAddress(member.address);
+				const startPoint = member.lat? [member.lat, member.lng] : await locFromAddress(member.address);
+				promise.push(startPoint);
+			}
+			await Promise.all(promise)
+			.then(cordArr => {
+				let lat = 0;
+				let lng = 0;
+				for (const val of cordArr) {
+					lat += Number(val[0]);
+					lng += Number(val[1]);
+				}
+				const placeData = {
+					"placeName": "중간 지점",
+					"lat": lat / voteDetail.memberList.length,
+					"lng": lng / voteDetail.memberList.length,
+				}
+				const result = postVotingItem(response.data.scheduleId, placeData);
+			})
 			// 일정 생성 성공
 			$('.top-container').css('display', 'none');
 			Swal.fire({
