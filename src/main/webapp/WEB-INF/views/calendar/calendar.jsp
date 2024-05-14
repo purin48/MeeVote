@@ -53,16 +53,11 @@ pageEncoding="UTF-8"%>
 
 
     <script src="/js/calendar.js" defer></script>
-<%--    <script--%>
-<%--            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"--%>
-<%--            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"--%>
-<%--            crossorigin="anonymous" defer--%>
-<%--    ></script>--%>
+
 
   </head>
 
   <body>
-<%--    <i class="bi bi-bell"></i>--%>
 
     <!-- 사이드바 include -->
     <jsp:include page="/WEB-INF/views/inc/sidebar.jsp">
@@ -113,11 +108,5 @@ pageEncoding="UTF-8"%>
 <%--      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"--%>
 <%--      crossorigin="anonymous"--%>
 <%--    ></script>--%>
-  <ul>
-    <li>
-      <li>
-
-    </li>
-  </ul>
   </body>
 </html>

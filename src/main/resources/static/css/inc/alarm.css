@@ -1,8 +1,8 @@
 
 #alarmIcon {
     position: fixed;
-    top: 1.2%;
-    right: 1.2%;
+    top: 11px;
+    right: 11px;
     z-index: 9999;
     font-size: 1.6rem;
     padding: .1rem .55rem;
@@ -25,8 +25,8 @@
     display: none;
     position: fixed;
     height: 100vh;
-    top: 1.2%;
-    right: 1.2%;
+    top: 7px;
+    right: 0px;
     width: 340px;
     z-index: 50; /* 다른 요소 위에 표시하기 위해 z-index를 설정합니다. */
     border-radius: 10px;
@@ -46,7 +46,7 @@
     display: flex;
     flex-direction: column;
     height: 100vh;
-    width: 310px;
+    width: 315px;
     /*box-shadow: left only;*/
 }
 
@@ -85,7 +85,7 @@
 ::-webkit-scrollbar-thumb {
     background: rgba(83, 166, 249, 0.75);
     border-radius: 2em;
-    height: 15px;
+    height: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -102,13 +102,14 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 300px;
+    width: 305px;
     /*height: 200px;*/
     font-size: small;
     margin-bottom: 5px;
     margin-top: 10px;
     border-radius: 5px;
     background-color: #ffffff;
+    cursor: pointer;
     /* z-index: 10; */
     /* padding: 2px, 2px, 2px, 2px; */
     /* padding-left: 5px; */
@@ -119,10 +120,11 @@
 }
 
 .card-name {
-    width: 90%;
+    width: 95%;
     height: 15%;
     margin: 5px 10px;
     font-weight: bold;
+    padding-left: 5px;
 }
 
 .card-main {
@@ -130,12 +132,13 @@
     flex-direction: column;
     justify-content: center;
     align-content: space-between;
+    align-items: stretch;
     background-color: #ffffffe2;
     width: 280px;
     height: 130px;
     border-radius: 5px;
     margin-bottom: 10px;
-    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px -5px 10px rgba(0, 0, 0, 0.05), 0px 5px 10px rgba(0, 0, 0, 0.1);
     font-weight: bold;
 }
 
