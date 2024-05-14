@@ -282,7 +282,7 @@
 			WHERE
 				ms.email = #{email}
 			AND s.end_date &lt; CURRENT_DATE
-			<if test="categoryId != 0">
+			<if test="categoryId != null and categoryId != 0">
 				AND s.schedule_category_id = #{categoryId}
 			</if>
 			<if test="keyword != null and keyword != ''">

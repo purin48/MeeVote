@@ -125,9 +125,9 @@ public class ScheduleService {
         scheduleDao.outGroupSchedule(email, scheduleId);
     }
 
-    public Page<GetScheduleListDto> getPastScheduleList(long categoryId, String keyword, Pageable pageable) {
+    public Page<GetScheduleListDto> getPastScheduleList(Long categoryId, String keyword, Pageable pageable) {
         String email = MemberContextHolder.getEmail();
-        if (!scheduleDao.isCategoryExist(categoryId)) {
+        if ( categoryId != null && categoryId != 0 && !scheduleDao.isCategoryExist(categoryId)) {
             throw new RestException(FailureInfo.NOT_EXIST_CATEGORY);
         }
         List<GetScheduleListDto> schedules = scheduleDao.getPastScheduleList(email, categoryId, keyword, pageable);

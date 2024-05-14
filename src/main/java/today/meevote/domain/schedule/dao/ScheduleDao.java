@@ -8,10 +8,7 @@ import java.util.Set;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import jakarta.validation.Valid;
 import org.springframework.data.domain.Pageable;
-import today.meevote.domain.schedule.dto.request.CreateGroupScheduleDto;
-import today.meevote.domain.schedule.dto.request.CreatePersonalScheduleDto;
 import today.meevote.domain.schedule.dto.request.InviteMemberDto;
 import today.meevote.domain.schedule.dto.response.*;
 
@@ -62,11 +59,11 @@ public interface ScheduleDao {
 
 	public List<GetScheduleListDto> getPastScheduleList(
 			@Param("email") String email,
-			@Param("categoryId") long categoryId,
+			@Param("categoryId") Long categoryId,
 			@Param("keyword") String keyword,
 			@Param("pageable") Pageable pageable);
 
-	public int countPastScheduleList(@Param("categoryId") long categoryId, @Param("keyword") String keyword);
+	public int countPastScheduleList(@Param("categoryId") Long categoryId, @Param("keyword") String keyword);
 
 	public boolean isOwner(@Param("email") String email, @Param("scheduleId") long scheduleId);
 
