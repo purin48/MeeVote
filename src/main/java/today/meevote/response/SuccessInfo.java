@@ -41,7 +41,11 @@ public enum SuccessInfo {
 	GET_NOTIFY_LIST("알림 목록 조회가 완료되었습니다."),
 
 	READ_NOTIFY("알림 읽기 처리가 완료되었습니다."),
-	READ_ALL_NOTIFY("모든 알림 읽기 처리가 완료되었습니다.");
+	READ_ALL_NOTIFY("모든 알림 읽기 처리가 완료되었습니다."),
+
+	// 통계
+	GET_MY_CATEGORY_STATS("내 일정 카테고리 통계 조회가 완료되었습니다."),
+	GET_MY_SCHEDULE_STATS("내 일정 통계 조회가 완료되었습니다.");
     private final String code = "A00";
     private final String message;
 }
