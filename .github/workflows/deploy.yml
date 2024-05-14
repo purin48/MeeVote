@@ -56,5 +56,7 @@ jobs:
         script: |
           sudo fuser -k 80/tcp
           cd /home/ubuntu/build/libs
-          sudo nohup java -jar meevote-0.0.1-SNAPSHOT.war -Dspring.profiles.active=prod -Duser.timezone="Asia/Seoul" &
+          sudo nohup java -jar -Dspring.profiles.active=prod -Duser.timezone="Asia/Seoul" meevote-0.0.1-SNAPSHOT.war &
+          netstat -tnlp
+
 
