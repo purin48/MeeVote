@@ -110,7 +110,7 @@ function showNotifications() {
                     //$cardMain3.append("<p style='margin-top: 16px;'>" + "투표 마감</p>");
                     $cardMain3.append("");
                 } else {  // 투표 마감일 전
-                    $cardMain3.append("<p style='margin-top: 16px;'>" + deadlineDate + "투표 마감</p>");
+                    $cardMain3.append("<p style='margin-top: 16px;'>" + deadlineDate + " 투표 마감</p>");
                 }
 
                 $cardMain1.append(
