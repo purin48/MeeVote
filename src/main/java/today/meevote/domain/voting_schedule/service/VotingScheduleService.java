@@ -2,6 +2,7 @@ package today.meevote.domain.voting_schedule.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import today.meevote.contextholder.MemberContextHolder;
 import today.meevote.domain.notify.dao.NotifyDao;
 import today.meevote.domain.voting_schedule.dao.VotingScheduleDao;
@@ -110,6 +111,7 @@ public class VotingScheduleService {
         votingScheduleDao.deleteDeparturePlace(email, scheduleId);
     }
 
+    @Transactional
     public void confirmPlace(long placeToVoteId) {
         String email = MemberContextHolder.getEmail();
 
