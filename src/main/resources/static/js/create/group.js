@@ -381,7 +381,6 @@ $('#save-btn').click(function(e) {
 
 			const promise = [];
 			for (const member of voteDetail.memberList) {
-				const memberHome = await locFromAddress(member.address);
 				const startPoint = member.lat? [member.lat, member.lng] : await locFromAddress(member.address);
 				promise.push(startPoint);
 			}
@@ -390,8 +389,8 @@ $('#save-btn').click(function(e) {
 				let lat = 0;
 				let lng = 0;
 				for (const val of cordArr) {
-					lat += Number(val[0]);
-					lng += Number(val[1]);
+					lat += Number(val[0]? val[0] : 127.0495556);
+					lng += Number(val[1]? val[1] : 37.514575);
 				}
 				const placeData = {
 					"placeName": "중간 지점",

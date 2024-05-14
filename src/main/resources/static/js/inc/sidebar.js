@@ -81,7 +81,43 @@ $.each($('.nav-content').children(), function (index, el) {
 });
 
 
-// ----- 배경사진 변경
-$('.profile-img-container').click(function(e) {
-  
-})
+// 회원 정보 수정
+async function updateMemberInfo(data) {
+  const response = await $.ajax({
+    type: "PUT",
+    url: '/api/member/me',
+    dataType: "json",
+    contentType: "application/json",
+    data: JSON.stringify(data),
+  });
+  if (!response.isSuccess) {
+    // 실패 시 예외 처리
+  }
+
+  return response;
+}
+
+
+// // ----- 배경사진 변경
+// $('.profile-img-container').click(async function(e) {
+//   updateMemberInfo()
+//   const file  = await Swal.fire({
+//     title: "배경사진 변경",
+//     input: "file",
+//     inputAttributes: {
+//       "accept": "image/*",
+//       "aria-label": "Upload your profile picture"
+//     }
+//   });
+//   if (file) {
+//     const reader = new FileReader();
+//     reader.onload = (e) => {
+//       Swal.fire({
+//         title: "Your uploaded picture",
+//         imageUrl: e.target.result,
+//         imageAlt: "The uploaded picture"
+//       });
+//     };
+//     reader.readAsDataURL(file);
+//   }
+// })
