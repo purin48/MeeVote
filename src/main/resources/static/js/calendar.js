@@ -38,6 +38,8 @@ $(document).ready(function() {
 
     // 캘린더에 일정 표시하는 함수
     function displayEventsOnCalendar(data) {
+        console.log('데이터 찍어보자고고오오오오옹오')
+        console.log(data)
         let calendarEl = document.getElementById('calendar');
         let calendar = new FullCalendar.Calendar(calendarEl, {
             timeZone: 'UTC',

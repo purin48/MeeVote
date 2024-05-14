@@ -16,24 +16,27 @@ $(document).ready(function() {
 
     $(document).on('click', '.card-outer', function() {
         // 클릭한 카드의 ID 가져오기
-        let cardId = $(this).data('card-id');
-        //let notiCateId = $(this).data('notify-category-id');
-        console.log(cardId)
-        //console.log(notiCateId)
-        window.location.href = '/schedule/detail';
+        let scheduleId = $(this).data('schedule-id');
+        // let cardId = $(this).data('card.scheduleId');
+        // // 클릭된 카드의 notifyCategoryId 가져오기
+        let notifyCategoryId = $(this).data('notify-category-id');
+        // console.log('cardId')
+        // console.log(scheduleId)
+        // console.log('notifyCategoryId')
+        // console.log(notifyCategoryId)
 
-        // if (cardID === 1) {
-        //
-        // } else if (cardID === 2) {
-        //     // 카드 상세 페이지로 이동
-        //     window.location.href = '/schedule/vote';
-        // } else {
-        //     // 카드 상세 페이지로 이동
-        //     window.location.href = '/schedule/detail';
-        // }
-        //
-        // // 카드 상세 페이지로 이동
-        // window.location.href = '/detail/' + cardId;
+        //window.location.href = '/schedule/vote?scheduleId=' + scheduleId;
+
+        if (notifyCategoryId === 1) {
+            window.location.href = '/schedule/vote?scheduleId=' + scheduleId;
+        } else if (notifyCategoryId === 2) {
+            // 카드 상세 페이지로 이동
+            window.location.href = '/schedule/datail?scheduleId=' + scheduleId;
+        } else if (notifyCategoryId === 3) {
+            // 카드 상세 페이지로 이동
+            window.location.href = '/schedule/detail?scheduleId=' + scheduleId;
+        }
+
     });
 });
 
@@ -48,12 +51,18 @@ function showNotifications() {
         success: function(response) {
             // 데이터 성공적으로 받아오면 실행되는 함수
             let cardData = response.data;  // 데이터 배열
+            console.log('response.data 찍기')
             console.log(response.data)
             // 데이터 배열을 순회하면서 카드 생성
             cardData.forEach(function(card) {
+                console.log('card.voteDeadline 찍기')
                 console.log(card.voteDeadline)
+                console.log('card.startDate 찍기')
+                console.log(card.startDate)
                 // 카드 생성 및 데이터 추가
-                let $cardOuter = $('<div class = "card-outer" data-card-id="{{card.scheduleId}}"></div>');
+                //let $cardOuter = $('<div class = "card-outer" data-card-id="{{card.scheduleId}}"></div>');
+                let $cardOuter = $('<div class="card-outer" data-schedule-id="' + card.scheduleId + '" data-notify-category-id="' + card.notifyCategoryId + '"></div>');
+
                 let $cardName = $('<div class = "card-name"></div>');
                 let $cardMain = $('<div class = "card-main"></div>');
                 let $cardMain1 = $('<div class = "card-main-1"></div>');
@@ -69,9 +78,9 @@ function showNotifications() {
                 let startDate = dateTimeArray[0]; // "YYYY-MM-DD"
                 let startTime = dateTimeArray[1]; // "HH:mm"
 
-                let deadline = card.voteDeadline;
-                let deadlineArray = deadline.split(" ")
-                let deadlineDate = deadlineArray[0];
+                // let deadline = card.voteDeadline;
+                // let deadlineArray = deadline.split(" ");
+                // let deadlineDate = deadlineArray[0];
 
                 // 데이터 추가
                 $cardName.append(card.message);

@@ -1,8 +1,8 @@
 
 #alarmIcon {
     position: fixed;
-    top: 1.2%;
-    right: 1.2%;
+    top: 11px;
+    right: 11px;
     z-index: 9999;
     font-size: 1.6rem;
     padding: .1rem .55rem;
@@ -25,8 +25,8 @@
     display: none;
     position: fixed;
     height: 100vh;
-    top: 1.2%;
-    right: 1.2%;
+    top: 7px;
+    right: 0px;
     width: 340px;
     z-index: 50; /* 다른 요소 위에 표시하기 위해 z-index를 설정합니다. */
     border-radius: 10px;
@@ -85,7 +85,7 @@
 ::-webkit-scrollbar-thumb {
     background: rgba(83, 166, 249, 0.75);
     border-radius: 2em;
-    height: 15px;
+    height: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
