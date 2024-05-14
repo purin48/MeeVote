@@ -207,3 +207,20 @@ export async function inviteMember(data) {
 
   return response;
 }
+
+
+// 회원 정보 수정
+export async function inviteMember(data) {
+  const response = await $.ajax({
+    type: "PUT",
+    url: '/api/member/me',
+    dataType: "json",
+    contentType: "application/json",
+    data: JSON.stringify(data),
+  });
+  if (!response.isSuccess) {
+    // 실패 시 예외 처리
+  }
+
+  return response;
+}

@@ -79,3 +79,9 @@ $.each($('.nav-content').children(), function (index, el) {
     window.location.href = `/${menuList[index]}`;
   })
 });
+
+
+// ----- 배경사진 변경
+$('.profile-img-container').click(function(e) {
+  
+})
