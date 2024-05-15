@@ -65,9 +65,7 @@ prefix="c" %>
     <jsp:include page="/WEB-INF/views/inc/sidebar.jsp" />
 
     <!-- 알람 include -->
-    <jsp:include page="/WEB-INF/views/inc/alarm.jsp">
-      <jsp:param value="calendar" name="scheduleName" />
-    </jsp:include>
+    <jsp:include page="/WEB-INF/views/inc/alarm.jsp"></jsp:include>
     
     <!-- 일정 정보 -->
     <div class="info-container"></div>
