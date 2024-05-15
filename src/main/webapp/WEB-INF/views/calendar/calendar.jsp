@@ -65,9 +65,7 @@ pageEncoding="UTF-8"%>
     </jsp:include>
 
     <!-- 알람 include -->
-    <jsp:include page="/WEB-INF/views/inc/alarm.jsp">
-      <jsp:param value="calendar" name="scheduleName" />
-    </jsp:include>
+    <jsp:include page="/WEB-INF/views/inc/alarm.jsp"></jsp:include>
 
     <div class="full-contentbox">
       <!--메인부분-->

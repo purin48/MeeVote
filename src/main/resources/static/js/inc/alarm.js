@@ -10,7 +10,7 @@ $("#alarmIcon").click(function () {
     overlay.toggleClass("show-overlay");
 });
 
-$(document).ready(function() {
+$(".msg-overlay-bubble-list").ready(function() {
     // 페이지가 완전히 로드된 후에 알림을 띄우는 함수 실행
     showNotifications();
     // x 버튼 클릭 시 ...
@@ -23,10 +23,16 @@ $(document).ready(function() {
         console.log("notifyID")
         console.log(notifyID)
         console.log(isRead)
-        if (isRead) {
-            // 해당 일정의 부모 요소를 숨깁니다.
-            $(this).closest('.card-outer').remove();
-        } else {
+        // if (isRead) {
+        //     // 해당 일정의 부모 요소를 숨깁니다.
+        //     $(this).closest('.card-outer').remove();
+        // } else {
+        //     isRead = true;  // isRead 의 값이 false 인 경우, x 버튼을 누르면 true 로 바꾸기
+        //     console.log("false -> true")
+        //     console.log(isRead)
+        // }
+
+        if (isRead != true) {
             isRead = true;  // isRead 의 값이 false 인 경우, x 버튼을 누르면 true 로 바꾸기
             console.log("false -> true")
             console.log(isRead)
@@ -41,20 +47,19 @@ $(document).ready(function() {
             },
             success: function (response) {
                 console.log('데이터 전송 성공:', response);
-                // if (isRead === true) {
-                //     // 해당 일정의 부모 요소를 숨깁니다.
-                //     $(this).closest('.card-outer').hide();
-                // }
+
+                // let $this = $(this);
+                // $this.closest('.card-outer').remove();
+
+                //$(this).closest('.card-outer').remove();
+
+                let $cardToRemove = $(document).find('[data-notify-id="' + notifyID + '"]').closest('.card-outer');
+                $cardToRemove.remove();
             },
             error: function (xhr, status, error) {
                 console.error('데이터 전송 실패:', error);
             }
         })
-
-        // if (isRead === true) {
-        //     // 해당 일정의 부모 요소를 숨깁니다.
-        //     $(this).closest('.card-outer').hide();
-        // }
     })
 
     $(document).on('click', '.card-outer', function() {
@@ -66,14 +71,14 @@ $(document).ready(function() {
         console.log(scheduleId)
         console.log(notifyCategoryId)
 
-        if (notifyCategoryId === 1) {
-            window.location.href = '/schedule/vote?scheduleId=' + scheduleId;
-        } else if (notifyCategoryId === 2) {
+        if (notifyCategoryId === 1) {  // 모임 일정 초대
+            location.href = '/schedule/vote?scheduleId=' + scheduleId;
+        } else if (notifyCategoryId === 2) {  // 모임 일정 장소 확정
             // 카드 상세 페이지로 이동
-            window.location.href = '/schedule/datail?scheduleId=' + scheduleId;
-        } else if (notifyCategoryId === 3) {
+            location.href = '/schedule/detail?scheduleId=' + scheduleId;
+        } else if (notifyCategoryId === 3) {  // 일정 예고
             // 카드 상세 페이지로 이동
-            window.location.href = '/schedule/detail?scheduleId=' + scheduleId;
+            location.href = '/schedule/detail?scheduleId=' + scheduleId;
         }
 
     });
