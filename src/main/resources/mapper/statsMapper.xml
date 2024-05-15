@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="today.meevote.domain.statistics.dao.StatsDao">
+
+    <select id="getMyCategoryStats">
+        WITH my_schedules AS (
+            SELECT s.schedule_id, s.schedule_category_id
+            FROM member_schedule ms
+            JOIN schedule s ON ms.schedule_id = s.schedule_id
+            LEFT JOIN schedule_place p ON ms.schedule_id = p.schedule_id
+            WHERE
+                ms.email = #{email}
+                <if test="isGroup != null">
+                    AND s.is_group = #{isGroup}
+                </if>
+                AND TO_CHAR(s.start_date, 'YYYY') = '2024'
+                AND TO_CHAR(s.start_date, 'MM') = '05'
+                AND ((s.is_group = 1 AND p.schedule_id IS NOT NULL) OR s.is_group = 0)
+        )
+        SELECT
+            sc.category_name,
+            sc.color,
+            COUNT(ms.schedule_id) AS schedule_count,
+            ROUND((COUNT(ms.schedule_id) / (SELECT COUNT(*) FROM my_schedules)) * 100, 2) AS percentage
+        FROM my_schedules ms
+        JOIN schedule_category sc ON ms.schedule_category_id = sc.schedule_category_id
+        GROUP BY sc.category_name, sc.color
+    </select>
+
+    <select id="getMyScheduleStats">
+        SELECT TO_CHAR(s.start_date, 'MM') AS month,
+               COUNT(s.schedule_id) AS scheduleCount
+        FROM member_schedule ms
+            JOIN schedule s
+            ON ms.schedule_id = s.schedule_id
+            LEFT JOIN schedule_place p ON ms.schedule_id = p.schedule_id
+        WHERE
+            ms.email = #{email}
+            <if test="isGroup != null">
+                AND s.is_group = #{isGroup}
+            </if>
+            <if test="categoryId != null">
+                AND s.schedule_category_id = #{categoryId}
+            </if>
+            AND TO_CHAR(s.start_date, 'YYYY') = #{year}
+            AND ((s.is_group = 1 AND p.schedule_id IS NOT NULL) OR s.is_group = 0)
+        GROUP BY TO_CHAR(s.start_date, 'MM')
+        ORDER BY TO_CHAR(s.start_date, 'MM')
+    </select>
+
+</mapper>

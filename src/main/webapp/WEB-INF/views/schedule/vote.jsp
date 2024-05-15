@@ -97,6 +97,9 @@ prefix="c" %>
       <ul class="vote-list">
       </ul>
     </div>
+    <!-- 투표항목 리스트 End -->
+
+    <!-- 맴버 -->
     <div class="member-container">
       <div class="del-btn"><i class="bi bi-door-open"></i></div>
       <div class="section" id="mid-section">
@@ -114,8 +117,10 @@ prefix="c" %>
         </ul>
       </div>
     </div>
-
+    
+    <div class="del-btn"><i class="bi bi-door-open"></i></div>
     <button class="member-btn">맴버 관리</button>
+    <!-- 맴버 Emnd-->
 
     <!-- 맵 컨테이너 -->
     <div class="map-container"></div>
