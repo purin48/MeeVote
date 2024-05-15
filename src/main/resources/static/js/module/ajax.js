@@ -209,6 +209,23 @@ export async function inviteMember(data) {
 }
 
 
+// 맴버 초대
+export async function getMemberInvite(email) {
+  const response = await $.ajax({
+    type: "GET",
+    url: '/api/member/invite',
+    dataType: "json",
+    contentType: "application/json",
+    data: JSON.stringify(data),
+  });
+  if (!response.isSuccess) {
+    // 실패 시 예외 처리
+  }
+
+  return response;
+}
+
+
 // 장소 투표 확정
 export async function endVote(scheduleID) {
   const response = await $.ajax({
