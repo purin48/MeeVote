@@ -199,6 +199,16 @@ REFERENCES member_schedule (
 	email, schedule_id
 ) ON DELETE CASCADE;
 
+ALTER TABLE place_to_vote MODIFY place_name NVARCHAR2(1000);
+ALTER TABLE place_to_vote MODIFY lat NVARCHAR2(1000);
+ALTER TABLE place_to_vote MODIFY lng NVARCHAR2(1000);
+
+CREATE UNIQUE INDEX uq_place_to_vote
+ON place_to_vote (schedule_id, lat, lng);
+
+ALTER TABLE place_to_vote
+ADD CONSTRAINT uq_place_to_vote UNIQUE (schedule_id, lat, lng);
+
 INSERT INTO schedule_category VALUES (seq_schedule_category.nextval, '기타', '#4FD1C5');
 INSERT INTO schedule_category VALUES (seq_schedule_category.nextval, '스터디', 'green');
 INSERT INTO schedule_category VALUES (seq_schedule_category.nextval, '회의', 'orange');
