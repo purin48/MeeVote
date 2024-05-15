@@ -70,11 +70,35 @@ prefix="c" %>
     </jsp:include>
     
     <!-- 일정 정보 -->
-
-    <div class="info-container">
-
-    </div>
+    <div class="info-container"></div>
     <!-- 일정 정보 End -->
+
+    <!-- 맴버 -->
+    <div class="member-container">
+      <div class="section" id="mid-section">
+        <div id="search-container">
+          <div id="name-serach">
+            <input type="text" placeholder="맴버 검색">
+            <i class="bi bi-search"></i>
+          </div>
+          <div id="search-list-container">
+            <ul id="search-list">
+            </ul>
+          </div>
+        </div>
+        <ul class="member-list">
+        </ul>
+      </div>
+    </div>
+    <!-- 맴버 End -->
+    <div class="no-place">
+      <img src="/image/icon/noplace.png" alt="" >
+    </div>
+
+    <!-- 기타 버튼 -->
+    <div class="del-btn"><i class="bi bi-door-open"></i></div>
+    <button class="member-btn">맴버 관리</button>
+    <!-- 기타 버튼 -->
 
     <!-- 맵 컨테이너 -->
     <div class="map-container"></div>
