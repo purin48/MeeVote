@@ -152,9 +152,7 @@ export async function getScheduleDetail(scheduleId) {
     // 실패 시 예외 처리
   }
 
-  console.log(response)
-
-  return response;
+  return response.data;
 }
 
 

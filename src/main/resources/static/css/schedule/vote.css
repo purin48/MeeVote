@@ -453,9 +453,9 @@ body {
 .del-btn {
   width: 43px;
   height: 43px;
-  position: absolute;
+  position: fixed;
   top: 11px;
-  left: 11px;
+  right: 60px;
   display: flex;
   justify-content: center;
   align-items: center;
