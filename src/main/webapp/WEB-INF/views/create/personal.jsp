@@ -65,9 +65,8 @@ prefix="c" %>
       <jsp:param value="personal" name="pageName" />
     </jsp:include>
     <!-- 알람 include -->
-    <jsp:include page="/WEB-INF/views/inc/alarm.jsp">
-      <jsp:param value="calendar" name="scheduleName" />
-    </jsp:include>
+    <jsp:include page="/WEB-INF/views/inc/alarm.jsp"></jsp:include>
+    
     <div class="top-container">
       <!-- 왼쪽 사이드 -->
       <div class="section" id="left-section">

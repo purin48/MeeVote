@@ -13,6 +13,15 @@ body {
   padding: 30px;
 }
 
+.foot-container {
+  display: flex;
+  flex-direction: column;
+
+  gap: 10px;
+  width: 100%;
+  padding: 10px 20px;
+}
+
 .root-container {
   display: flex;
   flex-direction: column;
@@ -24,6 +33,12 @@ body {
   font-size: 22px;
 }
 
+
+/* 공통 부분 End */
+
+
+
+/* 캐러셀  */
 .carousel-container {
   display: flex;
   align-items: center;
@@ -39,12 +54,9 @@ body {
 .carousel-container > i:hover {
   color: #4FD1C5;
 }
-/* 공통 부분 End */
-
-
 
 .carousel_main {
-  width: 330px; 
+  width: 280px; 
   position: relative;
   overflow: hidden;
   margin: 0 auto;
@@ -56,10 +68,8 @@ body {
   transition: transform 1s;
 }
 
-
-/* 캐러셀  */
 .carousel {
-  width: 330px;
+  width: 280px;
   border: 3px solid ;
   border-radius: 10px;
   padding: 10px 0px;
@@ -71,7 +81,7 @@ body {
 }
 
 .carousel > div {
-  width: 330px ;
+  width: 280px ;
   padding: 0px 20px;
   display: flex;
   justify-content: space-between;
@@ -80,6 +90,10 @@ body {
 
 .carousel-head > .name{
   font-size: 16px;
+}
+
+.carousel-content > .i{
+  width: 50px;
 }
 
 .carousel-content > .category{
@@ -93,3 +107,123 @@ body {
   font-size: 14px;
 }
 /* 캐러셀 End */
+
+
+
+
+
+/* 필터링 컨테이너 */
+.filter-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* ---- 키워드 검색창 ---- */
+.name-serach {
+  width: 300px;
+  padding: 5px 10px;
+  border: 1px solid #4FD1C5;
+  border-radius: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.name-serach > input{
+  width: 90%;
+  border: none;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.name-serach > i{
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.name-serach > i:hover{
+  color: #4fd1c5;
+}
+/* ---- 키워드 검색창 End ---- */
+
+/* ---- 카테고리 선택 ---- */
+.category-container {
+  display: flex;
+  border: 1px solid;
+  border-color: #4FD1C5;
+  padding: 5px 10px;
+  border-radius: 20px;
+}
+
+.category-container > select{
+  border: none;
+  width: 100%;
+  padding: 5px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.category-container option{
+  border: none;
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  border: #BBBBBB 1px solid;
+}
+/* ---- 카테고리 선택 End ---- */
+
+
+
+
+
+/* 데이터 테이블 */
+td{
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+td > i{
+  font-size : 22px
+}
+
+td > p{
+  display: inline;
+  margin: 0;
+  vertical-align: middle;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 10px;
+}
+
+/* 데이터 테이블 End*/
+
+
+
+
+
+/* 페이지네이션 */
+.down-btn {
+  font-size: 36px;
+  color: #4FD1C5;
+  justify-self: center;
+  margin: 0 auto;
+  transform: translateY(-10px);
+  cursor: pointer;
+}
+/* 페이지네이션 End */
+
+
+
+
+
+
+
+/* 미디어 쿼리 */
+@media (max-width:1100px) {
+  .head-container {
+    flex-direction: column;
+  }
+}

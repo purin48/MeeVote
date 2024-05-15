@@ -29,14 +29,14 @@ pageEncoding="UTF-8"%>
     ></script>
     <!-- bootstrap -->
     <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+    crossorigin="anonymous"
     />
     <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
-      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-      crossorigin="anonymous"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
     />
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
@@ -51,6 +51,9 @@ pageEncoding="UTF-8"%>
       type="text/javascript"
       src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6e5d6d2e61f5ab7c5909eee58f094989&libraries=services"
     ></script>
+    <!-- alarm -->
+    <link rel="stylesheet" href="/css/inc/alarm.css" />
+    <script src="/js/inc/alarm.js" defer></script>
     <!-- custom css -->
     <link rel="stylesheet" href="/css/inc/sidebar.css" />
     <link rel="stylesheet" href="/css/table/table.css" />
@@ -63,6 +66,9 @@ pageEncoding="UTF-8"%>
     <jsp:include page="/WEB-INF/views/inc/sidebar.jsp">
       <jsp:param value="table" name="pageName" />
     </jsp:include>
+
+    <!-- 알람 include -->
+    <jsp:include page="/WEB-INF/views/inc/alarm.jsp"></jsp:include>
 
     <div class="top-container">
       <!-- 상단부 -->
@@ -98,9 +104,43 @@ pageEncoding="UTF-8"%>
       </div>
       <!-- 상단부 End -->
 
-      <!-- 테이블 -->
-      <div class="main-container"></div>
-      <!-- 테이블 End -->
+      <!-- 하단부 -->
+      <div class="foot-container">
+        <!-- 필터링 -->
+        <div class="filter-container">
+          <!-- 카테고리 필터링 -->
+          <div class="category-container">
+            <i class="bi bi-pin-angle"></i>
+            <select class="category-select">
+              <option value="0">전체</option>
+            </select>
+          </div>
+          <!-- 키워드 검색 -->
+          <div class="name-serach">
+            <input type="text" placeholder="미입력시 전체 검색">
+            <i class="bi bi-search"></i>
+          </div>
+        </div>
+        <!-- 필터링 End -->
+        <!-- 테이블 -->
+        <div class="data-container">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th scope="col is-group">단체여부</th>
+                <th scope="col category">카테고리</th>
+                <th scope="col start-date">시작날짜</th>
+                <th scope="col name">일정명</th>
+                <th scope="col place">장소</th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+        </div>
+        <i class="bi bi-chevron-double-down down-btn"></i>
+        <!-- 테이블 End -->
+      </div>
     </div>
   </body>
 </html>

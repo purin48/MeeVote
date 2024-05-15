@@ -2,7 +2,6 @@ import {displayMap, createMarker, locFromAddress, addrFromLoc, createPolyline} f
 import * as aj from '/js/module/ajax.js'
 import {getRoute} from '/js/module/mobility.js'
 
-
 // ---- 스케쥴 관련 정보
 const urlSearch = new URLSearchParams(location.search);
 let scheduleId = await urlSearch.get('scheduleId');

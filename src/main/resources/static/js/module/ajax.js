@@ -238,3 +238,35 @@ export async function endVote(scheduleID) {
 
   return response;
 }
+
+
+// 카테고리 불러오기
+export async function getCategories() {
+  const response = await $.ajax({
+    type: "GET",
+    dataType : 'json',
+    contentType: 'application/json',
+    url: "/api/schedule/category",
+  });
+  if (!response.isSuccess) {
+    // 실패 시 예외 처리
+  }
+
+  return response;
+}
+
+
+// 카테고리 불러오기
+export async function getScheduleHistory(catogoryId, keyword, page, size) {
+  const response = await $.ajax({
+    type: "GET",
+    dataType : 'json',
+    contentType: 'application/json',
+    url: `/api/schedule/past/list?categoryId=${catogoryId}&keyword=${keyword}&page=${page}&size=${size}`,
+  });
+  if (!response.isSuccess) {
+    // 실패 시 예외 처리
+  }
+
+  return response;
+}
