@@ -10,7 +10,7 @@ $("#alarmIcon").click(function () {
     overlay.toggleClass("show-overlay");
 });
 
-$(document).ready(function() {
+$(".msg-overlay-bubble-list").ready(function() {
     // 페이지가 완전히 로드된 후에 알림을 띄우는 함수 실행
     showNotifications();
     // x 버튼 클릭 시 ...
@@ -23,10 +23,16 @@ $(document).ready(function() {
         console.log("notifyID")
         console.log(notifyID)
         console.log(isRead)
-        if (isRead) {
-            // 해당 일정의 부모 요소를 숨깁니다.
-            $(this).closest('.card-outer').remove();
-        } else {
+        // if (isRead) {
+        //     // 해당 일정의 부모 요소를 숨깁니다.
+        //     $(this).closest('.card-outer').remove();
+        // } else {
+        //     isRead = true;  // isRead 의 값이 false 인 경우, x 버튼을 누르면 true 로 바꾸기
+        //     console.log("false -> true")
+        //     console.log(isRead)
+        // }
+
+        if (isRead != true) {
             isRead = true;  // isRead 의 값이 false 인 경우, x 버튼을 누르면 true 로 바꾸기
             console.log("false -> true")
             console.log(isRead)
@@ -41,20 +47,19 @@ $(document).ready(function() {
             },
             success: function (response) {
                 console.log('데이터 전송 성공:', response);
-                // if (isRead === true) {
-                //     // 해당 일정의 부모 요소를 숨깁니다.
-                //     $(this).closest('.card-outer').hide();
-                // }
+
+                // let $this = $(this);
+                // $this.closest('.card-outer').remove();
+
+                //$(this).closest('.card-outer').remove();
+
+                let $cardToRemove = $(document).find('[data-notify-id="' + notifyID + '"]').closest('.card-outer');
+                $cardToRemove.remove();
             },
             error: function (xhr, status, error) {
                 console.error('데이터 전송 실패:', error);
             }
         })
-
-        // if (isRead === true) {
-        //     // 해당 일정의 부모 요소를 숨깁니다.
-        //     $(this).closest('.card-outer').hide();
-        // }
     })
 
     $(document).on('click', '.card-outer', function() {
@@ -66,14 +71,14 @@ $(document).ready(function() {
         console.log(scheduleId)
         console.log(notifyCategoryId)
 
-        if (notifyCategoryId === 1) {
-            window.location.href = '/schedule/vote?scheduleId=' + scheduleId;
-        } else if (notifyCategoryId === 2) {
+        if (notifyCategoryId === 1) {  // 모임 일정 초대
+            location.href = '/schedule/vote?scheduleId=' + scheduleId;
+        } else if (notifyCategoryId === 2) {  // 모임 일정 장소 확정
             // 카드 상세 페이지로 이동
-            window.location.href = '/schedule/datail?scheduleId=' + scheduleId;
-        } else if (notifyCategoryId === 3) {
+            location.href = '/schedule/detail?scheduleId=' + scheduleId;
+        } else if (notifyCategoryId === 3) {  // 일정 예고
             // 카드 상세 페이지로 이동
-            window.location.href = '/schedule/detail?scheduleId=' + scheduleId;
+            location.href = '/schedule/detail?scheduleId=' + scheduleId;
         }
 
     });
@@ -115,9 +120,20 @@ function showNotifications() {
                 let startTimeArray = startTime.split(":");
                 let startTimewithoutSec = startTimeArray[0] + ":" + startTimeArray[1];
 
+                // 메세지 가공
+                let fullMessage = card.message;
+                let fullMessageArray = fullMessage.split(".");
+                let message1 = fullMessageArray[0];
+                let message2 = fullMessageArray[1];
+                if(message2 === null) {
+                    $cardName.append(fullMessage);
+                } else {
+                    $cardName.append(message1 + "<br>" + message2);
+                }
+
 
                 // 데이터 추가
-                $cardName.append(card.message);
+               // $cardName.append(card.message);
                 $cardMain1.append("<h3 style='font-weight: bold; font-size: 15px;'>" + card.name + "</h3>");
                 //$cardMain2.append('<p><i class="bi bi-calendar-check"> </i>' + startDate + '</p>');
                 $cardMain3.append('<p style="font-size: 12px;"><i class="bi bi-calendar-check" style="margin-top: 16px;"> </i>' + startDate + '</p>');
@@ -133,18 +149,18 @@ function showNotifications() {
                 $cardMain.append($cardMain3);
                 $(".msg-overlay-bubble-list").append($cardOuter);
 
-                if (card.placeName === null) {
-                    $cardMain2.append('<p style="font-size: 12px;"><i class="bi bi-geo-alt" style="margin-top: 16px;"> </i>' + '투표중' + '</p>')
-                } else {
-                    $cardMain2.append('<p style="font-size: 12px;"><i class="bi bi-geo-alt" style="margin-top: 16px;"> </i>' + card.placeName + '</p>')
-                }
+                // if (card.placeName === null) {
+                //     $cardMain2.append('<p style="font-size: 12px;"><i class="bi bi-geo-alt" style="margin-top: 16px;"> </i>' + '투표중' + '</p>')
+                // } else {
+                //     $cardMain2.append('<p style="font-size: 12px;"><i class="bi bi-geo-alt" style="margin-top: 16px;"> </i>' + card.placeName + '</p>')
+                // }
 
                 if (card.voteDeadline === null) {  // 투표 마감일 X = 개인 일정
                     $cardMain2.append("");
                 } else if (card.voteDeadline < today) {  // 투표 마감일 지남
                     //$cardMain3.append("<p style='margin-top: 16px;'>" + "투표 마감</p>");
-                    $cardMain2.append("");
-                } else { // 투표 마감일 전
+                    $cardMain2.append(card.placeName);
+                } else { // 투표 마감일 전 (투표중)
                     let deadline = card.voteDeadline;
                     let deadlineArray = deadline.split(" ");
                     let deadlineDate = deadlineArray[0];
@@ -160,7 +176,7 @@ function showNotifications() {
                     // console.log(deadlineDateArray[1])  // 05
                     // console.log('day')
                     // console.log(deadlineDateArray[2]) // 17
-                    $cardMain3.append("<p style='font-size: 12px;'>" + deadlineMonth + "/" + deadlineDay + " <br>투표 마감</p>");
+                    $cardMain2.append("<p style='font-size: 12px;'><i class=\"bi bi-geo-alt\" style=\"margin-top: 16px;\"> </i>" + deadlineMonth + "/" + deadlineDay + " 투표 마감</p>");
                 }
 
                 $cardMain2.append(
