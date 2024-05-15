@@ -32,10 +32,11 @@
     height: 100vh;
     top: 7px;
     right: 0px;
-    width: 340px;
+    width: 230px;
     z-index: 50; /* 다른 요소 위에 표시하기 위해 z-index를 설정합니다. */
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 가로, 세로, 흐림 정도, 색상 */;
+    padding: 10px;
     /* border-radius: .3rem; */
      background-color: #ffffff;
     /* border-color: #4FD1C5; */
@@ -51,13 +52,13 @@
     display: flex;
     flex-direction: column;
     height: 100vh;
-    width: 315px;
+    width: 86%;
     /*box-shadow: left only;*/
 }
 
 .msg-overlay-bubble-header {
     margin: 0 20px;
-    font-size: large;
+    font-size: medium;
     font-weight: bold;
     border-bottom: 1px solid;
 
@@ -107,7 +108,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 305px;
+    width: 220px;
     /*height: 200px;*/
     font-size: small;
     margin-bottom: 5px;
@@ -126,9 +127,10 @@
 
 .card-name {
     width: 95%;
-    height: 15%;
+    height: 50%;
     margin: 5px 10px;
     font-weight: bold;
+    font-size: 12px;
     padding-left: 5px;
 }
 
@@ -139,12 +141,14 @@
     align-content: space-between;
     align-items: stretch;
     background-color: #ffffffe2;
-    width: 280px;
-    height: 130px;
+    width: 100%;
+    gap: 5px;
+    /*height: 130px;*/
     border-radius: 5px;
     margin-bottom: 10px;
     box-shadow: 0px -5px 10px rgba(0, 0, 0, 0.05), 0px 5px 10px rgba(0, 0, 0, 0.1);
     font-weight: bold;
+    padding: 10px 10px;
 }
 
 .card-main-1 {
@@ -152,8 +156,6 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    margin: 0 10px;
-    height: 30%;
 }
 
 .card-main-2 {
@@ -161,48 +163,25 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    margin: 0 10px;
-    height: 30%;
 }
 
 .card-main-3 {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
     align-items: center;
-    margin: 0 10px;
-    height: 30%;
+    justify-content: space-between
+
 }
 
 h3 {
     font-size: 18px;
+    margin: 0px;
 }
 
-/* .category1 {
-    background-color: rgb(71, 147, 175);
-    border-radius: 5px;
-    font-weight: bold;
-    color: #071241;
+.card-main p {
+    margin : 0px;
 }
 
-.category2 {
-    background-color: rgb(255, 196, 112);
-    border-radius: 5px;
-    font-weight: bold;
-    color: #071241;
-
+.bi bi-x-square {
+    z-index: 80;
 }
-
-.category3 {
-    background-color: rgb(221, 87, 70);
-    border-radius: 5px;
-    font-weight: bold;
-    color: #071241;
-}
-
-.category4 {
-    background-color: rgb(139, 50, 44);
-    border-radius: 5px;
-    font-weight: bold;
-    color: #071241;
-} */

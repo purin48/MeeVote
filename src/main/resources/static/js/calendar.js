@@ -177,7 +177,6 @@ $(document).ready(function() {
 
             events.forEach(event => {
                 let li = $('<li>').addClass('event-item');
-
                 // 시간 정보 추가
                 let dateTimeArray = event.startDate.split(' ');
                 let date = dateTimeArray[0]; // 날짜 부분
@@ -211,9 +210,7 @@ $(document).ready(function() {
 
                 // 클릭 이벤트 추가
                 li.on('click', function () {
-                    // 클릭한 날짜에 해당하는 캘린더 이벤트 선택
-                    calendar.select(event.startDate);
-                    console.log("눌림!");
+                    location.href = `/schedule/detail?scheduleId=${event.scheduleId}`
                 });
 
                 ul.append(li);
