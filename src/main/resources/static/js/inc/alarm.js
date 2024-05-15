@@ -13,7 +13,6 @@ $("#alarmIcon").click(function () {
 $(document).ready(function() {
     // 페이지가 완전히 로드된 후에 알림을 띄우는 함수 실행
     showNotifications();
-
     // x 버튼 클릭 시 ...
     $(document).on('click', '.bi.bi-x-square',function(e) {
         e.stopPropagation(); // 이벤트 전파 중지
@@ -24,9 +23,9 @@ $(document).ready(function() {
         console.log("notifyID")
         console.log(notifyID)
         console.log(isRead)
-        if (isRead === true) {
+        if (isRead) {
             // 해당 일정의 부모 요소를 숨깁니다.
-            $(this).closest('.card-outer').hide();
+            $(this).closest('.card-outer').remove();
         } else {
             isRead = true;  // isRead 의 값이 false 인 경우, x 버튼을 누르면 true 로 바꾸기
             console.log("false -> true")
