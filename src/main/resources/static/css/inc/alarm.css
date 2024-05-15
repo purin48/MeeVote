@@ -10,15 +10,20 @@
     color: #ffffff;
     border-radius: .5rem;
     cursor: pointer;
+    transition: all 0.5s;
+    box-shadow: 5px 5px 5px lightgray;
+}
+
+#alarmIcon:hover {
+    background-color: #ffffff;
+    color: #4FD1C5;
 }
 
 
 #alarmIcon.active-icon {
     background-color: #ffffff;
     color: #4FD1C5;
-    border-radius: .1rem;
     z-index: 9999;
-
 }
 
 .overlay-container {

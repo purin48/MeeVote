@@ -55,7 +55,7 @@ prefix="c" %>
     <script type="module" src="/js/create/group.js" defer></script>
     <!-- sidebar -->
     <link rel="stylesheet" href="/css/inc/sidebar.css" />
-    <script type="module" src="/js/inc/sidebar.js" defer></script>
+    <script type="module" type="module" src="/js/inc/sidebar.js" defer></script>
     <!-- alarm -->
     <link rel="stylesheet" href="/css/inc/alarm.css" />
     <script src="/js/inc/alarm.js" defer></script>

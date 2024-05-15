@@ -19,7 +19,7 @@ const myPoint = myScheduleInfo.lat? [myScheduleInfo.lat, myScheduleInfo.lng] : a
 const scheduleInfoContainer = $(`
   <div class="schedule-info">
     <p class="name">${targetInfo.name}</p>
-    <p class="description">${targetInfo.description}</p>
+    <p class="description">${targetInfo.description? targetInfo.description : "즐거운 하루 되세요!"}</p>
   </div>
 `)
 scheduleInfoContainer.css('border-color', targetInfo.color)

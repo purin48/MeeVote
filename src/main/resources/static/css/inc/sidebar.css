@@ -124,6 +124,7 @@ body {
   height: 40px;
   border-radius: 10px;
   background-color: white;
+  cursor: pointer;
 }
 
 #profile-img {

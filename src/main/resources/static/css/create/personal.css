@@ -131,7 +131,6 @@ body {
 #right-section {
   width: 650px;
   gap: 20px;
-  box-shadow: 0px 10px 10px 5px #BBBBBB;
   border-radius: 10px;
   padding: 30px;
 }
