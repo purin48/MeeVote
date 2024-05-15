@@ -9,6 +9,7 @@ body {
   width: 100%;
   height: 100vh;
   z-index: 0;
+  display: none;
 }
 
 .info-container {
@@ -356,6 +357,25 @@ body {
 .del-btn:hover{
   background-color: crimson;
 }
+/* 기타 버튼들 End */
+
+
+
+/* 장소 없음 표시 아이콘 */
+.no-place {
+  display: none;
+  width: 100%;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+}
+
+.no-place > img{
+  width: 30vh;
+}
+/* 장소 없음 표시 아이콘 End */
+
+
 
 @media (max-width: 800px) {
   .info-container {

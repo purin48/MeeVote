@@ -91,6 +91,9 @@ prefix="c" %>
       </div>
     </div>
     <!-- 맴버 End -->
+    <div class="no-place">
+      <img src="/image/icon/noplace.png" alt="" >
+    </div>
 
     <!-- 기타 버튼 -->
     <div class="del-btn"><i class="bi bi-door-open"></i></div>

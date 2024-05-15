@@ -35,15 +35,27 @@ const scheduleInfoContainer = $(`
   </div>
 `)
 
+// 일정 정보 표시하기
 scheduleInfoContainer.find('.category').css('background-color', targetInfo.color)
 $('.info-container').append(scheduleInfoContainer)
 
+// 일정 나가기
+$('.del-btn').click(async function(e) {
+  await deleteSchedule(targetInfo.requesterOwner, scheduleId);
+})
+
+
+
 // !!도착지 정보가 없는 경우
 if (!targetInfo.lat) {
+  $('.no-place').css('display', 'flex')
 }
+
+
 
 // !!도착지 정보가 있는 경우
 if (targetInfo.lat) {
+  $('.map-container').css('display', 'block')
   // ---- 목적지 주소 정보 ----
   const addr = await addrFromLoc(targetInfo.lat, targetInfo.lng);
   // ---- 지도 객체 ----
@@ -60,11 +72,10 @@ if (targetInfo.lat) {
   let polyline = createPolyLine(routeInfo, map);
   // ---- 지도 줌 축소 ----
   await changeMapZoom(myMarker, targetMarker, map);
-  // 일정 나가기
-  $('.del-btn').click(async function(e) {
-    await deleteSchedule(targetInfo.requesterOwner, scheduleId);
-  })
+
 }
+
+
 
 // !!그룹 일정일 경우
 if (targetInfo.isGroup) {
