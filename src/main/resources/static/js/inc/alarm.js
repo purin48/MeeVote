@@ -20,15 +20,18 @@ $(document).ready(function() {
         let isRead = $(this).data('is-read');
         let notifyID = $(this).data('notify-id');
         console.log('x 클릭 하셨군요...')
-        console.log(isRead)  // false
-        isRead = true;
-        console.log(isRead)  // true
         console.log("*************************8")
+        console.log("notifyID")
         console.log(notifyID)
-        // if (isRead === true) {
-        //     // 해당 일정의 부모 요소를 숨깁니다.
-        //     $(this).closest('.card-outer').hide();
-        // }
+        console.log(isRead)
+        if (isRead === true) {
+            // 해당 일정의 부모 요소를 숨깁니다.
+            $(this).closest('.card-outer').hide();
+        } else {
+            isRead = true;  // isRead 의 값이 false 인 경우, x 버튼을 누르면 true 로 바꾸기
+            console.log("false -> true")
+            console.log(isRead)
+        }
 
         $.ajax({
             type: 'PUT',
@@ -39,15 +42,20 @@ $(document).ready(function() {
             },
             success: function (response) {
                 console.log('데이터 전송 성공:', response);
-                if (isRead === true) {
-                    // 해당 일정의 부모 요소를 숨깁니다.
-                    $(this).closest('.card-outer').hide();
-                }
+                // if (isRead === true) {
+                //     // 해당 일정의 부모 요소를 숨깁니다.
+                //     $(this).closest('.card-outer').hide();
+                // }
             },
             error: function (xhr, status, error) {
                 console.error('데이터 전송 실패:', error);
             }
         })
+
+        // if (isRead === true) {
+        //     // 해당 일정의 부모 요소를 숨깁니다.
+        //     $(this).closest('.card-outer').hide();
+        // }
     })
 
     $(document).on('click', '.card-outer', function() {
