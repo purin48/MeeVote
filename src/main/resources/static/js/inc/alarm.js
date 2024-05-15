@@ -115,9 +115,20 @@ function showNotifications() {
                 let startTimeArray = startTime.split(":");
                 let startTimewithoutSec = startTimeArray[0] + ":" + startTimeArray[1];
 
+                // 메세지 가공
+                let fullMessage = card.message;
+                let fullMessageArray = fullMessage.split(".");
+                let message1 = fullMessageArray[0];
+                let message2 = fullMessageArray[1];
+                if(message2 === null) {
+                    $cardName.append(fullMessage);
+                } else {
+                    $cardName.append(message1 + "<br>" + message2);
+                }
+
 
                 // 데이터 추가
-                $cardName.append(card.message);
+               // $cardName.append(card.message);
                 $cardMain1.append("<h3 style='font-weight: bold; font-size: 15px;'>" + card.name + "</h3>");
                 //$cardMain2.append('<p><i class="bi bi-calendar-check"> </i>' + startDate + '</p>');
                 $cardMain3.append('<p style="font-size: 12px;"><i class="bi bi-calendar-check" style="margin-top: 16px;"> </i>' + startDate + '</p>');
@@ -133,18 +144,18 @@ function showNotifications() {
                 $cardMain.append($cardMain3);
                 $(".msg-overlay-bubble-list").append($cardOuter);
 
-                if (card.placeName === null) {
-                    $cardMain2.append('<p style="font-size: 12px;"><i class="bi bi-geo-alt" style="margin-top: 16px;"> </i>' + '투표중' + '</p>')
-                } else {
-                    $cardMain2.append('<p style="font-size: 12px;"><i class="bi bi-geo-alt" style="margin-top: 16px;"> </i>' + card.placeName + '</p>')
-                }
+                // if (card.placeName === null) {
+                //     $cardMain2.append('<p style="font-size: 12px;"><i class="bi bi-geo-alt" style="margin-top: 16px;"> </i>' + '투표중' + '</p>')
+                // } else {
+                //     $cardMain2.append('<p style="font-size: 12px;"><i class="bi bi-geo-alt" style="margin-top: 16px;"> </i>' + card.placeName + '</p>')
+                // }
 
                 if (card.voteDeadline === null) {  // 투표 마감일 X = 개인 일정
                     $cardMain2.append("");
                 } else if (card.voteDeadline < today) {  // 투표 마감일 지남
                     //$cardMain3.append("<p style='margin-top: 16px;'>" + "투표 마감</p>");
-                    $cardMain2.append("");
-                } else { // 투표 마감일 전
+                    $cardMain2.append(card.placeName);
+                } else { // 투표 마감일 전 (투표중)
                     let deadline = card.voteDeadline;
                     let deadlineArray = deadline.split(" ");
                     let deadlineDate = deadlineArray[0];
@@ -160,7 +171,7 @@ function showNotifications() {
                     // console.log(deadlineDateArray[1])  // 05
                     // console.log('day')
                     // console.log(deadlineDateArray[2]) // 17
-                    $cardMain3.append("<p style='font-size: 12px;'>" + deadlineMonth + "/" + deadlineDay + " <br>투표 마감</p>");
+                    $cardMain2.append("<p style='font-size: 12px;'><i class=\"bi bi-geo-alt\" style=\"margin-top: 16px;\"> </i>" + deadlineMonth + "/" + deadlineDay + " 투표 마감</p>");
                 }
 
                 $cardMain2.append(

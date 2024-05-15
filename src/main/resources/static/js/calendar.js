@@ -165,7 +165,7 @@ $(document).ready(function() {
 
             // 가져온 일정 데이터를 시작 시간을 기준으로 정렬
             events.sort((a, b) => {
-                return new Date(a.start) - new Date(b.start);
+                return new Date(a.startDate) - new Date(b.startDate);
             });
 
             // 가져온 일정 데이터를 리스트 형식으로 추가
@@ -174,6 +174,7 @@ $(document).ready(function() {
                 'flex-direction': 'column'
             });
 
+            console.log(events)
 
             events.forEach(event => {
                 let li = $('<li>').addClass('event-item');
