@@ -21,12 +21,14 @@ export function createMarker(map, lat, lng, size, imgSrc) {
   const imageSize = new kakao.maps.Size(size, size);
   const imageOption = {offset: new kakao.maps.Point(27, 69)};
   const markerImage = new kakao.maps.MarkerImage(imgSrc, imageSize, imageOption);
-  const markerPosition = new kakao.maps.LatLng(lat, lng); // 마커가 표시될 위치입니다
+  const markerPosition = new kakao.maps.LatLng(lat, lng);
+
   // 마커를 생성
   const marker = new kakao.maps.Marker({
-      position: markerPosition, 
-      image: imgSrc? markerImage : null
+      position: markerPosition,
+      image: imgSrc? markerImage : null,
   });
+
   // 마커가 지도 위에 표시되도록 설정
   marker.setMap(map);
   return marker;

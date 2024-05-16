@@ -1,7 +1,7 @@
 import {displayMap, createMarker, searchPlace, locFromAddress, addrFromLoc,  createOverlay, createPolyline} from '/js/module/map.js'
 import * as aj from '/js/module/ajax.js'
 import {showPlaceList} from '/js/module/common.js'
-import {getRoute} from '/js/module/mobility.js'
+import {getRoute, getMultiRoutes} from '/js/module/mobility.js'
 
 // 변수
 // ---- 스케쥴 관련 정보
@@ -26,7 +26,13 @@ let nowOverlay;
 let voteItems = {};
 // ---- 맴버 검색 ----
 let memberList = {};
+let isMemberChanged = true;
 // 변수 End
+
+
+
+
+
 
 
 
@@ -54,7 +60,8 @@ async function createMemberMarker(info) {
   const marker = createMarker(map, startPoint[0], startPoint[1], 72, `/image/marker/${imgSrc}.png`);
   return marker;
 }
-// ---- 함수 : 맴버 마커 추가 ----
+// ---- 함수 : 맴버 마커 추가 End----
+
 
 // --- 함수 : 맴버 목록 갱신 ----
 async function resetMemberAll() {
@@ -86,6 +93,11 @@ $('.member-btn').click(function(e) {
   $('.member-container').toggleClass('hide-container');
 })
 // ---- 이벤트 등록 : 맴버 관리 이벤트 ----
+
+// ---- 시작 이벤트 : 참여자 ui 생성 ----
+resetMemberAll();
+// ---- 시작 이벤트 : 참여자 ui 생성 End----
+
 // 1. 맴버 불러오기 End
 
 
@@ -127,7 +139,7 @@ function createOverlayElement(place) {
     });
     // 성공시 투표 항목 초기화
 
-    if(response.isSuccess) resetVoteAll();
+    if(response.isSuccess) resetVoteAll(false, false);
   })
   crosshairIcon.click(function(e) {
     moveStart(place.y, place.x, place.address_name)
@@ -315,21 +327,65 @@ async function createVoteItemPoly(id) {
 }
 // ---- 함수 : 투표 항목 폴리라인 생성 함수 End ----
 
+// ---- 함수 : 투표 항목 인포레이아웃 ----
+async function createIW(id) {
+  const infowindow = new kakao.maps.InfoWindow({
+    position : voteItems[id].marker.getPosition(), 
+    content : `<div class="iw">${voteItems[id].vote.placeName}</div>`
+  });
+  
+  infowindow.open(map, voteItems[id].marker); 
+
+  return infowindow; 
+}
+// ---- 함수 : 투표 항목 인포레이아웃 생성 함수 End ----
+
+// --- 함수 : 후보지와 맴버들간 거리 계산
+async function getMemberRoutes(id) {
+  const origins = [];
+  $.each(memberList, function (idx, member) { 
+    const origin = {
+      'x': member.marker.getPosition().La,
+      'y': member.marker.getPosition().Ma,
+      'key': idx
+    }
+    origins.push(origin);
+  });
+  const destination = {
+    'name' : 'a',
+    'x': voteItems[id].summary.destination.x,
+    'y': voteItems[id].summary.destination.y,
+  }
+
+  const multieRoute = await getMultiRoutes(origins, destination);
+  
+  return multieRoute;
+}
+// --- 함수 : 후보지와 맴버들간 거리 계산
+
+
 // --- 함수 : 투표 항목 전부 갱신 ----
-async function resetVoteAll() {
+async function resetVoteAll(myChange, memberChange) {
   scheduleInfo = await aj.getVotingDetail(scheduleId);
   $.each(scheduleInfo.placeToVoteList, async function (index, voteItem) {
     const id = voteItem.placeToVoteId;
-    if (!voteItems.hasOwnProperty(id)) {
+    if (!voteItems.hasOwnProperty(id) || myChange) {
       // 객체 구성
       voteItems[id] = await getVoteItemData(id, voteItem);
       voteItems[id].ui = createVoteItemUI(id);
       voteItems[id].marker = await createMarker(map, voteItems[id].vote.lat, voteItems[id].vote.lng, 60, '/image/marker/target.png');
       voteItems[id].poly = await createVoteItemPoly(id);
     }
+    // if (memberChange) {
+    //   voteItems[id].multieRoute = await getMemberRoutes(id);
+    // }
   });
 }
 // --- 함수 : 투표 항목 갱신 End----
+
+// ---- 시작 이벤트 : 투표 항목 표시 ----
+resetVoteAll(true, true);
+// ---- 시작 이벤트 : 투표 항목 표시 End----
 // 3. 투표 항목 End
 
 
@@ -363,8 +419,7 @@ async function moveStart(lat, lng, name) {
         voteItems[key].marker.setMap(null);
         voteItems[key].ui.remove();
       }
-      voteItems = {};
-      resetVoteAll();
+      resetVoteAll(true, false);
     }
   }
 
@@ -405,6 +460,7 @@ async function memberSearch(e){
       };
       const response = await aj.inviteMember(data);
       scheduleInfo = await aj.getVotingDetail(scheduleId);
+      isMemberChanged = true;
       await resetMemberAll();
       $(this).remove();
     })
@@ -513,15 +569,14 @@ $('.end-btn').click(async function(e) {
 // 7. 투표 종료하기 End
 
 
-// 시작 이벤트
+
 // ---- 시작 이벤트 : 정보 표시 ----
 if (!scheduleInfo.isRequesterOwner) $('.end-btn').css('display', 'none');
 $('.text-container > .name').text(scheduleInfo.votingScheduleInfo.name);
 $('.text-container > .deadline').text(scheduleInfo.votingScheduleInfo.voteDeadline+"까지");
-// ---- 시작 이벤트 : 참여자 ui 생성 ----
-resetMemberAll();
-// ---- 시작 이벤트 : 투표 항목 표시 ----
-resetVoteAll();
+
+
+
 
 
 

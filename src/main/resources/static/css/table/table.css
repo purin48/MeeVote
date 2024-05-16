@@ -13,6 +13,13 @@ body {
   padding: 30px;
 }
 
+.important-container {
+  gap: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .foot-container {
   display: flex;
   flex-direction: column;
