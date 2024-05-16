@@ -251,15 +251,15 @@ async function getBarData() {
       {
         label: '그룹',
         data: new Array(12).fill(0),
-        borderColor: '#4FD1C5',
-        backgroundColor: '#4FD1C5',
+        borderColor: 'tomato',
+        backgroundColor: 'tomato',
         borderWidth: 2,
       },
       {
         label: '개인',
         data: new Array(12).fill(0),
-        borderColor: '#4FD1C5',
-        backgroundColor: '#4FD1C5',
+        borderColor: 'cornflowerblue',
+        backgroundColor: 'cornflowerblue',
         borderWidth: 2,
       },
     ]
@@ -279,7 +279,7 @@ async function getBarData() {
   const countData2 = response2.data;
   $.each(countData2, function (idx, month) { 
     const monthIdx = Number(month.month) - 1;
-    data.datasets[0].data[monthIdx] = month.scheduleCount;
+    data.datasets[1].data[monthIdx] = month.scheduleCount;
   });
 
   // 개인 일정
@@ -287,7 +287,7 @@ async function getBarData() {
   const countData3 = response3.data;
   $.each(countData3, function (idx, month) { 
     const monthIdx = Number(month.month) - 1;
-    data.datasets[0].data[monthIdx] = month.scheduleCount;
+    data.datasets[2].data[monthIdx] = month.scheduleCount;
   });
 
   return data
@@ -310,7 +310,7 @@ async function showFirstCircleChart() {
         },
         title: {
           display: true,
-          text: '카테고리별 일정 통계'
+          text: `이번달 카테고리별 일정 통계`
         }
       }
     },
@@ -336,7 +336,7 @@ async function showFirstBarChart() {
         },
         title: {
           display: true,
-          text: '월별 일정 통계'
+          text: `${today.getFullYear()}년 월별 일정 통계`
         }
       }
     },
