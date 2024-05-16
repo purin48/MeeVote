@@ -239,25 +239,25 @@ async function getBarData() {
   const year = today.getFullYear();
 
   const data = {
-    labels: [],
+    labels: [1,2,3,4,5,6,7,8,9,10,11,12],
     datasets: [
       {
         label: '전체',
-        data: [],
+        data: new Array(12).fill(0),
         borderColor: '#4FD1C5',
         backgroundColor: '#4FD1C5',
         borderWidth: 2,
       },
       {
         label: '그룹',
-        data: [],
+        data: new Array(12).fill(0),
         borderColor: '#4FD1C5',
         backgroundColor: '#4FD1C5',
         borderWidth: 2,
       },
       {
         label: '개인',
-        data: [],
+        data: new Array(12).fill(0),
         borderColor: '#4FD1C5',
         backgroundColor: '#4FD1C5',
         borderWidth: 2,
@@ -269,23 +269,25 @@ async function getBarData() {
   const response1 = await aj.getMonthStatic(year);
   const countData1 = response1.data;
 
-  $.each(countData1, function (idx, month) { 
-    data.labels.push(month.month);
-    data.datasets[0].data.push(month.scheduleCount);
+  $.each(countData1, function (idx, month) {
+    const monthIdx = Number(month.month) - 1;
+    data.datasets[0].data[monthIdx] = month.scheduleCount;
   });
 
   // 그룹 일정
   const response2 = await aj.getMonthStatic(year, true);
-  const countData2 = response1.data;
+  const countData2 = response2.data;
   $.each(countData2, function (idx, month) { 
-    data.datasets[1].data.push(month.scheduleCount);
+    const monthIdx = Number(month.month) - 1;
+    data.datasets[0].data[monthIdx] = month.scheduleCount;
   });
 
   // 개인 일정
   const response3 = await aj.getMonthStatic(year, false);
-  const countData3 = response1.data;
+  const countData3 = response3.data;
   $.each(countData3, function (idx, month) { 
-    data.datasets[2].data.push(month.scheduleCount);
+    const monthIdx = Number(month.month) - 1;
+    data.datasets[0].data[monthIdx] = month.scheduleCount;
   });
 
   return data
