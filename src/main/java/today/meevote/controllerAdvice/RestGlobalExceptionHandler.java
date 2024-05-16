@@ -5,13 +5,13 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 import today.meevote.exception.rest.RestException;
 import today.meevote.response.BaseResponse;
 import today.meevote.response.FailureInfo;
-
-@org.springframework.web.bind.annotation.RestControllerAdvice
 @Slf4j
-public class RestControllerAdvice {
+@RestControllerAdvice
+public class RestGlobalExceptionHandler {
 	
     @ExceptionHandler(Exception.class)
     protected BaseResponse internalSeverException(Exception e){
@@ -38,7 +38,7 @@ public class RestControllerAdvice {
                 e.getConstraintViolations().stream().toList().get(0).getMessage()
         );
     }
-    
+
     @ExceptionHandler(RestException.class)
     protected BaseResponse restException(RestException e){
     	log.error("restException", e);
