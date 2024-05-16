@@ -43,10 +43,12 @@ $(document).ready(async function() {
         });
 
         pushCheck[`${yyyy}-${mm}`] = true;
+
     }
 
     // 캘린더에 일정 표시하는 함수
     function displayEventsOnCalendar(data) {
+
         let calendar = new FullCalendar.Calendar(calendarEl, {
             timeZone: 'UTC',
             themeSystem: 'bootstrap5',
@@ -89,15 +91,16 @@ $(document).ready(async function() {
 
                         // 일정 카테고리에 따라 일정 필터링하는 함수
                         function filterEventsByCategory(category) {
+
                             calendar.getEvents().forEach(function (event) {
-                                if (category === 'all') {
+                                 if (category === 'all') {
                                     // 전체 카테고리 선택 시 모든 일정을 표시합니다.
-                                    event.setProp('display', 'block');
+                                    event.setProp('display', 'auto');
                                 } else {
                                     // 개인, 그룹 카테고리 선택 시 해당 카테고리에 맞는 일정만 표시합니다.
                                     let isGroup = event.extendedProps.isGroup;
                                     if ((category === 'personal' && !isGroup) || (category === 'group' && isGroup)) {
-                                        event.setProp('display', 'block');
+                                        event.setProp('display', 'auto');
                                     } else {
                                         event.setProp('display', 'none');
                                     }
@@ -140,6 +143,7 @@ $(document).ready(async function() {
                     start: event.startDate,
                     // propA: event.description,  -> 일정 상세는 데이터 안 받아오네...
                     backgroundColor: event.color,
+                    isGroup: event.isGroup,
                     textColor: "#ffffff"
                 };
             }),
