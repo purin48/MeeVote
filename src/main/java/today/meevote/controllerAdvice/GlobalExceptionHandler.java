@@ -24,15 +24,4 @@ public class GlobalExceptionHandler {
     	log.error("notFoundException", e);
     	return "redirect:/notfound";
     }
-
-
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    protected BaseResponse methodArgumentNotValidException(MethodArgumentNotValidException e){
-        log.error("invalidInputException", e);
-        return new BaseResponse(
-                false,
-                FailureInfo.INVALID_INPUT.getCode(),
-                e.getFieldError().getDefaultMessage()
-        );
-    }
 }
