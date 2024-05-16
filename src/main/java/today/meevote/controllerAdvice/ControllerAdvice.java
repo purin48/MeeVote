@@ -1,17 +1,14 @@
 package today.meevote.controllerAdvice;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import today.meevote.exception.view.UnauthenticatedException;
 import today.meevote.exception.view.NotFoundException;
-import today.meevote.response.BaseResponse;
-import today.meevote.response.FailureInfo;
+
 
 @Slf4j
-@ControllerAdvice
-public class GlobalExceptionHandler {
+@org.springframework.web.bind.annotation.ControllerAdvice
+public class ControllerAdvice {
 	
     @ExceptionHandler(UnauthenticatedException.class)
     public String unauthenticatedException(UnauthenticatedException e){

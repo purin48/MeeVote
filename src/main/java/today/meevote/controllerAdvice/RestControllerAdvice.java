@@ -5,13 +5,12 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
 import today.meevote.exception.rest.RestException;
 import today.meevote.response.BaseResponse;
 import today.meevote.response.FailureInfo;
 @Slf4j
-@RestControllerAdvice
-public class RestGlobalExceptionHandler {
+@org.springframework.web.bind.annotation.RestControllerAdvice
+public class RestControllerAdvice {
 	
     @ExceptionHandler(Exception.class)
     protected BaseResponse internalSeverException(Exception e){
