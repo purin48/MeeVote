@@ -108,8 +108,6 @@ async function updateProfile(name, phoneNumber, address, imageData) {
     // 예외 처리
   }
 
-  console.log(response)
-
   return response
 }
 // ----- 회원정보 업데이트 ajax -----
