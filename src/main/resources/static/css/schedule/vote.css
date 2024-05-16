@@ -517,6 +517,13 @@ body {
 }
 /* ---- 정보창 End----*/
 
+.iw {
+  width: 100%;
+  text-align: center;
+  padding: 5px;
+  font-size: 14px;
+}
+
 
 /* 기타 버튼들 End */
 

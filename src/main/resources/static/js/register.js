@@ -47,7 +47,6 @@ $("#email-container >.input-btn").click(function (e) {
 $("#email-code-container > .input-btn").click(function (e) {
   if (!emailValidation) {
     // 이메일 유효성 검사가 통과되지 못한 경우
-    console.log("awrgaerhe");
     $("#email-input").addClass("is-invalid");
     $("#email-container > .invalid-feedback").text("이메일을 먼저 입력하세요");
     return;

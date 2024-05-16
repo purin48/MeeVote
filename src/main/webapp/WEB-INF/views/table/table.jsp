@@ -46,6 +46,8 @@ pageEncoding="UTF-8"%>
     ></script>
     <!-- sweet alert -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
+    <!-- chartjs -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
     <!-- kakao mpa -->
     <script
       type="text/javascript"
@@ -73,33 +75,35 @@ pageEncoding="UTF-8"%>
     <div class="top-container">
       <!-- 상단부 -->
       <div class="head-container">
-
-        <!-- 투표 중인 일정 -->
-        <div class="root-container">
-          <p>투표 중인 일정</p>
-          <div class="carousel-container voting-container">
-            <i class="bi bi-arrow-left-circle-fill carousel_prev"></i>
-            <div class="carousel_main">
-              <div class="carousel_wrapper">
+        <div class="important-container">
+          <!-- 투표 중인 일정 -->
+          <div class="root-container">
+            <p>투표 중인 일정</p>
+            <div class="carousel-container voting-container">
+              <i class="bi bi-arrow-left-circle-fill carousel_prev"></i>
+              <div class="carousel_main">
+                <div class="carousel_wrapper">
+                </div>
               </div>
+              <i class="bi bi-arrow-right-circle-fill carousel_next"></i>
             </div>
-            <i class="bi bi-arrow-right-circle-fill carousel_next"></i>
           </div>
-        </div>
-        <!-- 투표 중인 일정 End-->
+          <!-- 투표 중인 일정 End-->
+          <!-- 예정된 일정 -->
+          <div class="root-container">
+            <p>예정된 일정</p>
+            <div class="carousel-container future-container">
+              <i class="bi bi-arrow-left-circle-fill carousel_prev"></i>
+              <div class="carousel_main">
+                <div class="carousel_wrapper"></div>
+              </div>
+              <i class="bi bi-arrow-right-circle-fill carousel_next"></i>
+            </div>
+            <!-- 예정된 일정 End -->
+          </div>
 
-        <!-- 예정된 일정 -->
-        <div class="root-container">
-          <p>예정된 일정</p>
-          <div class="carousel-container future-container">
-            <i class="bi bi-arrow-left-circle-fill carousel_prev"></i>
-            <div class="carousel_main">
-              <div class="carousel_wrapper"></div>
-            </div>
-            <i class="bi bi-arrow-right-circle-fill carousel_next"></i>
-          </div>
+
         </div>
-        <!-- 예정된 일정 End -->
 
       </div>
       <!-- 상단부 End -->
