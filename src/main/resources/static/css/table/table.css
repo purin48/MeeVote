@@ -125,8 +125,12 @@ body {
 
 
 /* 차트 */
-.chart {
-  width: 300px;
+#bar-chart {
+  width: 400px;
+}
+
+#circle-chart {
+  width: 200px;
 }
 /* 차트 End*/
 
@@ -245,8 +249,18 @@ td > p{
 
 
 /* 미디어 쿼리 */
-@media (max-width:1100px) {
+@media (max-width:1600px) {
   .head-container {
     flex-direction: column;
+    gap: 30px;
   }
 }
+
+@media (max-width:1000px) {
+  .important-container {
+    flex-direction: column;
+    gap: 20px;
+  }
+}
+
+

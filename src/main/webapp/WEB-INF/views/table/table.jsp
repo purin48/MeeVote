@@ -75,11 +75,11 @@ pageEncoding="UTF-8"%>
     <div class="top-container">
       <!-- 상단부 -->
       <div class="head-container">
-        <div class="chart-container">
-          <div class="chart" id="bar-chart">
+        <div class="important-container">
+          <div class="chart" id="circle-chart">
             <canvas></canvas>
           </div>
-          <div class="chart" id="circle-chart">
+          <div class="chart" id="bar-chart">
             <canvas></canvas>
           </div>
         </div>
