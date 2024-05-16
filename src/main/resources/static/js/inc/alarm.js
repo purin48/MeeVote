@@ -18,24 +18,9 @@ $(".msg-overlay-bubble-list").ready(function() {
         e.stopPropagation(); // 이벤트 전파 중지
         let isRead = $(this).data('is-read');
         let notifyID = $(this).data('notify-id');
-        console.log('x 클릭 하셨군요...')
-        console.log("*************************8")
-        console.log("notifyID")
-        console.log(notifyID)
-        console.log(isRead)
-        // if (isRead) {
-        //     // 해당 일정의 부모 요소를 숨깁니다.
-        //     $(this).closest('.card-outer').remove();
-        // } else {
-        //     isRead = true;  // isRead 의 값이 false 인 경우, x 버튼을 누르면 true 로 바꾸기
-        //     console.log("false -> true")
-        //     console.log(isRead)
-        // }
 
         if (isRead != true) {
             isRead = true;  // isRead 의 값이 false 인 경우, x 버튼을 누르면 true 로 바꾸기
-            console.log("false -> true")
-            console.log(isRead)
         }
 
         $.ajax({
@@ -46,18 +31,11 @@ $(".msg-overlay-bubble-list").ready(function() {
                 notifyId: notifyID
             },
             success: function (response) {
-                console.log('데이터 전송 성공:', response);
-
-                // let $this = $(this);
-                // $this.closest('.card-outer').remove();
-
-                //$(this).closest('.card-outer').remove();
 
                 let $cardToRemove = $(document).find('[data-notify-id="' + notifyID + '"]').closest('.card-outer');
                 $cardToRemove.remove();
             },
             error: function (xhr, status, error) {
-                console.error('데이터 전송 실패:', error);
             }
         })
     })
@@ -67,9 +45,6 @@ $(".msg-overlay-bubble-list").ready(function() {
         let scheduleId = $(this).data('schedule-id');
         // // 클릭된 카드의 notifyCategoryId 가져오기
         let notifyCategoryId = $(this).data('notify-category-id');
-        console.log('두 번째 이벤트')
-        console.log(scheduleId)
-        console.log(notifyCategoryId)
 
         if (notifyCategoryId === 1) {  // 모임 일정 초대
             location.href = '/schedule/vote?scheduleId=' + scheduleId;
@@ -99,7 +74,6 @@ function showNotifications() {
             let cardData = response.data;  // 데이터 배열
             // 데이터 배열을 순회하면서 카드 생성
             cardData.forEach(function(card) {
-                //console.log(card)
                 // 카드 생성 및 데이터 추가
                 let $cardOuter = $('<div class="card-outer" data-schedule-id="' + card.scheduleId + '" data-notify-category-id="' + card.notifyCategoryId + '"></div>');
 
@@ -168,14 +142,6 @@ function showNotifications() {
                     let deadlineYear = deadlineDateArray[0];
                     let deadlineMonth = deadlineDateArray[1];
                     let deadlineDay = deadlineDateArray[2];
-                    // console.log('콘소오오올')
-                    // console.log(deadlineDateArray)  // ['2024', '05', '17']
-                    // console.log('year')
-                    // console.log(deadlineDateArray[0])  // 2024
-                    // console.log('month')
-                    // console.log(deadlineDateArray[1])  // 05
-                    // console.log('day')
-                    // console.log(deadlineDateArray[2]) // 17
                     $cardMain2.append("<p style='font-size: 12px;'><i class=\"bi bi-geo-alt\" style=\"margin-top: 16px;\"> </i>" + deadlineMonth + "/" + deadlineDay + " 투표 마감</p>");
                 }
 
@@ -195,7 +161,6 @@ function showNotifications() {
         },
         error: function(xhr, status, error) {
             // 데이터 받아오지 못할 경우 예외 처리
-            console.error("Error: ", error);
         }
     });
 };

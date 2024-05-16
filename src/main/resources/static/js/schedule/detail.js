@@ -6,6 +6,7 @@ import {getRoute} from '/js/module/mobility.js'
 const urlSearch = new URLSearchParams(location.search);
 let scheduleId = await urlSearch.get('scheduleId');
 let scheduleInfo = await aj.getScheduleDetail(scheduleId);
+console.log(scheduleInfo)
 const targetInfo = scheduleInfo.scheduleDetailInfo;
 // ---- 사용자 정보 ----
 const myInfo = await aj.getMyInfo();

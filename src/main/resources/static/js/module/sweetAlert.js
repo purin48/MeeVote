@@ -7,8 +7,6 @@ export async function successModal(text) {
     // confirmButtonText: '로그인',
     showConfirmButton: false
   })
-
-  console.log(result);
 }
 
 // 실패 모달
@@ -21,5 +19,4 @@ export async function infoModal(text) {
     showConfirmButton: false
   })
 
-  console.log(result);
 }

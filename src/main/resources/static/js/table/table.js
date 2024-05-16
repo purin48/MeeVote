@@ -12,6 +12,12 @@ let page = 0;
 let size = 10;
 let keyword = "";
 let isLast = true;
+// 차트 관련
+const today = new Date();
+let isGroup;
+let barIsGroup = null;
+let circleIsGroup = null;
+
 
 // !왼쪽 사이드 캐러셀
 let leftSlid = 0;
@@ -60,6 +66,11 @@ $('.down-btn').click(async function(e) {
   page++;
   await getSchedules();
 })
+
+
+// ! 차트
+const circleChart = await showFirstCircleChart();
+const barChart = await showFirstBarChart();
 
 
 
@@ -189,3 +200,147 @@ async function getSchedules() {
 }
 // ---- 데이터 불러오기 End ----
 // 2. 데이터 테이블 End
+
+
+
+// 3. 차트
+// --- 원 그래프 데이터 가져오기 ----
+async function getCircleData() {
+  const year = today.getFullYear();
+  const month = (today.getMonth() + 1).toString().padStart(2, '0');
+
+  const response = await aj.getCategoryStatic(year, month, isGroup);
+  const countData = response.data;
+  
+  const data = {
+    labels: [],
+    datasets: [
+        {
+          label: '전체 카테고리 통계',
+          data: [],
+          backgroundColor: [],
+        }
+    ]
+  };
+
+  $.each(countData, function (idx, category) { 
+    data.labels.push(category.categoryName);
+    data.datasets[0].data.push(category.scheduleCount);
+    data.datasets[0].backgroundColor.push(category.color);
+  });
+
+  return data
+}
+// --- 원 그래프 데이터 가져오기 ---- 
+
+
+// --- 막대 그래프 데이터 가져오기 ----
+async function getBarData() {
+  const year = today.getFullYear();
+
+  const data = {
+    labels: [],
+    datasets: [
+      {
+        label: '전체',
+        data: [],
+        borderColor: '#4FD1C5',
+        backgroundColor: '#4FD1C5',
+        borderWidth: 2,
+      },
+      {
+        label: '그룹',
+        data: [],
+        borderColor: '#4FD1C5',
+        backgroundColor: '#4FD1C5',
+        borderWidth: 2,
+      },
+      {
+        label: '개인',
+        data: [],
+        borderColor: '#4FD1C5',
+        backgroundColor: '#4FD1C5',
+        borderWidth: 2,
+      },
+    ]
+  };
+
+  // 전체 일정
+  const response1 = await aj.getMonthStatic(year);
+  const countData1 = response1.data;
+
+  $.each(countData1, function (idx, month) { 
+    data.labels.push(month.month);
+    data.datasets[0].data.push(month.scheduleCount);
+  });
+
+  // 그룹 일정
+  const response2 = await aj.getMonthStatic(year, true);
+  const countData2 = response1.data;
+  $.each(countData2, function (idx, month) { 
+    data.datasets[1].data.push(month.scheduleCount);
+  });
+
+  // 개인 일정
+  const response3 = await aj.getMonthStatic(year, false);
+  const countData3 = response1.data;
+  $.each(countData3, function (idx, month) { 
+    data.datasets[2].data.push(month.scheduleCount);
+  });
+
+  return data
+}
+// --- 막대 그래프 데이터 가져오기 ---- 
+
+// ---- 원 그래프 처음 보여주기 ----
+async function showFirstCircleChart() {
+  const barEl = $('#circle-chart > canvas');
+  
+  const data = await getCircleData();
+  var myChart = new Chart(barEl, {
+    type: 'doughnut',
+    data: data,
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'top',
+        },
+        title: {
+          display: true,
+          text: '카테고리별 일정 통계'
+        }
+      }
+    },
+  });
+
+  return myChart;
+}
+// ---- 원 그래프 처음 보여주기 End ----
+
+// ---- 막대 그래프 처음 보여주기 ----
+async function showFirstBarChart() {
+  const barEl = $('#bar-chart > canvas');
+  
+  const data = await getBarData();
+  var myChart = new Chart(barEl, {
+    type: 'bar',
+    data: data,
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'top',
+        },
+        title: {
+          display: true,
+          text: '월별 일정 통계'
+        }
+      }
+    },
+  });
+
+  return myChart;
+}
+// ---- 막대 그래프 처음 보여주기 End ----
+// ---- 원 그래프 End ----

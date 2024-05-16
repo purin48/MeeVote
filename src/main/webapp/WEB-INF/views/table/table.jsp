@@ -75,6 +75,14 @@ pageEncoding="UTF-8"%>
     <div class="top-container">
       <!-- 상단부 -->
       <div class="head-container">
+        <div class="chart-container">
+          <div class="chart" id="bar-chart">
+            <canvas></canvas>
+          </div>
+          <div class="chart" id="circle-chart">
+            <canvas></canvas>
+          </div>
+        </div>
         <div class="important-container">
           <!-- 투표 중인 일정 -->
           <div class="root-container">

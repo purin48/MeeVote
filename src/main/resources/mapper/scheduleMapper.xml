@@ -289,7 +289,7 @@
 			JOIN schedule s ON ms.schedule_id = s.schedule_id
 			WHERE
 				ms.email = #{email}
-			AND s.end_date &lt; CURRENT_DATE
+			AND s.start_date &lt; CURRENT_DATE
 			<if test="categoryId != null and categoryId != 0">
 				AND s.schedule_category_id = #{categoryId}
 			</if>
