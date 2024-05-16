@@ -30,7 +30,7 @@ import today.meevote.utils.SessionUtil;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/auth")
-@Tag(name = "인증 API 명세서")
+@Tag(name = "인증 API 명세서!!")
 @Validated
 public class AuthController {
 	
