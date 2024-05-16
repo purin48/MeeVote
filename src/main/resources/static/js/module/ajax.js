@@ -270,3 +270,50 @@ export async function getScheduleHistory(catogoryId, keyword, page, size) {
 
   return response;
 }
+
+
+
+// 월별 통계불러오기
+export async function getMonthStatic(year, isGroup) {
+  const response = await $.ajax({
+    type: "GET",
+    dataType : 'json',
+    contentType: 'application/json',
+    url: `/api/stats/me/schedule`,
+    data : {
+      "year" : year,
+      "isGroup" : isGroup
+    }
+  });
+  if (!response.isSuccess) {
+    // 실패 시 예외 처리
+  }
+
+  return response;
+}
+
+
+
+// 카테고리별 통계불러오기
+export async function getCategoryStatic(year, month, isGroup) {
+  console.log(year, month)
+
+  const response = await $.ajax({
+    type: "GET",
+    dataType : 'json',
+    contentType: 'application/json',
+    // url: `/api/stats/me/category?year=${year}?month=${month}`,
+    url: `/api/stats/me/category`,
+    data : {
+      "month" : month,
+      "year" : year,
+      "isGroup" : isGroup
+    }
+  });
+
+  if (!response.isSuccess) {
+    // 실패 시 예외 처리
+  }
+
+  return response;
+}

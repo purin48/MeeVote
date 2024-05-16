@@ -16,7 +16,6 @@ $(document).ready(async function() {
     // 달력 표시
     let scheduleData;
     await getCalendarSchedule();
-    console.log(scheduleData)
     const calendar = displayEventsOnCalendar(scheduleData);
     
     // ajax 통해 서버에서 일정 데이터 가져오는 함수
