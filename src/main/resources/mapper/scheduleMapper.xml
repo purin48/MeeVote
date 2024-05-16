@@ -212,8 +212,8 @@
 			m.img_src,
 			ms.is_owner,
 			dp.place_name AS departure_place_name,
-			dp.lat AS departure_lat,
-			dp.lng AS departure_lng
+			dp.lat,
+			dp.lng
 		FROM
 			member m
 				JOIN member_schedule ms ON m.email = ms.email
