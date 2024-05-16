@@ -1,3 +1,5 @@
+import * as aj from '/js/module/ajax.js';
+
 // 변수
 // ---- 달력 관련 변수 ----
 let date = new Date();
@@ -277,7 +279,7 @@ $(document).click(function(){
 // ---- 이벤트 등록 : 장소 선택 스크롤 숨기기 End----
 
 // ---- 이벤트 등록 : 일정 등록하기 ----
-$('#save-btn').click(function(e) {
+$('#save-btn').click(async function(e) {
 	// 이름 검증
 	const name = $('#name-container > input').val();
 	if (name === '') {
@@ -296,28 +298,28 @@ $('#save-btn').click(function(e) {
 		"placeLatitude": choosedPlace.y,
 		"placeLongitude": choosedPlace.x
 	}
-	// api 요청
-	$.ajax({
-		type: "POST",
-		url: '/api/schedule/personal',
-		dataType: "json",
-		contentType: "application/json",
-		data: JSON.stringify(data),
-		success: function (response) {
-			if (!response.isSuccess) {
-				// 예외 처리
-			} 
-			// 일정 생성 성공
-			$('.top-container').css('display', 'none');
-			Swal.fire({
-				title: '일정 생성이 완료되었습니다',
-				icon: 'success',
-				confirmButtonColor: '#4fd1c5',
-				confirmButtonText: '완료',
-			}).then((result) => {
-				if(result.isConfirmed) window.location.href = '/';
-			});
+
+	Swal.fire({
+		title: "작업 처리 중",
+		html: "잠시 기다려주세요...",
+		timerProgressBar: true,
+		allowOutsideClick: false,
+		showConfirmButton: false,
+		didOpen: () => {
+			Swal.showLoading();
 		},
+	})
+
+	const response = await aj.createPersonalSchedule(data);
+
+	$('.top-container').css('display', 'none');
+	Swal.fire({
+		title: '일정 생성이 완료되었습니다',
+		icon: 'success',
+		confirmButtonColor: '#4fd1c5',
+		confirmButtonText: '완료',
+	}).then((result) => {
+		if(result.isConfirmed) window.location.href = '/';
 	});
 })
 // ---- 이벤트 등록 : 일정 등록하기 End----
@@ -334,29 +336,20 @@ dateToInput('#end-date', endDate);
 timeToInput('#end-time', endDate);
 // ---- 디폴트 일정 날짜 등록 End ----
 
+
 // ---- 카테고리 db에서 불러오기
-$.ajax({
-	type: "GET",
-	dataType : 'json',
-	contentType: 'application/json',
-	url: "/api/schedule/category",
-	success: function (response) {
-		if(!response.isSuccess) {
-			// 예외 처리
-		}
-		// 카테고리 select 태그에 집어 넣기
-		categoryList = response.data;
-		$.each(categoryList, function (idx, category) {
-			const opt = $('<option></option>');
-			opt.attr('value', idx);
-			opt.text(category.categoryName);
-			$('#category-select').append(opt);
-		});
-		// 디폴트 카테고리로 설정
-		choosedCategory = categoryList[$('#category-select').val()];
-		$('#category-circle').css('background-color', choosedCategory.color);
-	}
+const categoryResponse = await aj.getCategories();
+categoryList = categoryResponse.data;
+$.each(categoryList, function (idx, category) {
+	const opt = $('<option></option>');
+	opt.attr('value', idx);
+	opt.text(category.categoryName);
+	$('#category-select').append(opt);
 });
-//
+
+// 디폴트 카테고리로 설정
+choosedCategory = categoryList[$('#category-select').val()];
+$('#category-circle').css('background-color', choosedCategory.color);
+
 
 calendarDisplay();

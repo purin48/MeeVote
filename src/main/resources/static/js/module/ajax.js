@@ -256,7 +256,7 @@ export async function getCategories() {
 }
 
 
-// 카테고리 불러오기
+// 이전 일정 불러오기
 export async function getScheduleHistory(catogoryId, keyword, page, size) {
   const response = await $.ajax({
     type: "GET",
@@ -296,19 +296,57 @@ export async function getMonthStatic(year, isGroup) {
 
 // 카테고리별 통계불러오기
 export async function getCategoryStatic(year, month, isGroup) {
-  console.log(year, month)
 
   const response = await $.ajax({
     type: "GET",
     dataType : 'json',
     contentType: 'application/json',
-    // url: `/api/stats/me/category?year=${year}?month=${month}`,
     url: `/api/stats/me/category`,
     data : {
       "month" : month,
       "year" : year,
       "isGroup" : isGroup
     }
+  });
+
+  if (!response.isSuccess) {
+    // 실패 시 예외 처리
+  }
+
+  return response;
+}
+
+
+
+// 그룹 일정 생성
+export async function createGroupSchedule(data) {
+
+  const response = await $.ajax({
+		type: "POST",
+		url: '/api/schedule/group',
+		dataType: "json",
+		contentType: "application/json",
+		data: JSON.stringify(data),
+  });
+
+  if (!response.isSuccess) {
+    // 실패 시 예외 처리
+  }
+
+  return response;
+}
+
+
+
+// 개인 일정 생성
+export async function createPersonalSchedule(data) {
+
+  const response = await $.ajax({
+		type: "POST",
+		url: '/api/schedule/personal',
+		dataType: "json",
+		contentType: "application/json",
+		data: JSON.stringify(data),
   });
 
   if (!response.isSuccess) {

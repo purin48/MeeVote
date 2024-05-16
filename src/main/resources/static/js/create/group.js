@@ -1,4 +1,4 @@
-import { getMyInfo, getVotingDetail, postVotingItem } from '/js/module/ajax.js';
+import * as aj from '/js/module/ajax.js';
 import { locFromAddress, } from '/js/module/map.js'
 
 // 변수
@@ -15,7 +15,7 @@ let voteDate = new Date();
 let categoryList = [];
 let choosedCategory;
 // ---- 맴버 변수 ----
-let myInfo = await getMyInfo();
+let myInfo = await aj.getMyInfo();
 let memberList = [];
 let memberSearchList = [];
 
@@ -319,7 +319,7 @@ $(document).click(function(){
 // ---- 이벤트 등록 : 장소 선택 스크롤 숨기기 End----
 
 // ---- 이벤트 등록 : 일정 등록하기 ----
-$('#save-btn').click(function(e) {
+$('#save-btn').click(async function(e) {
   $('.input-warning').css('display','none');
 	// 이름 검증
 	const name = $('#name-container > input').val();
@@ -363,53 +363,55 @@ $('#save-btn').click(function(e) {
 		"voteDeadline": `${$('#vote-date').val()} ${$('#vote-time').val()}`,
 	}
 
-	// api 요청
-	$.ajax({
-		type: "POST",
-		url: '/api/schedule/group',
-		dataType: "json",
-		contentType: "application/json",
-		data: JSON.stringify(data),
-		success: async function (response) {
-			if (!response.isSuccess) {
-				// 요청 실패 예외 처리
-				console.log(response);
-				return;
-			}
-			// 중간 지점 투표 항목에 넣기
-			const voteDetail = await getVotingDetail(response.data.scheduleId);
 
-			const promise = [];
-			for (const member of voteDetail.memberList) {
-				const startPoint = member.lat? [member.lat, member.lng] : await locFromAddress(member.address);
-				promise.push(startPoint);
-			}
-			await Promise.all(promise)
-			.then(cordArr => {
-				let lat = 0;
-				let lng = 0;
-				for (const val of cordArr) {
-					lat += Number(val[0]? val[0] : 127.0495556);
-					lng += Number(val[1]? val[1] : 37.514575);
-				}
-				const placeData = {
-					"placeName": "중간 지점",
-					"lat": lat / voteDetail.memberList.length,
-					"lng": lng / voteDetail.memberList.length,
-				}
-				const result = postVotingItem(response.data.scheduleId, placeData);
-			})
-			// 일정 생성 성공
-			$('.top-container').css('display', 'none');
-			Swal.fire({
-				title: '일정 생성이 완료되었습니다',
-				icon: 'success',
-				confirmButtonColor: '#4fd1c5',
-				confirmButtonText: '완료',
-			}).then((result) => {
-				if(result.isConfirmed) window.location.href = '/';
-			});
+	Swal.fire({
+		title: "작업 처리 중",
+		html: "잠시 기다려주세요...",
+		timerProgressBar: true,
+		allowOutsideClick: false,
+		showConfirmButton: false,
+		didOpen: () => {
+			Swal.showLoading();
 		},
+	})
+
+	// 일정 생성
+	const response = await aj.createGroupSchedule(data);
+
+	// 중간 지점 투표 항목에 넣기
+	const voteDetail = await aj.getVotingDetail(response.data.scheduleId);
+
+	const promise = [];
+	for (const member of voteDetail.memberList) {
+		const startPoint = member.lat? [member.lat, member.lng] : await locFromAddress(member.address);
+		promise.push(startPoint);
+	};
+
+	await Promise.all(promise)
+	.then(cordArr => {
+		let lat = 0;
+		let lng = 0;
+		for (const val of cordArr) {
+			lat += Number(val[0]? val[0] : 127.0495556);
+			lng += Number(val[1]? val[1] : 37.514575);
+		}
+		const placeData = {
+			"placeName": "중간 지점",
+			"lat": lat / voteDetail.memberList.length,
+			"lng": lng / voteDetail.memberList.length,
+		}
+		const result = aj.postVotingItem(response.data.scheduleId, placeData);
+	});
+
+	// 일정 생성 성공
+	$('.top-container').css('display', 'none');
+	Swal.fire({
+		title: '일정 생성이 완료되었습니다',
+		icon: 'success',
+		confirmButtonColor: '#4fd1c5',
+		confirmButtonText: '완료',
+	}).then((result) => {
+		if(result.isConfirmed) window.location.href = '/';
 	});
 })
 // ---- 이벤트 등록 : 일정 등록하기 End----
@@ -430,28 +432,19 @@ timeToInput('#vote-time', voteDate);
 // ---- 디폴트 일정 날짜 등록 End ----
 
 // ---- 카테고리 db에서 불러오기
-$.ajax({
-	type: "GET",
-	dataType : 'json',
-	contentType: 'application/json',
-	url: "/api/schedule/category",
-	success: function (response) {
-		if(!response.isSuccess) {
-			// 예외 처리
-		}
-		// 카테고리 select 태그에 집어 넣기
-		categoryList = response.data;
-		$.each(categoryList, function (idx, category) {
-			const opt = $('<option></option>');
-			opt.attr('value', idx);
-			opt.text(category.categoryName);
-			$('#category-select').append(opt);
-		});
-		// 디폴트 카테고리로 설정
-		choosedCategory = categoryList[$('#category-select').val()];
-		$('#category-circle').css('background-color', choosedCategory.color);
-	}
+const categoryResponse = await aj.getCategories();
+categoryList = categoryResponse.data;
+$.each(categoryList, function (idx, category) {
+	const opt = $('<option></option>');
+	opt.attr('value', idx);
+	opt.text(category.categoryName);
+	$('#category-select').append(opt);
 });
+
+// 디폴트 카테고리로 설정
+choosedCategory = categoryList[$('#category-select').val()];
+$('#category-circle').css('background-color', choosedCategory.color);
+
 
 // 달력 표시
 calendarDisplay();

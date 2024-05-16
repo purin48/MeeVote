@@ -58,7 +58,7 @@ prefix="c" %>
     <!-- custom css -->
     <link rel="stylesheet" href="/css/create/personal.css" />
     <!-- custom js import -->
-    <script src="/js/create/personal.js" defer></script>
+    <script type="module" src="/js/create/personal.js" defer></script>
 
     <!-- 사이드바 include -->
     <jsp:include page="/WEB-INF/views/inc/sidebar.jsp">
