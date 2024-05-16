@@ -32,10 +32,6 @@ let isMemberChanged = true;
 
 
 
-
-
-
-
 // 1. 맴버 불러오기
 // ---- 함수 : 맴버 ui 추가----
 function createMemberUI(info) {

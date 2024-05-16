@@ -81,43 +81,59 @@ $.each($('.nav-content').children(), function (index, el) {
 });
 
 
-// 회원 정보 수정
-async function updateMemberInfo(data) {
+
+
+// ----- 회원정보 업데이트 ajax -----
+async function updateProfile(name, phoneNumber, address, imageData) {
+  const formData = new FormData();
+  formData.append('image file', imageData); // 이미지 파일 추가
+  formData.append('request body', JSON.stringify({
+    "name": name,
+    "address": address,
+    "phoneNumber": phoneNumber
+  }));
+
   const response = await $.ajax({
-    type: "PUT",
-    url: '/api/member/me',
-    dataType: "json",
-    contentType: "application/json",
-    data: JSON.stringify(data),
+      url: '/api/member/me',
+      type: 'PUT',
+      data: formData,
+      processData: false,
+      contentType: false,
+      headers: {
+        'accept': 'application/json;charset=UTF-8'
+      },
   });
+
   if (!response.isSuccess) {
-    // 실패 시 예외 처리
+    // 예외 처리
   }
 
-  return response;
+  console.log(response)
+
+  return response
 }
+// ----- 회원정보 업데이트 ajax -----
 
 
-// // ----- 배경사진 변경
-// $('.profile-img-container').click(async function(e) {
-//   updateMemberInfo()
-//   const file  = await Swal.fire({
-//     title: "배경사진 변경",
-//     input: "file",
-//     inputAttributes: {
-//       "accept": "image/*",
-//       "aria-label": "Upload your profile picture"
-//     }
-//   });
-//   if (file) {
-//     const reader = new FileReader();
-//     reader.onload = (e) => {
-//       Swal.fire({
-//         title: "Your uploaded picture",
-//         imageUrl: e.target.result,
-//         imageAlt: "The uploaded picture"
-//       });
-//     };
-//     reader.readAsDataURL(file);
-//   }
-// })
+
+// ----- 프로필 사진 
+$('.profile-img-container').click(async function() {
+  const fileInput = $('<input type="file" accept="image/*" style="display: none;" />');
+
+  fileInput.on('change', function() {
+      const file = fileInput[0].files[0];
+      const reader = new FileReader();
+
+      reader.onload = async function(event) {
+        const imageData = event.target.result;
+        await updateProfile(myInfo.name, myInfo.phoneNumber, myInfo.address, fileInput[0].files[0]);
+        $('#profile-img').attr('src', imageData);
+      };
+
+      reader.readAsDataURL(file);
+  });
+
+  fileInput.click(); // 파일 선택 창 열기
+});
+
+
