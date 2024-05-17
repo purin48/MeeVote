@@ -48,99 +48,11 @@ h2{
     flex-direction: column;
     width: 100%;
     height: 100vh;
-    /* flex-wrap: wrap; */
-    /* justify-content: spa let calendar = new FullCalendar.Calendar(calendarEl, {
-        timeZone: 'UTC',
-        themeSystem: 'bootstrap5',
-        initialView: 'dayGridMonth',
-        // contentHeight: 600,
-        editable: true,  //  드래그해서 수정 가능한지, 길게 확장도 가능
-        selectable: true,
-        navLinks: false,  //  요일이랑 날짜 클릭 시 일이나 주단위 보여주는 화면으로 넘어감
-        select: function(info) {
-            // 클릭한 날짜 정보를 콘솔에 출력
-            console.log('Clicked date:', info.start);
-            // -> 확인용 코드
-            console.log(info);
-            // 클릭한 날짜에 해당하는 일정 가져오기
-            let selectedDate = info.start;
-            let selectedEvents = getEventsForDate(selectedDate);
-
-            // console.log(selectedEvents)
-            // 가져온 일정을 리스트 형식으로 보여주기
-            showEventsList(selectedEvents);
-
-            // 클릭한 날짜를 tit_date에 표시
-            let clickedDate = selectedDate.toISOString().slice(0, 10); // YYYY-MM-DD 형식으로 변환
-            $('.tit_date').text(clickedDate);
-        },
-
-        headerToolbar: {
-            start: 'today prev,next',
-            center: 'title',
-            right: 'customDropdownMenu'
-        },
-
-        customButtons: {
-            customDropdownMenu: {
-                text: '전체',
-                click: function() {
-                    $('#customDropdownMenu').toggleClass('show');
-                    // $('#customDropdownMenu').empty(); // 이전 내용 지우기
-
-                    // // 드롭다운 메뉴 항목 추가
-                    // $('#customDropdownMenu').append('<a class="dropdown-item" href="#">전체</a>');
-                    // $('#customDropdownMenu').append('<a class="dropdown-item" href="#">개인</a>');
-                    // $('#customDropdownMenu').append('<a class="dropdown-item" href="#">단체</a>');
-
-                    // 각 항목 클릭 시 이벤트 처리
-                    // $('.dropdown-item').click(function() {
-                    //     let text = $(this).text();
-                    //     $('.btn-secondary').text(text); // 버튼 텍스트 변경
-                    //     hideDropdownMenu(); // 드롭다운 닫기
-                    //
-                    // });
-                }
-            }
-        },
-
-
-        initialDate: today, // 달력 처음 로드될 때 표시되는 날짜, default 는 현재 날짜
-        editable: false,
-        dayMaxEvents: true, // +more 표시 전 최대 이벤트 갯수, true는 셀 높이에 의해 결정
-        eventLimit: true,
-        events: events.map(function(event) {
-            return {
-                title: event.name,
-                start: _date,
-                backgroundColor: event.color,
-                textColor: "#ffffff"
-            };
-        }),
-
-    });
-
-    // 각 항목 클릭 시 이벤트 처리 (이벤트 위임을 사용하여 중복 바인딩을 방지합니다)
-    $('body').on('click', '.dropdown-item', function() {
-        let text = $(this).text();
-        $('.btn-secondary').text(text); // 버튼 텍스트 변경
-        hideDropdownMenu(); // 드롭다운 닫기
-    });
-
-    // dropdown 메뉴 숨기는 함수
-    function hideDropdownMenu() {
-        $('#customDropdownMenu').removeClass('show');
-    }
-
-    calendar.render();ce-between; */
-    /* 소민 */
-    /* min-width: 100px; */
 }
 
 .main {
     height: 100%;
     display: flex;
-    /* flex-direction: column; */
 }
 
 .agenda_wrap {
@@ -149,13 +61,10 @@ h2{
 }
 
 #calendar {
-    /* max-width: 1100px; */
     width: 100%;
     height: 100vh;
-    /* max-height: 100%; */
     margin: 0 0 0 0 ;
     float: right;
-    /* width: 100%; */
 }
 
 /* toolbar header 부분*/
@@ -182,24 +91,12 @@ h2{
     order: 3;
     height: 100%;
     width: 20%;
-    /* border-left: 1px solid #EBEBEB; */
     background-color: #ffffff;
     min-width: 100px;
-    /*border-left-style: solid;*/
-    /*border-left-width: 1px;*/
-    /*border-left-color: lightgrey;*/
-
-
 }
 
 ul {
     padding: 0 0 0 5px;
-    /*display: flex;*/
-    /*justify-content: start;*/
-    /*flex-direction: column;*/
-    /*list-style-type: none;*/
-    /*margin-bottom: 1rem;*/
-    /*font-size: 13px;*/
 }
 li {
     padding: 0 0 0 5px;
@@ -207,7 +104,6 @@ li {
     justify-content: start;
     flex-direction : row;
     list-style-type: none;
-    /*margin-top: .5rem;*/
     margin-bottom: .8rem;
     font-size: 14px;
     margin-right: 3px;
@@ -232,10 +128,6 @@ li {
 .fc-col-header-cell-cushion {
     color: #494747;
 }
-/*.fc-col-header-cell-cushion:hover {*/
-/*    text-decoration: none;*/
-/*    color:#000;*/
-/*}*/
 
 /* 일자(숫자) */
 .fc-daygrid-day-number{
@@ -309,10 +201,6 @@ li {
     border: none !important; /* 일정의 테두리 제거 */
 }
 
-.fc-event-title {
-    /* font-weight: bold;  */
-    /* 일정 제목을 굵게 설정합니다 */
-}
 
 .fc .fc-button-primary:hover {
     background-color: #f8f9fa;
@@ -335,37 +223,17 @@ li {
 }
 
 .fc .fc-highlight {
-    /*background: var(--fc-highlight-color);*/
     border-color: #4FD1C5;
     border: 3px;
 }
 
 .dropdown-menu {
     position: absolute;
-    /*margin-top: 20px;*/
     background-color: white;
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
     display: none;
-
-    /*position: absolute;*/
-    /*top: 100%;*/
-    /*left: 0;*/
-    /*z-index: 5000;*/
-    /*display: none;*/
-    /*float: left;*/
-    /*min-width: 10rem;*/
-    /*padding: .5rem 0;*/
-    /*margin: .125rem 0 0;*/
-    /*font-size: 1rem;*/
-    /*color: #212529;*/
-    /*text-align: left;*/
-    /*list-style: none;*/
-    /*background-color: #fff;*/
-    /*background-clip: padding-box;*/
-    /*border: 1px solid rgba(0, 0, 0, .15);*/
-    /*border-radius: .25rem;*/
 }
 
 .dropdown-item {

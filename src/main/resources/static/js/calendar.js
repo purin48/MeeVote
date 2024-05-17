@@ -81,8 +81,6 @@ $(document).ready(async function() {
                     text: '전체',
                     click: function () {
                         $('#customDropdownMenu').toggleClass('show');
-                        // $('#customDropdownMenu').empty(); // 이전 내용 지우기
-
 
                         // drop down 메뉴 숨기는 함수
                         function hideDropdownMenu() {

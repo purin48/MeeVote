@@ -123,12 +123,6 @@ function showNotifications() {
                 $cardMain.append($cardMain3);
                 $(".msg-overlay-bubble-list").append($cardOuter);
 
-                // if (card.placeName === null) {
-                //     $cardMain2.append('<p style="font-size: 12px;"><i class="bi bi-geo-alt" style="margin-top: 16px;"> </i>' + '투표중' + '</p>')
-                // } else {
-                //     $cardMain2.append('<p style="font-size: 12px;"><i class="bi bi-geo-alt" style="margin-top: 16px;"> </i>' + card.placeName + '</p>')
-                // }
-
                 if (card.voteDeadline === null) {  // 투표 마감일 X = 개인 일정
                     $cardMain2.append("");
                 } else if (card.voteDeadline < today) {  // 투표 마감일 지남
@@ -152,10 +146,6 @@ function showNotifications() {
                     card.scheduleCategoryName +
                     "</p>"
                 );
-
-                // if(card.isRead === true) {
-                //     $('.card-outer').hide();
-                // }
 
             });
         },

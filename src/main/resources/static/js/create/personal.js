@@ -134,7 +134,6 @@ async function searchPlace(keyword) {
 	ps.keywordSearch(keyword, (data, status, pagination) => {
 		placeList = [];
 		if (status === kakao.maps.services.Status.OK) placeList = data;
-		console.log('1', data);
 	});
 }
 // ---- 함수 : 카카오 맵 검색 End----
