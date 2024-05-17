@@ -56,4 +56,9 @@ public class ViewController {
 	public String login() {
 		return "login/login";
 	}
+
+	@GetMapping("/hello")
+	public String hello() {
+		return "login/hello";
+	}
 }

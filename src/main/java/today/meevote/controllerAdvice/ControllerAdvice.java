@@ -13,7 +13,7 @@ public class ControllerAdvice {
     @ExceptionHandler(UnauthenticatedException.class)
     public String unauthenticatedException(UnauthenticatedException e){
     	log.error("unauthenticatedException", e);
-        return "redirect:/login";
+        return "redirect:/hello";
     }
     
     @ExceptionHandler(NotFoundException.class)
